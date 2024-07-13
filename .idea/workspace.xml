@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.idea_/.idea.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea_/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.idea_/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Boids/.idea_/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Boids/.idea_/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Boids/angles.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Boids/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Boids/sprites/arrow.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Boids/sprites/bird.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Boids/vector.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Snake/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Snake/sprites/apple.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Snake/sprites/snake_full.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Snake/sprites/snake_side.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SnakeGame" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/.idea_/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/.idea_/.name" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/.idea_/TFE.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/.idea_/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/.idea_/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/.idea_/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/.idea_/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/.idea_/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_1024.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_128.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_131072.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_16.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_16384.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_2048.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_256.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_32.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_32768.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_4096.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_512.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_64.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_65536.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_8.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TFE/sprites/sprite_8192.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/games.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/games.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Combos/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/.idea_/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Combos/.idea/Combos.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/.idea_/Birds.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Combos/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/.idea_/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Combos/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea_/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Combos/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/.idea_/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Combos/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea_/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Combos/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/.idea_/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Combos/main.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2jBBUjReQGywl04ie2I6ydoAfxz" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/dev/games/Snake",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PythonContentEntriesConfigurable"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\dev\games\Snake" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-50da183f06c8-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13135.95" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="" />
+      <created>1720850607871</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1720850607871</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/SnakeGame" />
+    </ignored-roots>
+  </component>
+</project>
