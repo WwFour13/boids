@@ -8,12 +8,13 @@ import random
 import math
 import vector
 import angles
+import background
 
 pygame.init()
 screen_width = 1280
 screen_height = 720
 screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Birds!")  # Set the window caption
+pygame.display.set_caption("Boids!")  # Set the window caption
 clock = pygame.time.Clock()  # Clock for controlling frame rate
 
 BLACK = (0, 0, 0)
@@ -23,23 +24,24 @@ BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
 
-BIRD_COUNT = 100
-BIRD_SIZE = 20
-BIRD_SIGHT_DISTANCE = 70
-BIRD_MAX_SPEED = 50
-BIRD_MAX_FORCE = 20
+BOID_COUNT = 100
+BOID_SIZE = 30
+BOID_SIGHT_DISTANCE = 70
+BOID_MAX_SPEED = 50
+BOID_MAX_FORCE = 20
 
-BIRD_IMAGE = pygame.transform.flip(
-    pygame.transform.scale(pygame.image.load("sprites/bird.png"), (BIRD_SIZE, BIRD_SIZE)), True, False)
-BIRD_SIGHT_COLOR = (175, 255, 171)
-BIRD_PERSONAL_SPACE_COLOR = RED
+BOID_IMAGE = pygame.transform.flip(
+    pygame.transform.scale(pygame.image.load("sprites/arrow.png"), (BOID_SIZE, BOID_SIZE)), True, False)
+BOID_SIGHT_COLOR = (175, 255, 171)
+BOID_PERSONAL_SPACE_COLOR = RED
 
-WALL_WEIGHT = 100000
 COHESION_WEIGHT = 0.5
 ALIGNMENT_WEIGHT = 1
 SEPARATION_WEIGHT = 0.1
 
 FPS = 30
+
+run_time_seconds = 0.0
 
 
 def clamp(num, cap):
@@ -51,20 +53,13 @@ def clamp(num, cap):
         return num
 
 
-def expand(num, min):
-    if -min < num < min:
-        return min if num < 0 else -min
-    else:
-        return num
-
-
-class Bird:
+class Boid:
     def __init__(self,
                  x=screen_width / 2,
                  y=screen_height / 2,
                  direction=vector.Vector(), ):
-        self.image = BIRD_IMAGE
-        self.sight_color = BIRD_SIGHT_COLOR
+        self.image = BOID_IMAGE
+        self.sight_color = BOID_SIGHT_COLOR
         self.x: float = x
         self.y: float = y
         self.direction = direction
@@ -105,82 +100,75 @@ class Bird:
             self.x = 0
             self.direction.x *= -1
 
-    def cohesion_force(self, seen_birds: list[Self]) -> vector.Vector:
-        if not seen_birds:
+    def cohesion_force(self, seen_boids: list[Self]) -> vector.Vector:
+        if not seen_boids:
             return vector.Vector(0, 0)
 
-        center_x = sum(bird.x for bird in seen_birds) / len(seen_birds)
-        center_y = sum(bird.y for bird in seen_birds) / len(seen_birds)
+        center_x = sum(boid.x for boid in seen_boids) / len(seen_boids)
+        center_y = sum(boid.y for boid in seen_boids) / len(seen_boids)
         direction_to_center = vector.Vector(center_x - self.x, center_y - self.y)
         return direction_to_center - self.direction
 
 
-    def alignment_force(self, seen_birds: list[Self]) -> vector.Vector:
-        if not seen_birds:
+    def alignment_force(self, seen_boids: list[Self]) -> vector.Vector:
+        if not seen_boids:
             return vector.Vector(0, 0)
 
-        average_direction = vector.Vector.average([bird.direction for bird in seen_birds])
+        average_direction = vector.Vector.average([boid.direction for boid in seen_boids])
         return average_direction - self.direction
 
-    def separation_force(self, seen_birds: list[Self]) -> vector.Vector:
-        if not seen_birds:
-            return vector.Vector(0, 0)
-        personal_birds = [bird for bird in seen_birds if self.distance_to(bird) < BIRD_SIGHT_DISTANCE * SEPARATION_WEIGHT]
+    def flock(self, all_boids: list[Self]):
+        seen_boids = [boid for boid in all_boids if self.distance_to(boid) < BOID_SIGHT_DISTANCE and boid != self]
 
-        if not personal_birds:
-            return vector.Vector(0, 0)
-        separation = vector.Vector.average([vector.Vector(self.x - bird.x, self.y - bird.y) for bird in personal_birds])
-        return separation - self.direction
-
-    def flock(self, all_birds: list[Self]):
-        seen_birds = [bird for bird in all_birds if self.distance_to(bird) < BIRD_SIGHT_DISTANCE and bird != self]
-
-        if not seen_birds:
+        if not seen_boids:
             return
 
-        force = self.cohesion_force(seen_birds) + self.alignment_force(seen_birds) + self.separation_force(seen_birds)
-        force.clamp_magnitude(BIRD_MAX_FORCE)
+        force = self.cohesion_force(seen_boids) + self.alignment_force(seen_boids)# + self.separation_force(seen_boids)
+        force.clamp_magnitude(BOID_MAX_FORCE)
         self.direction += force
-        self.direction.clamp_magnitude(BIRD_MAX_SPEED)
+        self.direction.clamp_magnitude(BOID_MAX_SPEED)
 
     def rotate_image(self):
         rad = self.get_radians()
         quadrant = angles.get_quadrant(rad)
 
         if quadrant in (1, 4):
-            self.image = pygame.transform.rotate(BIRD_IMAGE, math.degrees(rad))
+            self.image = pygame.transform.rotate(BOID_IMAGE, math.degrees(rad))
         else:
             self.image = pygame.transform.flip(
-                pygame.transform.rotate(BIRD_IMAGE, 180 - math.degrees(rad)), True, False)
+                pygame.transform.rotate(BOID_IMAGE, 180 - math.degrees(rad)), True, False)
 
-    def update(self, dt: float, birds: list[Self]):
+    def update(self, dt: float, all_boids: list[Self]):
 
-        self.flock(birds)
+        self.flock(all_boids)
         self.rotate_image()
         self.move(dt)
 
     def draw(self):
 
-        center_x = self.x - BIRD_SIZE / 2
-        center_y = self.y - BIRD_SIZE / 2
+        center_x = self.x - BOID_SIZE / 2
+        center_y = self.y - BOID_SIZE / 2
         screen.blit(self.image, (center_x, center_y))
 
 
-birds: list[Bird] = []
+boids: list[Boid] = []
 
 
-def add_birds():
-    for _ in range(BIRD_COUNT):
+def add_boids():
+    for _ in range(BOID_COUNT):
         radians = random.uniform(0, 2 * math.pi) % (2 * math.pi)
         x = random.uniform(0, screen_width)
         y = random.uniform(0, screen_height)
-        dx = math.cos(radians) * BIRD_MAX_SPEED
-        dy = math.sin(radians) * BIRD_MAX_SPEED
-        birds.append(Bird(x=x, y=y, direction=vector.Vector(dx, dy)))
+        dx = math.cos(radians) * BOID_MAX_SPEED
+        dy = math.sin(radians) * BOID_MAX_SPEED
+        boids.append(Boid(x=x, y=y, direction=vector.Vector(dx, dy)))
 
 
 def main():
-    add_birds()
+
+    global run_time_seconds
+
+    add_boids()
 
     while True:
 
@@ -194,16 +182,19 @@ def main():
             if event.type == KEYDOWN:
                 pass
 
-        screen.fill((100, 100, 100))
+        rgb = background.get_rgb(run_time_seconds)
+        print(rgb)
+        screen.fill(rgb)
 
-        birds_snap = list(birds)
-        for bird in birds:
-            bird.update(1 / FPS, birds_snap)
-            bird.draw()
+        boids_snap = list(boids)
+        for boid in boids:
+            boid.update(1 / FPS, boids_snap)
+            boid.draw()
 
         pygame.display.flip()
 
         clock.tick(FPS)
+        run_time_seconds += 1 / FPS
 
 
 if __name__ == '__main__':

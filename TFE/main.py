@@ -4,7 +4,6 @@ import pygame
 from pygame.locals import MOUSEBUTTONDOWN, KEYDOWN
 import sys
 import random
-import numpy as np
 import math
 import copy
 
