@@ -89,3 +89,20 @@ class Boid:
 
     def get_coordinates(self):
         return self.x, self.y
+
+    def draw(self):
+        rad = self.get_radians()
+        quadrant = angles.get_quadrant(rad)
+
+        if quadrant in (1, 4):
+            image = pygame.transform.rotate(BOID_IMAGE, math.degrees(rad))
+        else:
+            image = pygame.transform.flip(
+                pygame.transform.rotate(BOID_IMAGE, 180 - math.degrees(rad)), True, False)
+
+        w = image.get_width()
+        h = image.get_height()
+        left = self.x - w / 2
+        top = self.y - h / 2
+
+        # main.screen.blit(image, (left, top))
