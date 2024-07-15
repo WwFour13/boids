@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="separate boid file">
+    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="cleaned">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/boid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/boid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/main.py" afterDir="false" />
@@ -155,7 +155,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721008380126</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="cleaned">
+      <option name="closed" value="true" />
+      <created>1721009625849</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1721009625849</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -175,6 +183,7 @@
     </ignored-roots>
     <MESSAGE value="background and rename" />
     <MESSAGE value="separate boid file" />
-    <option name="LAST_COMMIT_MESSAGE" value="separate boid file" />
+    <MESSAGE value="cleaned" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaned" />
   </component>
 </project>

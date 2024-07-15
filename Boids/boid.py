@@ -70,20 +70,22 @@ class Boid:
         if not seen_boids:
             return
 
-    def get_image(self):
+    def get_image_with_top_left(self):
         rad = self.get_radians()
         quadrant = angles.get_quadrant(rad)
 
         if quadrant in (1, 4):
-            return pygame.transform.rotate(BOID_IMAGE, math.degrees(rad))
+            image = pygame.transform.rotate(BOID_IMAGE, math.degrees(rad))
         else:
-            return pygame.transform.flip(
+            image = pygame.transform.flip(
                 pygame.transform.rotate(BOID_IMAGE, 180 - math.degrees(rad)), True, False)
+
+        w = image.get_width()
+        h = image.get_height()
+        left = self.x - w / 2
+        top = self.y - h / 2
+
+        return image, (left, top)
 
     def get_coordinates(self):
         return self.x, self.y
-
-    def get_top_left_coordinates(self):
-        left = self.x - BOID_SIZE / 2
-        top = self.y - BOID_SIZE / 2
-        return left, top

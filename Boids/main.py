@@ -87,8 +87,7 @@ def main():
             boid.find_flock_direction(boids)
         for boid in boids:
             boid.move(dt)
-            # screen.blit(boid.get_image(),
-            #             boid.get_top_left_coordinates())
+            screen.blit(*boid.get_image_with_top_left())
             pygame.draw.circle(screen, RED, boid.get_coordinates(), 5)
 
         pygame.display.flip()
