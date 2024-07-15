@@ -49,8 +49,10 @@ boids: list[Boid] = []
 def add_boids():
     for _ in range(BOID_COUNT):
         radians = random.uniform(0, 2 * math.pi) % (2 * math.pi)
-        x = random.uniform(0, screen_width)
-        y = random.uniform(0, screen_height)
+        # x = random.uniform(0, screen_width)
+        # y = random.uniform(0, screen_height)
+        x = screen_width / 2
+        y = screen_height / 2
         dx = math.cos(radians)
         dy = math.sin(radians)
         v = Vector()
@@ -85,8 +87,8 @@ def main():
             boid.find_flock_direction(boids)
         for boid in boids:
             boid.move(dt)
-            screen.blit(boid.get_image(),
-                        boid.get_top_left_coordinates())
+            # screen.blit(boid.get_image(),
+            #             boid.get_top_left_coordinates())
             pygame.draw.circle(screen, RED, boid.get_coordinates(), 5)
 
         pygame.display.flip()

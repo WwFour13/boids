@@ -2,7 +2,7 @@ import pygame
 
 import math
 import angles
-import vector
+from vector import Vector
 from typing import Self
 
 
@@ -12,7 +12,10 @@ BOID_MAX_SPEED = 50
 BOID_MAX_FORCE = 20
 
 BOID_IMAGE = pygame.transform.flip(
-    pygame.transform.scale(pygame.image.load("sprites/arrow.png"), (BOID_SIZE, BOID_SIZE)), True, False)
+    pygame.transform.scale(pygame.image.load("sprites/arrow_filled_background.png"),
+                           (BOID_SIZE, BOID_SIZE)),
+    True,
+    False)
 BOID_SIGHT_COLOR = (175, 255, 171)
 
 
@@ -21,7 +24,7 @@ class Boid:
     def __init__(self,
                  x,
                  y,
-                 direction=vector.Vector(), ):
+                 direction=Vector(),):
         self.image = BOID_IMAGE
         self.sight_color = BOID_SIGHT_COLOR
         self.x: float = x
@@ -45,20 +48,20 @@ class Boid:
         self.x += self.direction.x * dt
         self.y -= self.direction.y * dt
 
-    def cohesion_force(self, seen_boids: list[Self]) -> vector.Vector:
+    def cohesion_force(self, seen_boids: list[Self]) -> Vector:
         if not seen_boids:
-            return vector.Vector(0, 0)
+            return Vector(0, 0)
 
         center_x = sum(boid.x for boid in seen_boids) / len(seen_boids)
         center_y = sum(boid.y for boid in seen_boids) / len(seen_boids)
-        direction_to_center = vector.Vector(center_x - self.x, center_y - self.y)
+        direction_to_center = Vector(center_x - self.x, center_y - self.y)
         return direction_to_center - self.direction
 
-    def alignment_force(self, seen_boids: list[Self]) -> vector.Vector:
+    def alignment_force(self, seen_boids: list[Self]) -> Vector:
         if not seen_boids:
-            return vector.Vector(0, 0)
+            return Vector(0, 0)
 
-        average_direction = vector.Vector.average([boid.direction for boid in seen_boids])
+        average_direction = Vector.average([boid.direction for boid in seen_boids])
         return average_direction - self.direction
 
     def find_flock_direction(self, all_boids: list[Self]):
@@ -66,11 +69,6 @@ class Boid:
 
         if not seen_boids:
             return
-
-        force = self.cohesion_force(seen_boids) + self.alignment_force(seen_boids)# + self.separation_force(seen_boids)
-        force.clamp_magnitude(BOID_MAX_FORCE)
-        self.direction += force
-        self.direction.clamp_magnitude(BOID_MAX_SPEED)
 
     def get_image(self):
         rad = self.get_radians()
@@ -88,4 +86,4 @@ class Boid:
     def get_top_left_coordinates(self):
         left = self.x - BOID_SIZE / 2
         top = self.y - BOID_SIZE / 2
-        return (left, top)
+        return left, top
