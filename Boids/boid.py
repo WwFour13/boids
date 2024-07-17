@@ -12,12 +12,11 @@ BOID_MAX_SPEED = 50
 BOID_MAX_FORCE = 20
 
 BOID_IMAGE = pygame.transform.flip(
-    pygame.transform.scale(pygame.image.load("sprites/arrow_filled_background.png"),
+    pygame.transform.scale(pygame.image.load("sprites/arrow.png"),
                            (BOID_SIZE, BOID_SIZE)),
     True,
     False)
 BOID_SIGHT_COLOR = (175, 255, 171)
-
 
 
 class Boid:
@@ -104,5 +103,3 @@ class Boid:
         h = image.get_height()
         left = self.x - w / 2
         top = self.y - h / 2
-
-        # main.screen.blit(image, (left, top))

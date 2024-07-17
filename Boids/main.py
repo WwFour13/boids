@@ -17,6 +17,7 @@ screen_width = 1280
 screen_height = 720
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Boids!")  # Set the window caption
+pygame.display.set_icon(pygame.transform.rotozoom(pygame.image.load("sprites/arrow.png"), 135, 2))
 clock = pygame.time.Clock()  # Clock for controlling frame rate
 
 BLACK = (0, 0, 0)
@@ -88,7 +89,7 @@ def main():
         for boid in boids:
             boid.move(dt)
             screen.blit(*boid.get_image_with_top_left())
-            pygame.draw.circle(screen, RED, boid.get_coordinates(), 5)
+            #pygame.draw.circle(screen, RED, boid.get_coordinates(), 5)
 
         pygame.display.flip()
 
