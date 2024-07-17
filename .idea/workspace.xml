@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="centered after rotations v2">
+      <change afterPath="$PROJECT_DIR$/Boids/surfaces.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boids/background.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/background.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/boid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/boid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/main.py" afterDir="false" />
     </list>
@@ -56,17 +56,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.background.executor": "Run",
-    "Python.main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/dev/games",
-    "settings.editor.selected.configurable": "ai.codium.settings.CodiumSettingsConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.background.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Reverting in main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/dev/games&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ai.codium.settings.CodiumSettingsConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\dev\games\Snake" />
@@ -203,6 +203,7 @@
     <MESSAGE value="cleaned" />
     <MESSAGE value="centered after rotations" />
     <MESSAGE value="centered after rotations v2" />
-    <option name="LAST_COMMIT_MESSAGE" value="centered after rotations v2" />
+    <MESSAGE value="centered after rotations v3" />
+    <option name="LAST_COMMIT_MESSAGE" value="centered after rotations v3" />
   </component>
 </project>

@@ -4,6 +4,8 @@ import sys
 import pygame
 from pygame.locals import MOUSEBUTTONDOWN, KEYDOWN
 
+from surfaces import main_screen, main_screen_width, main_screen_height
+
 from boid import Boid
 from boid import BOID_MAX_SPEED
 
@@ -13,9 +15,8 @@ from vector import Vector
 import background
 
 pygame.init()
-screen_width = 1280
-screen_height = 720
-screen = pygame.display.set_mode((screen_width, screen_height))
+
+
 pygame.display.set_caption("Boids!")  # Set the window caption
 pygame.display.set_icon(pygame.transform.rotozoom(pygame.image.load("sprites/arrow.png"), 135, 2))
 clock = pygame.time.Clock()  # Clock for controlling frame rate
@@ -52,8 +53,8 @@ def add_boids():
         radians = random.uniform(0, 2 * math.pi) % (2 * math.pi)
         # x = random.uniform(0, screen_width)
         # y = random.uniform(0, screen_height)
-        x = screen_width / 2
-        y = screen_height / 2
+        x = main_screen_width / 2
+        y = main_screen_height / 2
         dx = math.cos(radians)
         dy = math.sin(radians)
         v = Vector()
@@ -82,14 +83,15 @@ def main():
                 pass
 
         rgb = background.get_rgb(run_time_seconds)
-        screen.fill(rgb)
+        main_screen.fill(rgb)
 
         for boid in boids:
             boid.find_flock_direction(boids)
         for boid in boids:
             boid.move(dt)
-            screen.blit(*boid.get_image_with_top_left())
-            #pygame.draw.circle(screen, RED, boid.get_coordinates(), 5)
+            boid.draw_sight(main_screen)
+        for boid in boids:
+            boid.draw(main_screen)
 
         pygame.display.flip()
 

@@ -1,10 +1,11 @@
 import pygame
 
+from surfaces import main_screen, main_screen_width, main_screen_height
+
 import math
 import angles
 from vector import Vector
 from typing import Self
-
 
 BOID_SIZE = 30
 BOID_SIGHT_DISTANCE = 70
@@ -12,7 +13,7 @@ BOID_MAX_SPEED = 50
 BOID_MAX_FORCE = 20
 
 BOID_IMAGE = pygame.transform.flip(
-    pygame.transform.scale(pygame.image.load("sprites/arrow.png"),
+    pygame.transform.scale(pygame.image.load("sprites/bird.png"),
                            (BOID_SIZE, BOID_SIZE)),
     True,
     False)
@@ -21,9 +22,9 @@ BOID_SIGHT_COLOR = (175, 255, 171)
 
 class Boid:
     def __init__(self,
-                 x,
-                 y,
-                 direction=Vector(),):
+                 x=main_screen_width / 2,
+                 y=main_screen_height / 2,
+                 direction=Vector(), ):
         self.image = BOID_IMAGE
         self.sight_color = BOID_SIGHT_COLOR
         self.x: float = x
@@ -69,27 +70,10 @@ class Boid:
         if not seen_boids:
             return
 
-    def get_image_with_top_left(self):
-        rad = self.get_radians()
-        quadrant = angles.get_quadrant(rad)
-
-        if quadrant in (1, 4):
-            image = pygame.transform.rotate(BOID_IMAGE, math.degrees(rad))
-        else:
-            image = pygame.transform.flip(
-                pygame.transform.rotate(BOID_IMAGE, 180 - math.degrees(rad)), True, False)
-
-        w = image.get_width()
-        h = image.get_height()
-        left = self.x - w / 2
-        top = self.y - h / 2
-
-        return image, (left, top)
-
     def get_coordinates(self):
         return self.x, self.y
 
-    def draw(self):
+    def draw(self, screen):
         rad = self.get_radians()
         quadrant = angles.get_quadrant(rad)
 
@@ -103,3 +87,8 @@ class Boid:
         h = image.get_height()
         left = self.x - w / 2
         top = self.y - h / 2
+
+        screen.blit(image, (left, top))
+
+    def draw_sight(self, screen):
+        pygame.draw.circle(screen, self.sight_color, self.get_coordinates(), BOID_SIGHT_DISTANCE)
