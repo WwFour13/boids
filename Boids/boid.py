@@ -3,21 +3,27 @@ import pygame
 from surfaces import main_screen, main_screen_width, main_screen_height
 
 import math
+import random
 import angles
 from vector import Vector
 from typing import Self
 
 BOID_SIZE = 30
 BOID_SIGHT_DISTANCE = 70
-BOID_MAX_SPEED = 50
+BOID_MAX_SPEED = 120 # per second
 BOID_MAX_FORCE = 20
+BOID_ACCELERATION_FACTOR = 0.1
+BOID_MAX_VARIATION_ANGLE = math.radians(20)
+BOID_VARIATION_PERCENTAGE_PER_SECOND = 0.2
 
 BOID_IMAGE = pygame.transform.flip(
-    pygame.transform.scale(pygame.image.load("sprites/bird.png"),
+    pygame.transform.scale(pygame.image.load("sprites/arrow.png"),
                            (BOID_SIZE, BOID_SIZE)),
     True,
     False)
 BOID_SIGHT_COLOR = (175, 255, 171)
+
+WALL_FORCE_FACTOR = 5
 
 
 class Boid:
@@ -29,7 +35,7 @@ class Boid:
         self.sight_color = BOID_SIGHT_COLOR
         self.x: float = x
         self.y: float = y
-        self.direction = direction
+        self.direction: Vector = direction
 
     def __repr__(self):
         return f"X: {self.x}, Y: {self.y}, "
@@ -48,14 +54,16 @@ class Boid:
         self.x += self.direction.x * dt
         self.y -= self.direction.y * dt
 
+        self.x %= main_screen_width
+        self.y %= main_screen_height
+
     def cohesion_force(self, seen_boids: list[Self]) -> Vector:
         if not seen_boids:
             return Vector(0, 0)
 
-        center_x = sum(boid.x for boid in seen_boids) / len(seen_boids)
-        center_y = sum(boid.y for boid in seen_boids) / len(seen_boids)
-        direction_to_center = Vector(center_x - self.x, center_y - self.y)
-        return direction_to_center - self.direction
+        to_average_position = Vector.average([boid.direction for boid in seen_boids])
+        cohesion_force = to_average_position - self.direction
+        return cohesion_force
 
     def alignment_force(self, seen_boids: list[Self]) -> Vector:
         if not seen_boids:
@@ -64,11 +72,28 @@ class Boid:
         average_direction = Vector.average([boid.direction for boid in seen_boids])
         return average_direction - self.direction
 
-    def find_flock_direction(self, all_boids: list[Self]):
+    def find_flock_direction(self, all_boids: list[Self], dt: float):
         seen_boids = [boid for boid in all_boids if self.distance_to(boid) < BOID_SIGHT_DISTANCE and boid != self]
 
         if not seen_boids:
             return
+
+        force = Vector()
+        force += self.alignment_force(seen_boids)
+        force.clamp_magnitude(BOID_MAX_FORCE)
+
+        self.direction += force
+        self.direction *= 1 + BOID_ACCELERATION_FACTOR
+        self.direction.clamp_magnitude(BOID_MAX_SPEED)
+
+        if random.random() < BOID_VARIATION_PERCENTAGE_PER_SECOND * dt:
+            self.variate()
+
+    def variate(self):
+        random_angle_variation = random.uniform(-BOID_MAX_VARIATION_ANGLE, BOID_MAX_VARIATION_ANGLE)
+        new_angle = self.direction.get_radians() + random_angle_variation
+        new_angle %= 2 * math.pi
+        self.direction.set_radians(new_angle)
 
     def get_coordinates(self):
         return self.x, self.y

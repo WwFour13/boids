@@ -51,13 +51,12 @@ boids: list[Boid] = []
 def add_boids():
     for _ in range(BOID_COUNT):
         radians = random.uniform(0, 2 * math.pi) % (2 * math.pi)
-        # x = random.uniform(0, screen_width)
-        # y = random.uniform(0, screen_height)
-        x = main_screen_width / 2
-        y = main_screen_height / 2
+        x = random.uniform(0, main_screen_width)
+        y = random.uniform(0, main_screen_height)
+
         dx = math.cos(radians)
         dy = math.sin(radians)
-        v = Vector()
+        v = Vector(1, 1)
         v.set_radians(radians)
         v.set_magnitude(BOID_MAX_SPEED)
         boids.append(
@@ -86,12 +85,14 @@ def main():
         main_screen.fill(rgb)
 
         for boid in boids:
-            boid.find_flock_direction(boids)
+            boid.find_flock_direction(boids, dt)
         for boid in boids:
             boid.move(dt)
             boid.draw_sight(main_screen)
         for boid in boids:
             boid.draw(main_screen)
+
+        print(len(boids))
 
         pygame.display.flip()
 
