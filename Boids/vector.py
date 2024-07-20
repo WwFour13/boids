@@ -65,6 +65,10 @@ class Vector:
     def get_opposite(self):
         return Vector(dx=-self.x, dy=-self.y)
 
+    def rotate(self, angle):
+        radians = (self.get_radians() + angle) % (2 * math.pi)
+        self.set_radians(radians)
+
     @staticmethod
     def sum(vectors):
         x = 0

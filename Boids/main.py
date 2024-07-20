@@ -92,8 +92,6 @@ def main():
         for boid in boids:
             boid.draw(main_screen)
 
-        print(len(boids))
-
         pygame.display.flip()
 
         clock.tick(FPS)
