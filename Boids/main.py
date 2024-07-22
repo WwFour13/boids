@@ -28,7 +28,7 @@ BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
 
-BOID_COUNT = 100
+BOID_COUNT = 30
 
 FPS = 30
 dt = 1 / FPS

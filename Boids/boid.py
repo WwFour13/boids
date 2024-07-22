@@ -58,8 +58,8 @@ class Boid:
     def get_radians(self):
         return self.direction.get_radians()
 
-    def distance_to(self, other: Self):
-        return math.sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
+    def get_coordinates(self):
+        return self.x, self.y
 
     def move(self, dt: float):
         self.x += self.direction.x * dt
@@ -90,7 +90,8 @@ class Boid:
         if not seen_boids:
             return Vector(0, 0)
 
-        personal_boids = [boid for boid in seen_boids if self.distance_to(boid) < BOID_PERSONAL_SPACE]
+        personal_boids = [boid for boid in seen_boids
+                          if math.dist(self.get_coordinates(), boid.get_coordinates()) < BOID_PERSONAL_SPACE]
 
         if not personal_boids:
             return Vector(0, 0)
@@ -124,7 +125,9 @@ class Boid:
 
 
     def find_flock_direction(self, all_boids: list[Self], dt: float):
-        seen_boids = [boid for boid in all_boids if self.distance_to(boid) < BOID_SIGHT_DISTANCE and boid != self]
+        seen_boids = [boid for boid in all_boids
+                      if math.dist(self.get_coordinates(), boid.get_coordinates()) < BOID_SIGHT_DISTANCE
+                      and boid != self]
 
         if not seen_boids:
             return
@@ -146,9 +149,6 @@ class Boid:
     def variate(self):
         random_angle_variation = random.uniform(-BOID_MAX_VARIATION, BOID_MAX_VARIATION)
         self.direction.rotate(random_angle_variation)
-
-    def get_coordinates(self):
-        return self.x, self.y
 
     def draw(self):
         rad = self.get_radians()
