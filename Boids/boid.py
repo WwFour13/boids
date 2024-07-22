@@ -24,9 +24,11 @@ BOID_IMAGE = pygame.transform.flip(
     False)
 BOID_SIGHT_COLOR = (175, 255, 171)
 
-COHESION_FACTOR = 0.5
-SEPARATION_FACTOR = 5
+COHESION_FACTOR = 0.2
+SEPARATION_FACTOR = 500
 ALIGNMENT_FACTOR = 1
+
+BARRIER_FACTOR = 10
 
 
 class Boid:
@@ -98,6 +100,9 @@ class Boid:
         separation_force = away_from_average - self.direction
         return separation_force
 
+    def barrier_force(self, barriers) -> Vector:
+        pass
+
     def find_flock_direction(self, all_boids: list[Self], dt: float):
         seen_boids = [boid for boid in all_boids if self.distance_to(boid) < BOID_SIGHT_DISTANCE and boid != self]
 
@@ -124,7 +129,7 @@ class Boid:
     def get_coordinates(self):
         return self.x, self.y
 
-    def draw(self, screen):
+    def draw(self):
         rad = self.get_radians()
         quadrant = angles.get_quadrant(rad)
 
@@ -139,7 +144,7 @@ class Boid:
         left = self.x - w / 2
         top = self.y - h / 2
 
-        screen.blit(image, (left, top))
+        main_screen.blit(image, (left, top))
 
-    def draw_sight(self, screen):
-        pygame.draw.circle(screen, self.sight_color, self.get_coordinates(), BOID_SIGHT_DISTANCE)
+    def draw_sight(self):
+        pygame.draw.circle(main_screen, self.sight_color, self.get_coordinates(), BOID_SIGHT_DISTANCE)

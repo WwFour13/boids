@@ -701,7 +701,7 @@ enemy_count_slider_buttons = [
 
 enemy_count_slider = Selectable(full_width=screen_width - 10, center=screen_width // 2, is_vertical=False,
                                 buttons=enemy_count_slider_buttons, selected_index=0)
-enemy_count_slider.set_selection(index=0)
+#enemy_count_slider.set_selection(index=0)
 
 
 def set_menu():
@@ -726,14 +726,8 @@ def main():
             if event.type == MOUSEBUTTONDOWN:
 
                 if not current_game.is_running():
-
-                    was_selected = enemy_count_slider.get_selected()
-                    print(was_selected.text)
-                    enemy_count_slider.update(events=events, position=pygame.mouse.get_pos())
-                    if was_selected == enemy_count_slider.get_selected():
-                        continue
-                        #current_game = Game(start_apples=1, enemies=0, players=1)
-                        #current_game.in_game = True
+                    current_game = Game(start_apples=1, enemies=0, players=1)
+                    current_game.in_game = True
 
             if current_game.is_running():
                 if event.type == pygame.KEYDOWN:

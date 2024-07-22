@@ -88,9 +88,9 @@ def main():
             boid.find_flock_direction(boids, dt)
         for boid in boids:
             boid.move(dt)
-            boid.draw_sight(main_screen)
+            boid.draw_sight()
         for boid in boids:
-            boid.draw(main_screen)
+            boid.draw()
 
         pygame.display.flip()
 
