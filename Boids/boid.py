@@ -8,21 +8,23 @@ import angles
 from vector import Vector
 from typing import Self
 
-BOID_SIZE = 30
-BOID_SIGHT_DISTANCE = 90
-BOID_PERSONAL_SPACE = 60
-BOID_MAX_SPEED = 120  # per second
-BOID_MAX_FORCE = 20
-BOID_ACCELERATION_FACTOR = 80
-BOID_MAX_VARIATION = math.radians(50)
-BOID_VARIATION_PERCENTAGE_PER_SECOND = 0.5
+SIZE = 30
+SIGHT_DISTANCE = 90
+PERSONAL_SPACE = 60
 
-BOID_IMAGE = pygame.transform.flip(
+MAX_SPEED = 120  # per second
+MAX_FORCE = 20
+ACCELERATION_FACTOR = 80
+
+MAX_VARIATION = math.radians(50)
+VARIATION_PERCENTAGE_PER_SECOND = 0.5
+
+IMAGE = pygame.transform.flip(
     pygame.transform.scale(pygame.image.load("sprites/arrow.png"),
-                           (BOID_SIZE, BOID_SIZE)),
+                           (SIZE, SIZE)),
     True,
     False)
-BOID_SIGHT_COLOR = (175, 255, 171)
+SIGHT_COLOR = (175, 255, 171)
 
 COHESION_FACTOR = 0.5
 SEPARATION_FACTOR = 1.0
@@ -36,8 +38,8 @@ class Boid:
                  x=main_screen_width / 2,
                  y=main_screen_height / 2,
                  direction=Vector(), ):
-        self.image = BOID_IMAGE
-        self.sight_color = BOID_SIGHT_COLOR
+        self.image = IMAGE
+        self.sight_color = SIGHT_COLOR
         self.x: float = x
         self.y: float = y
         self.direction: Vector = direction
@@ -91,7 +93,7 @@ class Boid:
             return Vector(0, 0)
 
         personal_boids = [boid for boid in seen_boids
-                          if math.dist(self.get_coordinates(), boid.get_coordinates()) < BOID_PERSONAL_SPACE]
+                          if math.dist(self.get_coordinates(), boid.get_coordinates()) < PERSONAL_SPACE]
 
         if not personal_boids:
             return Vector(0, 0)
@@ -112,10 +114,10 @@ class Boid:
         top_dist = self.y
         bottom_dist = main_screen_height - self.y
 
-        left_mult = max(BOID_SIGHT_DISTANCE - left_dist, 0)
-        right_mult = max(BOID_SIGHT_DISTANCE - right_dist, 0)
-        top_mult = max(BOID_SIGHT_DISTANCE - top_dist, 0)
-        bottom_mult = max(BOID_SIGHT_DISTANCE - bottom_dist, 0)
+        left_mult = max(SIGHT_DISTANCE - left_dist, 0)
+        right_mult = max(SIGHT_DISTANCE - right_dist, 0)
+        top_mult = max(SIGHT_DISTANCE - top_dist, 0)
+        bottom_mult = max(SIGHT_DISTANCE - bottom_dist, 0)
 
         desired_direction = Vector(left_mult - right_mult, top_mult - bottom_mult)
         desired_direction = Vector(right_mult - left_mult, bottom_mult - top_mult)
@@ -126,7 +128,7 @@ class Boid:
 
     def find_flock_direction(self, all_boids: list[Self], dt: float):
         seen_boids = [boid for boid in all_boids
-                      if math.dist(self.get_coordinates(), boid.get_coordinates()) < BOID_SIGHT_DISTANCE
+                      if math.dist(self.get_coordinates(), boid.get_coordinates()) < SIGHT_DISTANCE
                       and boid != self]
 
         if not seen_boids:
@@ -137,17 +139,17 @@ class Boid:
         force += self.cohesion_force(seen_boids)
         force += self.separation_force(seen_boids)
         force += self.wall_force()
-        force.clamp_magnitude(BOID_MAX_FORCE)
+        force.clamp_magnitude(MAX_FORCE)
 
         self.direction += force
-        self.direction *= BOID_ACCELERATION_FACTOR * dt
-        self.direction.clamp_magnitude(BOID_MAX_SPEED)
+        self.direction *= ACCELERATION_FACTOR * dt
+        self.direction.clamp_magnitude(MAX_SPEED)
 
-        if random.random() < BOID_VARIATION_PERCENTAGE_PER_SECOND * dt:
+        if random.random() < VARIATION_PERCENTAGE_PER_SECOND * dt:
             self.variate()
 
     def variate(self):
-        random_angle_variation = random.uniform(-BOID_MAX_VARIATION, BOID_MAX_VARIATION)
+        random_angle_variation = random.uniform(-MAX_VARIATION, MAX_VARIATION)
         self.direction.rotate(random_angle_variation)
 
     def draw(self):
@@ -155,10 +157,10 @@ class Boid:
         quadrant = angles.get_quadrant(rad)
 
         if quadrant in (1, 4):
-            image = pygame.transform.rotate(BOID_IMAGE, math.degrees(rad))
+            image = pygame.transform.rotate(IMAGE, math.degrees(rad))
         else:
             image = pygame.transform.flip(
-                pygame.transform.rotate(BOID_IMAGE, 180 - math.degrees(rad)), True, False)
+                pygame.transform.rotate(IMAGE, 180 - math.degrees(rad)), True, False)
 
         w = image.get_width()
         h = image.get_height()
@@ -168,4 +170,4 @@ class Boid:
         main_screen.blit(image, (left, top))
 
     def draw_sight(self):
-        pygame.draw.circle(main_screen, self.sight_color, self.get_coordinates(), BOID_SIGHT_DISTANCE)
+        pygame.draw.circle(main_screen, self.sight_color, self.get_coordinates(), SIGHT_DISTANCE)

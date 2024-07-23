@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="before barriers">
-      <change afterPath="$PROJECT_DIR$/Boids/barrier.py" afterDir="false" />
+    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="before barriers v2">
+      <change afterPath="$PROJECT_DIR$/Boids/balloon.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Boids/barrier.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/boid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/boid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boids/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +244,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721646704866</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="before barriers v2">
+      <option name="closed" value="true" />
+      <created>1721647634956</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1721647634956</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -273,6 +281,7 @@
     <MESSAGE value="some separation" />
     <MESSAGE value="more separation separation" />
     <MESSAGE value="before barriers" />
-    <option name="LAST_COMMIT_MESSAGE" value="before barriers" />
+    <MESSAGE value="before barriers v2" />
+    <option name="LAST_COMMIT_MESSAGE" value="before barriers v2" />
   </component>
 </project>

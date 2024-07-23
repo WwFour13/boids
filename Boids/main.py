@@ -7,7 +7,7 @@ from pygame.locals import MOUSEBUTTONDOWN, KEYDOWN
 from surfaces import main_screen, main_screen_width, main_screen_height
 
 from boid import Boid
-from boid import BOID_MAX_SPEED
+from boid import MAX_SPEED
 
 import random
 import math
@@ -58,7 +58,7 @@ def add_boids():
         dy = math.sin(radians)
         v = Vector(1, 1)
         v.set_radians(radians)
-        v.set_magnitude(BOID_MAX_SPEED)
+        v.set_magnitude(MAX_SPEED)
         boids.append(
             Boid(x=x, y=y, direction=v)
         )
