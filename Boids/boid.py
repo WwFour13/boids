@@ -124,8 +124,6 @@ class Boid:
         wall_force = desired_direction - self.direction
         return wall_force * WALL_FACTOR
 
-
-
     def find_flock_direction(self, all_boids: list[Self], dt: float):
         seen_boids = [boid for boid in all_boids
                       if math.dist(self.get_coordinates(), boid.get_coordinates()) < SIGHT_DISTANCE

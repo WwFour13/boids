@@ -16,7 +16,7 @@ def normalize_hsv_to_rgb(hsv: tuple[float, float, float]):
     return percent_rgb[0] * 256.0, percent_rgb[1] * 256.0, percent_rgb[2] * 256.0
 
 
-def get_rgb(run_time_seconds: float):
+def get_cyclical_rgb(run_time_seconds: float):
     h = run_time_seconds % loop_time_seconds / loop_time_seconds * 360.0
     s = color_strength
     v = color_brightness
