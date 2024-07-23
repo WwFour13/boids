@@ -19,6 +19,7 @@ class Balloon:
 
         self.GROWTH_RATE = 50
         self.MAX_RADIUS = min(main_screen_width, main_screen_height) / 15
+        self.MIN_RADIUS = min(main_screen_width, main_screen_height) / 100
         self.COLOR = (255, 0, 0)
 
     def get_coordinates(self) -> tuple[float, float]:
@@ -32,7 +33,7 @@ class Balloon:
     def get_radius(self):
         return self.radius
 
-    def intersects(self, *other_coordinates):
+    def intersects(self, other_coordinates):
         return math.dist(self.get_coordinates(), other_coordinates) < self.radius
 
     def expand(self, dt):

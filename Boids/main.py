@@ -86,11 +86,22 @@ def main():
                     is_growing = True
 
             if event.type == MOUSEBUTTONUP:
+
                 if not barriers:
                     raise Exception("No barriers to pop")
+
                 current_barrier = barriers[-1]
                 is_growing = False
-                if current_barrier.pop:
+
+                if current_barrier.radius < current_barrier.MIN_RADIUS:
+                    barriers.remove(current_barrier)
+                    x, y = pygame.mouse.get_pos()
+                    for bar in barriers:
+                        if bar.intersects((x, y)):
+                            barriers.remove(bar)
+                            break
+
+                elif current_barrier.pop:
                     barriers.remove(current_barrier)
 
         rgb = get_cyclical_rgb(run_time_seconds)
