@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="barriers appear on screen">
+    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="barriers editable">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/balloon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/balloon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Boids/boid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/boid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Boids/vector.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/vector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Snake/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Snake/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -267,7 +270,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721715068026</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="barriers editable">
+      <option name="closed" value="true" />
+      <created>1721752790681</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1721752790681</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -299,6 +310,7 @@
     <MESSAGE value="before barriers v2" />
     <MESSAGE value="before barriers renaming" />
     <MESSAGE value="barriers appear on screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="barriers appear on screen" />
+    <MESSAGE value="barriers editable" />
+    <option name="LAST_COMMIT_MESSAGE" value="barriers editable" />
   </component>
 </project>

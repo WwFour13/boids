@@ -35,7 +35,7 @@ GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
 
 
-BOID_COUNT = 30
+BOID_COUNT = 100
 boids: list[Boid] = []
 
 barrier_pop_key_binds = {
@@ -112,7 +112,7 @@ def main():
             barriers[-1].expand(dt)
 
         for boid in boids:
-            boid.find_flock_direction(boids, dt)
+            boid.find_flock_direction(boids, barriers, dt)
         for boid in boids:
             boid.move(dt)
             boid.draw_sight()

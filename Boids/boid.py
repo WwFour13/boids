@@ -5,6 +5,7 @@ from surfaces import main_screen, main_screen_width, main_screen_height
 import math
 import random
 import angles
+from balloon import Balloon
 from vector import Vector
 from typing import Self
 
@@ -64,8 +65,8 @@ class Boid:
         return self.x, self.y
 
     def move(self, dt: float):
-        self.x += self.direction.x * dt
-        self.y -= self.direction.y * dt
+        self.x += self.direction.dx * dt
+        self.y -= self.direction.dy * dt
 
         self.x %= main_screen_width
         self.y %= main_screen_height
@@ -84,7 +85,7 @@ class Boid:
         if not seen_boids:
             return Vector(0, 0)
 
-        average_direction = Vector.average([boid.direction for boid in seen_boids])
+        average_direction = Vector.get_average([boid.direction for boid in seen_boids])
         alignment_force = average_direction - self.direction
         return alignment_force * ALIGNMENT_FACTOR
 
@@ -104,8 +105,22 @@ class Boid:
         separation_force = away_from_average - self.direction
         return separation_force * SEPARATION_FACTOR
 
-    def barrier_force(self, barriers):
-        pass
+    def barrier_force(self, barriers: list[Balloon]) -> Vector:
+        barrier_force = Vector(0, 0)
+
+        for bar in barriers:
+
+            if (dist := ((math.dist(self.get_coordinates(), bar.get_coordinates())) - bar.radius)
+                    < SIGHT_DISTANCE):
+                weight = (SIGHT_DISTANCE - dist) ** 2
+                force = Vector()
+                dx, dy = bar.x - self.x, bar.y - self.y
+                force.set(dx, dy)
+                force.set_magnitude(weight)
+
+                barrier_force += (force.dx, force.dy)
+
+        return barrier_force * BARRIER_FACTOR
 
     def wall_force(self) -> Vector:
 
@@ -124,7 +139,7 @@ class Boid:
         wall_force = desired_direction - self.direction
         return wall_force * WALL_FACTOR
 
-    def find_flock_direction(self, all_boids: list[Self], dt: float):
+    def find_flock_direction(self, all_boids: list[Self], barriers: list[Balloon], dt: float):
         seen_boids = [boid for boid in all_boids
                       if math.dist(self.get_coordinates(), boid.get_coordinates()) < SIGHT_DISTANCE
                       and boid != self]
@@ -136,7 +151,7 @@ class Boid:
         force += self.alignment_force(seen_boids)
         force += self.cohesion_force(seen_boids)
         force += self.separation_force(seen_boids)
-        force += self.wall_force()
+        force += self.barrier_force(barriers)
         force.clamp_magnitude(MAX_FORCE)
 
         self.direction += force

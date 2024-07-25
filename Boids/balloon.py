@@ -19,8 +19,11 @@ class Balloon:
 
         self.GROWTH_RATE = 50
         self.MAX_RADIUS = min(main_screen_width, main_screen_height) / 15
-        self.MIN_RADIUS = min(main_screen_width, main_screen_height) / 100
+        self.MIN_RADIUS = min(main_screen_width, main_screen_height) / 80
         self.COLOR = (255, 0, 0)
+
+    def __repr__(self):
+        return f"X: {self.x}, Y: {self.y}, Radius: {self.radius}, Pop: {self.pop}"
 
     def get_coordinates(self) -> tuple[float, float]:
         return self.x, self.y

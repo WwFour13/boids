@@ -214,7 +214,7 @@ class Vector:
         self.set(key, x, y)
 
     def __eq__(self, other) -> bool:
-        return self.x == other.x and self.y == other.y
+        return self.x == other.dx and self.y == other.dy
 
     def __add__(self, other):
         return (other[0] + self.x), (other[1] + self.y)
@@ -236,14 +236,14 @@ class Vector:
             self.x = 1
 
     def is_perpendicular(self, other):
-        return self.x * other.x + self.y * other.y == 0
+        return self.x * other.dx + self.y * other.dy == 0
 
     def get_opposite(self):
         return Vector(x=-self.x, y=-self.y)
 
     def angle_to(self, other):
         """Calculates the angle between two vectors in radians."""
-        dot_product = self.x * other.x + self.y * other.y
+        dot_product = self.x * other.dx + self.y * other.dy
         magnitude_product = (self.magnitude() * other.magnitude())
 
         if magnitude_product == 0:
