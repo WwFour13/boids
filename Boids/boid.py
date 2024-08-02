@@ -31,7 +31,7 @@ COHESION_FACTOR = 0.5
 SEPARATION_FACTOR = 1.0
 ALIGNMENT_FACTOR = 1.0
 WALL_FACTOR = 0.0
-BARRIER_FACTOR = 5.0
+BARRIER_FACTOR = 50000.0
 
 
 class Boid:
@@ -68,8 +68,21 @@ class Boid:
         self.x += self.direction.dx * dt
         self.y -= self.direction.dy * dt
 
-        self.x %= main_screen_width
-        self.y %= main_screen_height
+        if self.x < 0:
+            self.direction.dx *= -1
+            self.x = 0
+
+        if self.y < 0:
+            self.direction.dy *= -1
+            self.y = 0
+
+        if self.x > main_screen_width:
+            self.direction.dx *= -1
+            self.x = main_screen_width
+
+        if self.y > main_screen_height:
+            self.direction.dy *= -1
+            self.y = main_screen_height
 
     def cohesion_force(self, seen_boids: list[Self]) -> Vector:
         if not seen_boids:
@@ -121,23 +134,6 @@ class Boid:
                 barrier_force += (force.dx, force.dy)
 
         return barrier_force * BARRIER_FACTOR
-
-    def wall_force(self) -> Vector:
-
-        left_dist = self.x
-        right_dist = main_screen_width - self.x
-        top_dist = self.y
-        bottom_dist = main_screen_height - self.y
-
-        left_mult = max(SIGHT_DISTANCE - left_dist, 0)
-        right_mult = max(SIGHT_DISTANCE - right_dist, 0)
-        top_mult = max(SIGHT_DISTANCE - top_dist, 0)
-        bottom_mult = max(SIGHT_DISTANCE - bottom_dist, 0)
-
-        desired_direction = Vector(left_mult - right_mult, top_mult - bottom_mult)
-        desired_direction = Vector(right_mult - left_mult, bottom_mult - top_mult)
-        wall_force = desired_direction - self.direction
-        return wall_force * WALL_FACTOR
 
     def find_flock_direction(self, all_boids: list[Self], barriers: list[Balloon], dt: float):
 
