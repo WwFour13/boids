@@ -31,7 +31,7 @@ COHESION_FACTOR = 0.5
 SEPARATION_FACTOR = 1.0
 ALIGNMENT_FACTOR = 1.0
 WALL_FACTOR = 0.0
-BARRIER_FACTOR = 10
+BARRIER_FACTOR = 5.0
 
 
 class Boid:
@@ -140,26 +140,26 @@ class Boid:
         return wall_force * WALL_FACTOR
 
     def find_flock_direction(self, all_boids: list[Self], barriers: list[Balloon], dt: float):
+
+        if random.random() < VARIATION_PERCENTAGE_PER_SECOND * dt:
+            self.variate()
+
+        force = Vector()
+        force += self.barrier_force(barriers)
+
         seen_boids = [boid for boid in all_boids
                       if math.dist(self.get_coordinates(), boid.get_coordinates()) < SIGHT_DISTANCE
                       and boid != self]
 
-        if not seen_boids:
-            return
-
-        force = Vector()
         force += self.alignment_force(seen_boids)
         force += self.cohesion_force(seen_boids)
         force += self.separation_force(seen_boids)
-        force += self.barrier_force(barriers)
+
         force.clamp_magnitude(MAX_FORCE)
 
         self.direction += force
         self.direction *= ACCELERATION_FACTOR * dt
         self.direction.clamp_magnitude(MAX_SPEED)
-
-        if random.random() < VARIATION_PERCENTAGE_PER_SECOND * dt:
-            self.variate()
 
     def variate(self):
         random_angle_variation = random.uniform(-MAX_VARIATION, MAX_VARIATION)
