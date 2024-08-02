@@ -1,7 +1,7 @@
 import colorsys
 
-color_strength = 30.0  # S-value ranging 0-100
-color_brightness = 70.0  # V-value ranging 0-100
+color_strength = 30.0  # S-value ranging 0-100 lower values fades to white
+color_brightness = 80.0  # V-value ranging 0-100 lower values fades to black
 loop_time_seconds = 25.0
 
 

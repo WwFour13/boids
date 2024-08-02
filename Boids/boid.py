@@ -114,7 +114,7 @@ class Boid:
                     < SIGHT_DISTANCE):
                 weight = (SIGHT_DISTANCE - dist) ** 2
                 force = Vector()
-                dx, dy = bar.x - self.x, bar.y - self.y
+                dx, dy = self.x - bar.x, bar.y - self.y
                 force.set(dx, dy)
                 force.set_magnitude(weight)
 
