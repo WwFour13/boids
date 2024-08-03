@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="barrier force horizontal flip">
+    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="wall barriers">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/boid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/boid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/main.py" afterDir="false" />
@@ -70,18 +70,6 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;ai.codium.settings.CodiumSettingsConfigurable&quot;
   }
 }</component>
-  <component name="QodanaHighlightedReportService">
-    <option name="localRunNotPublishedPersistedInfo">
-      <LocalReportPersistedInfo>
-        <option name="path" value="C:\Users\tavgu\AppData\Local\Temp\qodana_output\qodana.sarif.json" />
-        <option name="reportGuid" value="635093a5-2db2-48fe-b4d7-88e44feeea37" />
-        <option name="reportName" value="games/qodana/2024-08-02" />
-      </LocalReportPersistedInfo>
-    </option>
-  </component>
-  <component name="QodanaIsSelectedPersistenceService">
-    <option name="selectedOrLoading" value="true" />
-  </component>
   <component name="QodanaReportsService">
     <option name="descriptions">
       <ReportDescription localRun="true" path="C:\Users\tavgu\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="635093a5-2db2-48fe-b4d7-88e44feeea37" reportId="games/qodana/2024-08-02" />
@@ -312,7 +300,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722618719732</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="wall barriers">
+      <option name="closed" value="true" />
+      <created>1722638110604</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1722638110604</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -347,6 +343,7 @@
     <MESSAGE value="barriers editable" />
     <MESSAGE value="barrier force" />
     <MESSAGE value="barrier force horizontal flip" />
-    <option name="LAST_COMMIT_MESSAGE" value="barrier force horizontal flip" />
+    <MESSAGE value="wall barriers" />
+    <option name="LAST_COMMIT_MESSAGE" value="wall barriers" />
   </component>
 </project>

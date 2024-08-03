@@ -10,8 +10,8 @@ from vector import Vector
 from typing import Self
 
 SIZE = 30
-SIGHT_DISTANCE = 90
-PERSONAL_SPACE = 60
+SIGHT_DISTANCE = 80
+PERSONAL_SPACE = 25
 
 MAX_SPEED = 120  # per second
 MAX_FORCE = 20
@@ -25,11 +25,13 @@ IMAGE = pygame.transform.flip(
                            (SIZE, SIZE)),
     True,
     False)
-SIGHT_COLOR = (175, 255, 171)
 
-COHESION_FACTOR = 0.5
-SEPARATION_FACTOR = 1.0
-ALIGNMENT_FACTOR = 1.0
+SIGHT_COLOR = (175, 255, 171)
+PERSONAL_SPACE_COLOR = (255, 142, 140)
+
+COHESION_FACTOR = 1.0
+SEPARATION_FACTOR = 2.0
+ALIGNMENT_FACTOR = 1.5
 WALL_FACTOR = 0.0
 BARRIER_FACTOR = 50000.0
 
@@ -41,6 +43,7 @@ class Boid:
                  direction=Vector(), ):
         self.image = IMAGE
         self.sight_color = SIGHT_COLOR
+        self.personal_space_color = PERSONAL_SPACE_COLOR
         self.x: float = x
         self.y: float = y
         self.direction: Vector = direction
@@ -180,3 +183,6 @@ class Boid:
 
     def draw_sight(self):
         pygame.draw.circle(main_screen, self.sight_color, self.get_coordinates(), SIGHT_DISTANCE)
+
+    def draw_personal_space(self):
+        pygame.draw.circle(main_screen, self.personal_space_color, self.get_coordinates(), PERSONAL_SPACE)

@@ -61,12 +61,12 @@ def add_boids():
 
 def add_wall_barriers():
     for x in range(0, main_screen_width, wall_barrier_separation):
-        barriers.append(Balloon(x=x, y=0, pop=False, radius=wall_barrier_separation))
-        barriers.append(Balloon(x=x, y=main_screen_height, pop=False, radius=wall_barrier_separation))
+        barriers.append(Balloon(x=x, y=-wall_barrier_separation, pop=False, radius=wall_barrier_separation))
+        barriers.append(Balloon(x=x, y=main_screen_height+wall_barrier_separation, pop=False, radius=wall_barrier_separation))
 
     for y in range(0, main_screen_height, wall_barrier_separation):
-        barriers.append(Balloon(x=0, y=y, pop=False, radius=wall_barrier_separation))
-        barriers.append(Balloon(x=main_screen_width, y=y, pop=False, radius=wall_barrier_separation))
+        barriers.append(Balloon(x=-wall_barrier_separation, y=y, pop=False, radius=wall_barrier_separation))
+        barriers.append(Balloon(x=main_screen_width+wall_barrier_separation, y=y, pop=False, radius=wall_barrier_separation))
 
 
 def main():
@@ -125,7 +125,9 @@ def main():
             boid.find_flock_direction(boids, barriers, dt)
         for boid in boids:
             boid.move(dt)
-            boid.draw_sight()
+            #boid.draw_sight()
+        #for boid in boids:
+            #boid.draw_personal_space()
         for bar in barriers:
             bar.draw()
         for boid in boids:
