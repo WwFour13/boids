@@ -125,7 +125,7 @@ def main():
             boid.find_flock_direction(boids, barriers, dt)
         for boid in boids:
             boid.move(dt)
-            #boid.draw_sight()
+            boid.draw_sight()
         #for boid in boids:
             #boid.draw_personal_space()
         for bar in barriers:

@@ -30,10 +30,9 @@ SIGHT_COLOR = (175, 255, 171)
 PERSONAL_SPACE_COLOR = (255, 142, 140)
 
 COHESION_FACTOR = 1.0
-SEPARATION_FACTOR = 2.0
+SEPARATION_FACTOR = 20.0
 ALIGNMENT_FACTOR = 1.5
-WALL_FACTOR = 0.0
-BARRIER_FACTOR = 50000.0
+BARRIER_FACTOR = 500.0
 
 
 class Boid:
@@ -93,7 +92,7 @@ class Boid:
 
         avg_x = sum([boid.x for boid in seen_boids]) / len(seen_boids)
         avg_y = sum([boid.y for boid in seen_boids]) / len(seen_boids)
-        to_average_position = Vector(avg_x - self.x, avg_y - self.y)
+        to_average_position = Vector(avg_x - self.x, self.y - avg_y)
         cohesion_force = to_average_position - self.direction
         return cohesion_force * COHESION_FACTOR
 
