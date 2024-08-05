@@ -33,7 +33,7 @@ BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
 
-BOID_COUNT = 100
+BOID_COUNT = 30
 boids: list[Boid] = []
 
 barrier_pop_key_binds = {
@@ -62,11 +62,13 @@ def add_boids():
 def add_wall_barriers():
     for x in range(0, main_screen_width, wall_barrier_separation):
         barriers.append(Balloon(x=x, y=-wall_barrier_separation, pop=False, radius=wall_barrier_separation))
-        barriers.append(Balloon(x=x, y=main_screen_height+wall_barrier_separation, pop=False, radius=wall_barrier_separation))
+        barriers.append(Balloon(x=x, y=main_screen_height+wall_barrier_separation,
+                                pop=False, radius=wall_barrier_separation))
 
     for y in range(0, main_screen_height, wall_barrier_separation):
         barriers.append(Balloon(x=-wall_barrier_separation, y=y, pop=False, radius=wall_barrier_separation))
-        barriers.append(Balloon(x=main_screen_width+wall_barrier_separation, y=y, pop=False, radius=wall_barrier_separation))
+        barriers.append(Balloon(x=main_screen_width+wall_barrier_separation, y=y,
+                                pop=False, radius=wall_barrier_separation))
 
 
 def main():

@@ -43,4 +43,3 @@ def circular_mean(angles, is_degrees=True):
     mean_angle_deg = math.degrees(mean_angle_rad) % 360
 
     return mean_angle_deg
-
