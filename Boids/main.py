@@ -1,15 +1,13 @@
-from typing import Any
-
 import sys
 
 import pygame
-from pygame.locals import MOUSEBUTTONDOWN, MOUSEBUTTONUP, KEYDOWN
+from pygame.locals import MOUSEBUTTONDOWN, MOUSEBUTTONUP, KEYDOWN, KEYUP
 
 from surfaces import main_screen, main_screen_width, main_screen_height
 
 from boid import Boid
 from boid import MAX_SPEED
-from balloon import Balloon
+from balloon import Balloon, Barrier, Cloud
 from vector import Vector
 
 import random
@@ -36,13 +34,22 @@ YELLOW = (255, 255, 0)
 BOID_COUNT = 30
 boids: list[Boid] = []
 
-barrier_pop_key_binds = {
-    1: True,  # This is the left mouse button. We just need to remember that for some reason...
-    3: False,  # This is the right mouse button. 2 is middle,
-}
-is_growing = False
-barriers: list[Balloon] = []
 wall_barrier_separation = 10
+barriers: list[Barrier] = []
+
+clouds: list[Cloud] = []
+
+current_balloon: Balloon | None = None
+last_key = None
+
+default_bind = (lambda x, y: barriers.append(Barrier(x=x, y=y, pop=True)), barriers)
+key_binds = {
+    pygame.K_c: (lambda x, y: clouds.append(Cloud(x=x, y=y)), clouds),
+    pygame.K_b: (lambda x, y: boids.append(Boid(x=x, y=y)), None),
+    pygame.K_p: (lambda x, y: barriers.append(Barrier(x=x, y=y, pop=False)), barriers),
+    pygame.K_BACKSPACE: (lambda x, y: remove_element((x, y)), None),
+
+}
 
 
 def add_boids():
@@ -61,18 +68,36 @@ def add_boids():
 
 def add_wall_barriers():
     for x in range(0, main_screen_width, wall_barrier_separation):
-        barriers.append(Balloon(x=x, y=-wall_barrier_separation, pop=False, radius=wall_barrier_separation))
-        barriers.append(Balloon(x=x, y=main_screen_height+wall_barrier_separation,
+        barriers.append(Barrier(x=x, y=-wall_barrier_separation, pop=False, radius=wall_barrier_separation))
+        barriers.append(Barrier(x=x, y=main_screen_height + wall_barrier_separation,
                                 pop=False, radius=wall_barrier_separation))
 
     for y in range(0, main_screen_height, wall_barrier_separation):
-        barriers.append(Balloon(x=-wall_barrier_separation, y=y, pop=False, radius=wall_barrier_separation))
-        barriers.append(Balloon(x=main_screen_width+wall_barrier_separation, y=y,
+        barriers.append(Barrier(x=-wall_barrier_separation, y=y, pop=False, radius=wall_barrier_separation))
+        barriers.append(Barrier(x=main_screen_width + wall_barrier_separation, y=y,
                                 pop=False, radius=wall_barrier_separation))
 
 
+def remove_element(mouse_pos: tuple[int, int]):
+    x, y = mouse_pos
+    for bar in barriers:
+        if bar.intersects((x, y)):
+            barriers.remove(bar)
+            return
+
+    for cloud in clouds:
+        if cloud.intersects((x, y)):
+            clouds.remove(cloud)
+            return
+
+    for boid in boids:
+        if boid.in_personal_space((x, y)):
+            boids.remove(boid)
+            return
+
+
 def main():
-    global run_time_seconds, is_growing
+    global run_time_seconds, current_balloon, last_key, barriers, clouds
 
     add_boids()
     add_wall_barriers()
@@ -87,53 +112,50 @@ def main():
                 sys.exit()
 
             if event.type == KEYDOWN:
-                pass
+                last_key = event.key
+
+            if event.type == KEYUP:
+                if event.key == last_key:
+                    last_key = None
 
             if event.type == MOUSEBUTTONDOWN:
-                if event.button in barrier_pop_key_binds:
-                    barriers.append(Balloon(x=event.pos[0],
-                                            y=event.pos[1],
-                                            pop=barrier_pop_key_binds[event.button],
-                                            ))
-                    is_growing = True
+
+                action, holder = key_binds.get(last_key, default_bind)
+                x, y = pygame.mouse.get_pos()
+                action(x, y)
+                if holder is not None:
+                    current_balloon = holder[-1]
 
             if event.type == MOUSEBUTTONUP:
-
-                if not barriers:
-                    raise Exception("No barriers to pop")
-
-                current_barrier = barriers[-1]
-                is_growing = False
-
-                if current_barrier.radius < current_barrier.MIN_RADIUS:
-                    barriers.remove(current_barrier)
-                    x, y = pygame.mouse.get_pos()
-                    for bar in barriers:
-                        if bar.intersects((x, y)):
-                            barriers.remove(bar)
-                            break
-
-                elif current_barrier.pop:
-                    barriers.remove(current_barrier)
+                current_balloon = None
 
         rgb = get_cyclical_rgb(run_time_seconds)
         main_screen.fill(rgb)
 
-        if is_growing:
-            barriers[-1].set_coordinates((pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]))
-            barriers[-1].expand(dt)
+        if current_balloon is not None:
+            current_balloon.set_coordinates((pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]))
+            current_balloon.expand(dt)
 
         for boid in boids:
             boid.find_flock_direction(boids, barriers, dt)
         for boid in boids:
             boid.move(dt)
             boid.draw_sight()
-        #for boid in boids:
-            #boid.draw_personal_space()
+
+        if current_balloon is None:
+            for i in range(len(barriers) - 1, -1, -1):
+                bar = barriers[i]
+                if bar.pop or bar.radius < bar.MIN_RADIUS:
+                    del barriers[i]
+
         for bar in barriers:
             bar.draw()
         for boid in boids:
             boid.draw()
+
+        for cloud in clouds:
+            cloud.move(dt)
+            cloud.draw()
 
         pygame.display.flip()
 

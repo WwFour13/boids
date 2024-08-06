@@ -5,7 +5,7 @@ from surfaces import main_screen, main_screen_width, main_screen_height
 import math
 import random
 import angles
-from balloon import Balloon
+from balloon import Barrier
 from vector import Vector
 from typing import Self
 
@@ -66,6 +66,9 @@ class Boid:
     def get_coordinates(self):
         return self.x, self.y
 
+    def in_personal_space(self, other: tuple) -> bool:
+        return math.dist((self.x, self.y), other) < PERSONAL_SPACE
+
     def move(self, dt: float):
         self.x += self.direction.dx * dt
         self.y -= self.direction.dy * dt
@@ -120,7 +123,7 @@ class Boid:
         separation_force = away_from_average - self.direction
         return separation_force * SEPARATION_FACTOR
 
-    def barrier_force(self, barriers: list[Balloon]) -> Vector:
+    def barrier_force(self, barriers: list[Barrier]) -> Vector:
         barrier_force = Vector(0, 0)
 
         for bar in barriers:
@@ -137,7 +140,7 @@ class Boid:
 
         return barrier_force * BARRIER_FACTOR
 
-    def find_flock_direction(self, all_boids: list[Self], barriers: list[Balloon], dt: float):
+    def find_flock_direction(self, all_boids: list[Self], barriers: list[Barrier], dt: float):
 
         if random.random() < VARIATION_PERCENTAGE_PER_SECOND * dt:
             self.variate()
