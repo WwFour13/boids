@@ -83,8 +83,13 @@ class Cloud(Balloon):
         self.x %= main_screen_width
         self.y %= main_screen_height
 
-
-
     def draw(self):
-        self.image = pygame.transform.scale(self.IMAGE, (self.radius * 2, self.radius * 2))
-        main_screen.blit(self.image, (self.x - self.radius, self.y - self.radius))
+
+        if self.radius == 0:
+            return
+
+        scale_factor = (self.radius * 2) / min(self.IMAGE.get_width(), self.IMAGE.get_height())
+        w = int(self.IMAGE.get_width() * scale_factor)
+        h = int(self.IMAGE.get_height() * scale_factor)
+        self.image = pygame.transform.scale(self.IMAGE, (w, h))
+        main_screen.blit(self.image, (self.x - (w / 2), self.y - (h / 2)))
