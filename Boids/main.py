@@ -148,6 +148,11 @@ def main():
                 if bar.pop or bar.radius < bar.MIN_RADIUS:
                     del barriers[i]
 
+            for i in range(len(clouds) - 1, -1, -1):
+                cloud = clouds[i]
+                if cloud.radius < cloud.MIN_RADIUS:
+                    del clouds[i]
+
         for bar in barriers:
             bar.draw()
         for boid in boids:
