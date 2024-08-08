@@ -159,7 +159,7 @@ def main():
             boid.draw()
 
         for cloud in clouds:
-            cloud.move(dt)
+            cloud.move(dt, run_time_seconds)
             cloud.draw()
 
         pygame.display.flip()

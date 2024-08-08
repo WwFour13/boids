@@ -30,7 +30,7 @@ SIGHT_COLOR = (175, 255, 171)
 PERSONAL_SPACE_COLOR = (255, 142, 140)
 
 COHESION_FACTOR = 1.0
-SEPARATION_FACTOR = 20.0
+SEPARATION_FACTOR = 10.0
 ALIGNMENT_FACTOR = 1.5
 BARRIER_FACTOR = 500.0
 
@@ -93,8 +93,7 @@ class Boid:
         if not seen_boids:
             return Vector(0, 0)
 
-        avg_x = sum([boid.x for boid in seen_boids]) / len(seen_boids)
-        avg_y = sum([boid.y for boid in seen_boids]) / len(seen_boids)
+        avg_x, avg_y = self.average_coordinates(seen_boids)
         to_average_position = Vector(avg_x - self.x, self.y - avg_y)
         cohesion_force = to_average_position - self.direction
         return cohesion_force * COHESION_FACTOR
@@ -117,10 +116,7 @@ class Boid:
         if not personal_boids:
             return Vector(0, 0)
 
-        avg_x, avg_y = self.average_coordinates(personal_boids)
-        to_average_position = Vector(avg_x - self.x, avg_y - self.y)
-        away_from_average = to_average_position.get_opposite()
-        separation_force = away_from_average - self.direction
+        separation_force = self.cohesion_force(personal_boids).get_opposite()
         return separation_force * SEPARATION_FACTOR
 
     def barrier_force(self, barriers: list[Barrier]) -> Vector:
@@ -184,7 +180,11 @@ class Boid:
         main_screen.blit(image, (left, top))
 
     def draw_sight(self):
-        pygame.draw.circle(main_screen, self.sight_color, self.get_coordinates(), SIGHT_DISTANCE)
+
+        circle = pygame.Surface((SIGHT_DISTANCE * 2, SIGHT_DISTANCE * 2), pygame.SRCALPHA)
+        pygame.draw.circle(circle, color=self.sight_color, center=(SIGHT_DISTANCE, SIGHT_DISTANCE), radius=SIGHT_DISTANCE)
+        circle.set_alpha(50)
+        main_screen.blit(circle, (self.x - SIGHT_DISTANCE, self.y - SIGHT_DISTANCE))
 
     def draw_personal_space(self):
         pygame.draw.circle(main_screen, self.personal_space_color, self.get_coordinates(), PERSONAL_SPACE)
