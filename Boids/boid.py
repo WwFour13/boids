@@ -182,7 +182,13 @@ class Boid:
     def draw_sight(self):
 
         circle = pygame.Surface((SIGHT_DISTANCE * 2, SIGHT_DISTANCE * 2), pygame.SRCALPHA)
-        pygame.draw.circle(circle, color=self.sight_color, center=(SIGHT_DISTANCE, SIGHT_DISTANCE), radius=SIGHT_DISTANCE)
+        (pygame.draw.circle
+            (
+                circle,
+                color=self.sight_color,
+                center=(SIGHT_DISTANCE, SIGHT_DISTANCE),
+                radius=SIGHT_DISTANCE
+            ))
         circle.set_alpha(50)
         main_screen.blit(circle, (self.x - SIGHT_DISTANCE, self.y - SIGHT_DISTANCE))
 

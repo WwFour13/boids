@@ -29,6 +29,9 @@ def circular_mean(angles, is_degrees=True):
     if not angles:
         raise ValueError("Input list of angles cannot be empty")
 
+    if is_degrees:
+        angles = [math.radians(angle) for angle in angles]
+
     # Convert angles to radians
     radians = [math.radians(angle) for angle in angles]
 
@@ -36,7 +39,7 @@ def circular_mean(angles, is_degrees=True):
     sum_cos = sum(math.cos(angle) for angle in radians)
     sum_sin = sum(math.sin(angle) for angle in radians)
 
-    # Calculate the mean angle in radians using arctangent of means
+    # Calculate the mean angle in radians using arc-tangent of means
     mean_angle_rad = math.atan2(sum_sin, sum_cos)
 
     # Convert back to degrees and ensure between 0 and 360
