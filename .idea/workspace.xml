@@ -4,14 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="">
+    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="translucency and cloud movement (separation bug fix)">
+      <change afterPath="$PROJECT_DIR$/Boids/sprites/Untitled.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Boids/sprites/arrow_white_center.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Boids/sprites/arrow_white_center_2.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/games.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/games.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boids/balloon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/balloon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Boids/background.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/coloring.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/boid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/boid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boids/sprites/cloud.png" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/sprites/cloud.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,30 +59,38 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2jBBUjReQGywl04ie2I6ydoAfxz" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.background.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/dev/games&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;ai.codium.settings.CodiumSettingsConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Python.background.executor": "Run",
+    "Python.main (1).executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/dev/games",
+    "settings.editor.selected.configurable": "ai.codium.settings.CodiumSettingsConfigurable"
   }
-}</component>
+}]]></component>
+  <component name="QodanaReportsService">
+    <option name="descriptions">
+      <ReportDescription localRun="true" path="C:\Users\tavgu\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="e87aa54c-4574-435b-8d10-2ac34ca6d359" reportId="games/qodana/2024-08-07" />
+    </option>
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\dev\games\Snake" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
-    <configuration name="background" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="coloring" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="games" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -93,7 +103,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Boids/background.py" />
+      <option name="SCRIPT_NAME" value="C:\dev\games\Boids\coloring.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -133,6 +143,7 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Boids" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -150,14 +161,14 @@
       <list>
         <item itemvalue="Python.main" />
         <item itemvalue="Python.main (1)" />
-        <item itemvalue="Python.background" />
+        <item itemvalue="Python.coloring" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-975db3bf15a3-31b6be0877a2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.18034.82" />
+        <option value="bundled-python-sdk-eebebe6c2be4-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.15325.20" />
       </set>
     </attachedChunks>
   </component>
@@ -322,7 +333,23 @@
       <option name="project" value="LOCAL" />
       <updated>1722721675260</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="translucency and cloud movement (separation bug fix)">
+      <option name="closed" value="true" />
+      <created>1723077676006</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1723077676006</updated>
+    </task>
+    <task id="LOCAL-00021" summary="translucency and cloud movement (separation bug fix)">
+      <option name="closed" value="true" />
+      <created>1723078024152</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1723078024152</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -337,6 +364,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <ignored-roots>
       <path value="$PROJECT_DIR$/SnakeGame" />
     </ignored-roots>
@@ -360,6 +388,7 @@
     <MESSAGE value="wall barriers" />
     <MESSAGE value="improved visuals" />
     <MESSAGE value="bug fixs and cleanup" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug fixs and cleanup" />
+    <MESSAGE value="translucency and cloud movement (separation bug fix)" />
+    <option name="LAST_COMMIT_MESSAGE" value="translucency and cloud movement (separation bug fix)" />
   </component>
 </project>

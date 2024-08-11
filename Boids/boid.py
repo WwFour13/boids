@@ -1,10 +1,12 @@
 import pygame
 
+import coloring
 from surfaces import main_screen, main_screen_width, main_screen_height
 
 import math
 import random
 import angles
+from coloring import interpolate_color, replace_color
 from balloon import Barrier
 from vector import Vector
 from typing import Self
@@ -21,10 +23,18 @@ MAX_VARIATION = math.radians(50)
 VARIATION_PERCENTAGE_PER_SECOND = 0.5
 
 IMAGE = pygame.transform.flip(
-    pygame.transform.scale(pygame.image.load("sprites/arrow.png"),
+    pygame.transform.scale(pygame.image.load("sprites/arrow_white_center.png"),
                            (SIZE, SIZE)),
     True,
     False)
+GRADIENT_COLORING = True
+
+REPLACE_COLOR = (255, 255, 255)
+
+TARGET_NEIGHBOUR_COUNT = 7
+TOGETHER_COLOR = (84, 135, 229)
+ALONE_COLOR = (216, 26, 172)
+
 
 SIGHT_COLOR = (175, 255, 171)
 PERSONAL_SPACE_COLOR = (255, 142, 140)
@@ -40,9 +50,13 @@ class Boid:
                  x=main_screen_width / 2,
                  y=main_screen_height / 2,
                  direction=Vector(), ):
+
         self.image = IMAGE
         self.sight_color = SIGHT_COLOR
         self.personal_space_color = PERSONAL_SPACE_COLOR
+
+        self.neighbors_count = 0
+
         self.x: float = x
         self.y: float = y
         self.direction: Vector = direction
@@ -148,6 +162,8 @@ class Boid:
                       if math.dist(self.get_coordinates(), boid.get_coordinates()) < SIGHT_DISTANCE
                       and boid != self]
 
+        self.neighbors_count = len(seen_boids)
+
         force += self.alignment_force(seen_boids)
         force += self.cohesion_force(seen_boids)
         force += self.separation_force(seen_boids)
@@ -171,6 +187,14 @@ class Boid:
         else:
             image = pygame.transform.flip(
                 pygame.transform.rotate(IMAGE, 180 - math.degrees(rad)), True, False)
+
+        if GRADIENT_COLORING:
+
+            neighbor_percentage = min((self.neighbors_count / TARGET_NEIGHBOUR_COUNT), 1)
+            color = coloring.interpolate_color(ALONE_COLOR, TOGETHER_COLOR, neighbor_percentage)
+            colored_image = coloring.replace_color(image, old_color=REPLACE_COLOR, new_color=color)
+
+            image = colored_image
 
         w = image.get_width()
         h = image.get_height()

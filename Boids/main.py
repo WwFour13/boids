@@ -12,9 +12,9 @@ from vector import Vector
 
 import random
 import math
-from background import get_cyclical_rgb
+from coloring import get_cyclical_rgb
 
-FPS = 30
+FPS = 50
 dt = 1 / FPS
 run_time_seconds = 0.0
 
@@ -96,6 +96,12 @@ def remove_element(mouse_pos: tuple[int, int]):
             return
 
 
+def same_instance_filter(x: list, remove_condition: callable):
+    for i in range(len(x) - 1, -1, -1):
+        if remove_condition(x[i]):
+            del x[i]
+
+
 def main():
     global run_time_seconds, current_balloon, last_key, barriers, clouds
 
@@ -143,15 +149,9 @@ def main():
             boid.draw_sight()
 
         if current_balloon is None:
-            for i in range(len(barriers) - 1, -1, -1):
-                bar = barriers[i]
-                if bar.pop or bar.radius < bar.MIN_RADIUS:
-                    del barriers[i]
 
-            for i in range(len(clouds) - 1, -1, -1):
-                cloud = clouds[i]
-                if cloud.radius < cloud.MIN_RADIUS:
-                    del clouds[i]
+            same_instance_filter(barriers, lambda b: b.pop or b.radius < b.MIN_RADIUS)
+            same_instance_filter(clouds, lambda c: c.radius < c.MIN_RADIUS)
 
         for bar in barriers:
             bar.draw()
