@@ -14,7 +14,7 @@ import random
 import math
 from coloring import get_cyclical_rgb
 
-FPS = 50
+FPS = 30
 dt = 1 / FPS
 run_time_seconds = 0.0
 
@@ -147,6 +147,8 @@ def main():
         for boid in boids:
             boid.move(dt)
             boid.draw_sight()
+        # for boid in boids:
+        #     boid.draw_tracers()
 
         if current_balloon is None:
 

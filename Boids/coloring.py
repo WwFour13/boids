@@ -1,6 +1,5 @@
 import colorsys
-
-import pygame
+from functools import lru_cache
 
 
 def normalize_hsv_to_rgb(hsv: tuple[float, float, float]):
@@ -25,6 +24,7 @@ def get_cyclical_rgb(seconds: float):
     return normalize_hsv_to_rgb((h, s, v))
 
 
+@lru_cache(maxsize=None)
 def interpolate_color(color1, color2, t):
     """
   Interpolates between two colors based on a factor t (0-1).
