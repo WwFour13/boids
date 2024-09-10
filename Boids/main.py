@@ -1,20 +1,25 @@
 import sys
 
 import pygame
-from pygame.locals import MOUSEBUTTONDOWN, MOUSEBUTTONUP, KEYDOWN, KEYUP
+# from pygame.locals import MOUSEBUTTONDOWN, MOUSEBUTTONUP, KEYDOWN, KEYUP
 
-from surfaces import main_screen, main_screen_width, main_screen_height
+from surfaces import main_screen
 
 from boid import Boid
-from boid import MAX_SPEED
-from balloon import Balloon, Barrier, Cloud
-from vector import Vector
+from balloon import Barrier, Cloud
 
-import random
-import math
 from coloring import get_cyclical_rgb
 
-FPS = 30
+from IO import update_current_balloon, is_holding_balloon, handle_event
+
+import GameObjects as Go
+
+boids: list[Boid] = Go.boids
+barriers: list[Barrier] = Go.barriers
+clouds: list[Cloud] = Go.clouds
+
+
+FPS = 20
 dt = 1 / FPS
 run_time_seconds = 0.0
 
@@ -31,82 +36,11 @@ BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
 
-BOID_COUNT = 30
-boids: list[Boid] = []
-
-wall_barrier_separation = 10
-barriers: list[Barrier] = []
-
-clouds: list[Cloud] = []
-
-current_balloon: Balloon | None = None
-last_key = None
-
-default_bind = (lambda x, y: barriers.append(Barrier(x=x, y=y, pop=True)), barriers)
-key_binds = {
-    pygame.K_c: (lambda x, y: clouds.append(Cloud(x=x, y=y)), clouds),
-    pygame.K_b: (lambda x, y: boids.append(Boid(x=x, y=y)), None),
-    pygame.K_p: (lambda x, y: barriers.append(Barrier(x=x, y=y, pop=False)), barriers),
-    pygame.K_BACKSPACE: (lambda x, y: remove_element((x, y)), None),
-
-}
-
-
-def add_boids():
-    for _ in range(BOID_COUNT):
-        radians = random.uniform(0, 2 * math.pi) % (2 * math.pi)
-        x = random.uniform(0, main_screen_width)
-        y = random.uniform(0, main_screen_height)
-
-        v = Vector(1, 1)
-        v.set_radians(radians)
-        v.set_magnitude(MAX_SPEED)
-        boids.append(
-            Boid(x=x, y=y, direction=v)
-        )
-
-
-def add_wall_barriers():
-    for x in range(0, main_screen_width, wall_barrier_separation):
-        barriers.append(Barrier(x=x, y=-wall_barrier_separation, pop=False, radius=wall_barrier_separation))
-        barriers.append(Barrier(x=x, y=main_screen_height + wall_barrier_separation,
-                                pop=False, radius=wall_barrier_separation))
-
-    for y in range(0, main_screen_height, wall_barrier_separation):
-        barriers.append(Barrier(x=-wall_barrier_separation, y=y, pop=False, radius=wall_barrier_separation))
-        barriers.append(Barrier(x=main_screen_width + wall_barrier_separation, y=y,
-                                pop=False, radius=wall_barrier_separation))
-
-
-def remove_element(mouse_pos: tuple[int, int]):
-    x, y = mouse_pos
-    for bar in barriers:
-        if bar.intersects((x, y)):
-            barriers.remove(bar)
-            return
-
-    for cloud in clouds:
-        if cloud.intersects((x, y)):
-            clouds.remove(cloud)
-            return
-
-    for boid in boids:
-        if boid.in_personal_space((x, y)):
-            boids.remove(boid)
-            return
-
-
-def same_instance_filter(x: list, remove_condition: callable):
-    for i in range(len(x) - 1, -1, -1):
-        if remove_condition(x[i]):
-            del x[i]
-
 
 def main():
-    global run_time_seconds, current_balloon, last_key, barriers, clouds
+    global run_time_seconds, barriers, clouds
 
-    add_boids()
-    add_wall_barriers()
+    Go.init()
 
     while True:
 
@@ -117,43 +51,20 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-            if event.type == KEYDOWN:
-                last_key = event.key
+            handle_event(event)
 
-            if event.type == KEYUP:
-                if event.key == last_key:
-                    last_key = None
+        main_screen.fill(get_cyclical_rgb(run_time_seconds))
 
-            if event.type == MOUSEBUTTONDOWN:
-
-                action, holder = key_binds.get(last_key, default_bind)
-                x, y = pygame.mouse.get_pos()
-                action(x, y)
-                if holder is not None:
-                    current_balloon = holder[-1]
-
-            if event.type == MOUSEBUTTONUP:
-                current_balloon = None
-
-        rgb = get_cyclical_rgb(run_time_seconds)
-        main_screen.fill(rgb)
-
-        if current_balloon is not None:
-            current_balloon.set_coordinates((pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]))
-            current_balloon.expand(dt)
+        update_current_balloon(dt)
 
         for boid in boids:
             boid.find_flock_direction(boids, barriers, dt)
-        for boid in boids:
             boid.move(dt)
             boid.draw_sight()
-        # for boid in boids:
-        #     boid.draw_tracers()
+            # boid.draw_tracers()
 
-        if current_balloon is None:
-
-            same_instance_filter(barriers, lambda b: b.pop or b.radius < b.MIN_RADIUS)
-            same_instance_filter(clouds, lambda c: c.radius < c.MIN_RADIUS)
+        if not is_holding_balloon():
+            Go.remove_small_balloons()
 
         for bar in barriers:
             bar.draw()

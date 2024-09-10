@@ -11,12 +11,12 @@ from vector import Vector
 from typing import Self
 
 SIZE = 30
-SIGHT_DISTANCE = 80
+SIGHT_DISTANCE = 65
 PERSONAL_SPACE = 25
 
 MAX_SPEED = 120  # per second
-MAX_FORCE = 20
-ACCELERATION_FACTOR = 80
+MAX_FORCE = 40
+ACCELERATION_FACTOR = 800
 
 TRACER_DURATION = 1
 TRACES_PER_SECOND = 8
@@ -36,7 +36,7 @@ SECONDS_PER_COLORING = 1 / COLORING_PER_SECOND
 
 REPLACE_COLOR = (255, 255, 255)
 
-TARGET_NEIGHBOUR_COUNT = 10
+TARGET_NEIGHBOUR_COUNT = 5
 TOGETHER_COLOR = (84, 135, 229)
 ALONE_COLOR = (216, 26, 172)
 
@@ -50,7 +50,7 @@ PERSONAL_SPACE_COLOR = (255, 142, 140)
 COHESION_FACTOR = 1.0
 SEPARATION_FACTOR = 10.0
 ALIGNMENT_FACTOR = 1.5
-BARRIER_FACTOR = 500.0
+BARRIER_FACTOR = 50000.0
 
 
 class Boid:
@@ -91,7 +91,7 @@ class Boid:
     def get_coordinates(self):
         return self.x, self.y
 
-    def in_personal_space(self, other: tuple) -> bool:
+    def intersects(self, other: tuple) -> bool:
         return math.dist((self.x, self.y), other) < PERSONAL_SPACE
 
     def move(self, dt: float):
