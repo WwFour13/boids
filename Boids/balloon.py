@@ -5,29 +5,18 @@ import math
 from surfaces import main_screen, main_screen_width, main_screen_height
 from vector import Vector
 
+from GameObject import GameObject
 
-class Balloon:
-    def __init__(self,
-                 x: float,
-                 y: float,
-                 radius: float = 0.0):
 
+class Balloon(GameObject):
+    def __init__(self, x: float, y: float, radius: float = 0.0):
+
+        super().__init__(x, y)
         self.radius = radius
         self.GROWTH_RATE = 50
 
-        self.y = y
-        self.x = x
-
         self.MIN_RADIUS = min(main_screen_width, main_screen_height) / 80
         self.MAX_RADIUS = min(main_screen_width, main_screen_height) / 15
-
-    def get_coordinates(self) -> tuple[float, float]:
-        return self.x, self.y
-
-    def set_coordinates(self, coordinates):
-        x, y = coordinates
-        self.x = x
-        self.y = y
 
     def get_radius(self):
         return self.radius

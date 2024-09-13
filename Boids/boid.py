@@ -9,6 +9,7 @@ from coloring import interpolate_color, replace_color
 from balloon import Barrier
 from vector import Vector
 from typing import Self
+from GameObject import GameObject
 
 SIZE = 30
 SIGHT_DISTANCE = 65
@@ -53,20 +54,16 @@ ALIGNMENT_FACTOR = 1.5
 BARRIER_FACTOR = 50000.0
 
 
-class Boid:
-    def __init__(self,
-                 x=main_screen_width / 2,
-                 y=main_screen_height / 2,
-                 direction=Vector(), ):
+class Boid(GameObject):
+    def __init__(self, x=main_screen_width / 2, y=main_screen_height / 2, direction=Vector()):
 
+        super().__init__(x, y)
         self.image = IMAGE
 
         self.neighbors_count = 0
         self.color = (0, 0, 0)
         self.coloring_pending_seconds = 0.0
 
-        self.x: float = x
-        self.y: float = y
         self.direction: Vector = direction
 
         self.tracer_points = []
@@ -87,9 +84,6 @@ class Boid:
 
     def get_radians(self):
         return self.direction.get_radians()
-
-    def get_coordinates(self):
-        return self.x, self.y
 
     def intersects(self, other: tuple) -> bool:
         return math.dist((self.x, self.y), other) < PERSONAL_SPACE

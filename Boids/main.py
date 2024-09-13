@@ -19,7 +19,7 @@ barriers: list[Barrier] = Go.barriers
 clouds: list[Cloud] = Go.clouds
 
 
-FPS = 20
+FPS = 24
 dt = 1 / FPS
 run_time_seconds = 0.0
 
