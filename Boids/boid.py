@@ -69,6 +69,9 @@ class Boid(GameObject):
         self.tracer_points = []
         self.tracer_pending_seconds = 0.0
 
+    def __hash__(self):
+        return hash((self.x, self.y, self.direction.dx, self.direction.dy))
+
     @staticmethod
     def average_coordinates(boids):
         x = sum([boid.x for boid in boids]) / len(boids)

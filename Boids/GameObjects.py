@@ -15,28 +15,18 @@ barriers: list[Barrier] = []
 clouds: list[Cloud] = []
 
 
-def remove_element(*mouse_pos: tuple[int, int]):
-    x, y = mouse_pos
-    for bar in barriers:
-        if bar.intersects((x, y)):
-            barriers.remove(bar)
-            return
-
-    for cloud in clouds:
-        if cloud.intersects((x, y)):
-            clouds.remove(cloud)
-            return
-
-    for boid in boids:
-        if boid.intersects((x, y)):
-            boids.remove(boid)
-            return
-
-
 def same_instance_filter(x: list, remove_condition: callable):
     for i in range(len(x) - 1, -1, -1):
         if remove_condition(x[i]):
             del x[i]
+
+
+def remove_element(*mouse_pos: tuple[int, int]):
+
+    x, y = mouse_pos
+    same_instance_filter(barriers, lambda b: b.intersects((x, y)))
+    same_instance_filter(clouds, lambda c: c.intersects((x, y)))
+    same_instance_filter(boids, lambda b: b.intersects((x, y)))
 
 
 def remove_small_balloons():
