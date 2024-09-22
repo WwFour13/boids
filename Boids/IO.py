@@ -4,7 +4,7 @@ from pygame.locals import MOUSEBUTTONDOWN, MOUSEBUTTONUP, KEYDOWN, KEYUP
 from boid import Boid
 from balloon import Balloon, Barrier, Cloud
 
-import GameObjects as Go
+import Chunks as Go
 
 boids: list[Boid] = Go.boids
 barriers: list[Barrier] = Go.barriers

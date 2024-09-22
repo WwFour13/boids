@@ -12,7 +12,7 @@ from coloring import get_cyclical_rgb
 
 from IO import update_current_balloon, is_holding_balloon, handle_event
 
-import GameObjects as Go
+import Chunks as Go
 
 boids: list[Boid] = Go.boids
 barriers: list[Barrier] = Go.barriers
