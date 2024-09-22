@@ -10,9 +10,6 @@ class GameObject:
         self.current_chunk: tuple[float, float] = (x // chunk_size, y // chunk_size)
         self.old_chunk: tuple[float, float] | None = None
 
-    def __hash__(self):
-        raise NotImplemented("Hash method not implemented")
-
     def intersects(self, other_coordinates):
         raise NotImplemented("Intersects method not implemented")
 

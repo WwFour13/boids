@@ -18,6 +18,9 @@ class Balloon(GameObject):
         self.MIN_RADIUS = min(main_screen_width, main_screen_height) / 80
         self.MAX_RADIUS = min(main_screen_width, main_screen_height) / 15
 
+    def __eq__(self, other) -> bool:
+        return self.x == other.x and self.y == other.y and self.radius == other.radius
+
     def __hash__(self):
         return hash((self.x, self.y, self.radius))
 

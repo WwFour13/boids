@@ -69,9 +69,6 @@ class Boid(GameObject):
         self.tracer_points = []
         self.tracer_pending_seconds = 0.0
 
-    def __hash__(self):
-        return hash((self.x, self.y, self.direction.dx, self.direction.dy))
-
     @staticmethod
     def average_coordinates(boids):
         x = sum([boid.x for boid in boids]) / len(boids)
@@ -82,8 +79,16 @@ class Boid(GameObject):
         return f"X: {self.x}, Y: {self.y}, "
 
     def __eq__(self, other: Self) -> bool:
+        return (self.x == other.x and
+                self.y == other.y and
+                self.direction.dx == other.direction.dx and
+                self.direction.dy == other.direction.dy)
 
-        return self.x == other.x and self.y == other.y and self.direction == other.direction
+    def __hash__(self):
+        return hash((self.x,
+                     self.y,
+                     self.direction.dx,
+                     self.direction.dy))
 
     def get_radians(self):
         return self.direction.get_radians()
