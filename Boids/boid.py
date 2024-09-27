@@ -23,15 +23,15 @@ TRACER_DURATION = 1
 TRACES_PER_SECOND = 8
 SECONDS_PER_TRACE = 1 / TRACES_PER_SECOND
 
-MAX_VARIATION = math.radians(50)
+MAX_VARIATION = math.radians(40)
 VARIATION_PERCENTAGE_PER_SECOND = 0.5
 
 IMAGE = pygame.transform.flip(
-    pygame.transform.scale(pygame.image.load("sprites/arrow_white_center.png"),
+    pygame.transform.scale(pygame.image.load("sprites/arrow.png"),
                            (SIZE, SIZE)),
     True,
     False)
-GRADIENT_COLORING = True
+GRADIENT_COLORING = False
 COLORING_PER_SECOND = 4
 SECONDS_PER_COLORING = 1 / COLORING_PER_SECOND
 
@@ -162,20 +162,20 @@ class Boid(GameObject):
 
         return barrier_force * BARRIER_FACTOR
 
-    def find_flock_direction(self, all_boids: list[Self], barriers: list[Barrier], dt: float):
+    def find_flock_direction(self, boids: list[Self], barriers: list[Barrier], dt: float):
 
         if random.random() < VARIATION_PERCENTAGE_PER_SECOND * dt:
             self.variate()
+            #return
 
-        force = Vector()
-        force += self.barrier_force(barriers)
-
-        seen_boids = [boid for boid in all_boids
-                      if math.dist(self.get_coordinates(), boid.get_coordinates()) < SIGHT_DISTANCE
-                      and boid != self]
+        seen_boids = [b for b in boids
+                      if math.dist(self.get_coordinates(), b.get_coordinates()) < SIGHT_DISTANCE
+                      and b != self]
 
         self.neighbors_count = len(seen_boids)
 
+        force = Vector()
+        force += self.barrier_force(barriers)
         force += self.alignment_force(seen_boids)
         force += self.cohesion_force(seen_boids)
         force += self.separation_force(seen_boids)
@@ -200,6 +200,16 @@ class Boid(GameObject):
                 self.coloring_pending_seconds = 0.0
                 neighbor_percentage = min((self.neighbors_count / TARGET_NEIGHBOUR_COUNT), 1)
                 self.color = interpolate_color(ALONE_COLOR, TOGETHER_COLOR, neighbor_percentage)
+
+    def flock_from_chunk(self, chunk: list[GameObject], dt: float):
+        boids = []
+        barriers = []
+        for elem in chunk:
+            if isinstance(elem, Boid):
+                boids.append(elem)
+            if isinstance(elem, Barrier):
+                barriers.append(elem)
+        self.find_flock_direction(boids, barriers, dt)
 
     def variate(self):
         random_angle_variation = random.uniform(-MAX_VARIATION, MAX_VARIATION)

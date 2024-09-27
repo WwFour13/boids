@@ -4,11 +4,11 @@ from pygame.locals import MOUSEBUTTONDOWN, MOUSEBUTTONUP, KEYDOWN, KEYUP
 from boid import Boid
 from balloon import Balloon, Barrier, Cloud
 
-import Chunks as Go
+import GameObjects as GO
 
-boids: list[Boid] = Go.boids
-barriers: list[Barrier] = Go.barriers
-clouds: list[Cloud] = Go.clouds
+boids: list[Boid] = GO.boids
+barriers: list[Barrier] = GO.barriers
+clouds: list[Cloud] = GO.clouds
 
 current_balloon: Balloon | None = None
 last_key = None
@@ -71,7 +71,7 @@ key_binds: dict[int | None, callable] = {
     pygame.K_c: add_cloud,
     pygame.K_b: add_boid,
     pygame.K_p: add_barrier,
-    pygame.K_BACKSPACE: Go.remove_element,
+    pygame.K_BACKSPACE: GO.remove_element,
 }
 
 

@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="__hash__ methods">
+    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="before chunks">
+      <change afterPath="$PROJECT_DIR$/Boids/chunks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Boids/Chunks.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/GameObjects.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/GameObject.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/GameObject.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boids/balloon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/balloon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Boids/IO.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/IO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Boids/boid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/boid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Boids/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -363,7 +366,23 @@
       <option name="project" value="LOCAL" />
       <updated>1726705457603</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="__hash__ methods">
+      <option name="closed" value="true" />
+      <created>1726978290697</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1726978290697</updated>
+    </task>
+    <task id="LOCAL-00026" summary="before chunks">
+      <option name="closed" value="true" />
+      <created>1726978615431</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1726978615431</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -406,6 +425,7 @@
     <MESSAGE value="trail (inefficient)" />
     <MESSAGE value="separated IO and GameObjects.py, simplified key-binds" />
     <MESSAGE value="__hash__ methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="__hash__ methods" />
+    <MESSAGE value="before chunks" />
+    <option name="LAST_COMMIT_MESSAGE" value="before chunks" />
   </component>
 </project>

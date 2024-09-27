@@ -12,11 +12,13 @@ from coloring import get_cyclical_rgb
 
 from IO import update_current_balloon, is_holding_balloon, handle_event
 
-import Chunks as Go
+import GameObjects as GO
 
-boids: list[Boid] = Go.boids
-barriers: list[Barrier] = Go.barriers
-clouds: list[Cloud] = Go.clouds
+import chunks as CH
+
+boids: list[Boid] = GO.boids
+barriers: list[Barrier] = GO.barriers
+clouds: list[Cloud] = GO.clouds
 
 
 FPS = 24
@@ -38,9 +40,10 @@ YELLOW = (255, 255, 0)
 
 
 def main():
-    global run_time_seconds, barriers, clouds
+    global run_time_seconds, boids, barriers, clouds
 
-    Go.init()
+    GO.init()
+    CH.update_chunks_data(*boids, *barriers, *clouds)
 
     while True:
 
@@ -56,15 +59,16 @@ def main():
         main_screen.fill(get_cyclical_rgb(run_time_seconds))
 
         update_current_balloon(dt)
-
-        for boid in boids:
-            boid.find_flock_direction(boids, barriers, dt)
-            boid.move(dt)
-            boid.draw_sight()
-            # boid.draw_tracers()
+        CH.update_chunks_data(*boids, *barriers, *clouds)
 
         if not is_holding_balloon():
-            Go.remove_small_balloons()
+            GO.remove_small_balloons()
+
+        for boid in boids:
+            #boid.find_flock_direction(boids, barriers, dt)
+            boid.flock_from_chunk(CH.get_chunks_data(boid, 1), dt)
+            boid.move(dt)
+            boid.draw_sight()
 
         for bar in barriers:
             bar.draw()

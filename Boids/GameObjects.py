@@ -6,7 +6,7 @@ from boid import Boid, MAX_SPEED
 from balloon import Barrier, Cloud
 from surfaces import main_screen_width, main_screen_height
 
-BOID_COUNT = 20
+BOID_COUNT = 130
 boids: list[Boid] = []
 
 wall_barrier_separation = 10
