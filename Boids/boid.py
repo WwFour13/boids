@@ -32,12 +32,10 @@ IMAGE = pygame.transform.flip(
     True,
     False)
 GRADIENT_COLORING = True
-COLORING_PER_SECOND = 4
-SECONDS_PER_COLORING = 1 / COLORING_PER_SECOND
 
 REPLACE_COLOR = (255, 255, 255)
 
-TARGET_NEIGHBOUR_COUNT = 5
+TARGET_NEIGHBOUR_COUNT = 10
 TOGETHER_COLOR = (84, 135, 229)
 ALONE_COLOR = (216, 26, 172)
 
@@ -194,13 +192,6 @@ class Boid(GameObject):
         if len(self.tracer_points) > TRACER_DURATION * TRACES_PER_SECOND:
             self.tracer_points.pop(0)
 
-        if GRADIENT_COLORING:
-            self.coloring_pending_seconds += dt
-            if self.coloring_pending_seconds > SECONDS_PER_COLORING:
-                self.coloring_pending_seconds = 0.0
-                neighbor_percentage = min((self.neighbors_count / TARGET_NEIGHBOUR_COUNT), 1)
-                self.color = interpolate_color(ALONE_COLOR, TOGETHER_COLOR, neighbor_percentage)
-
     def flock_from_chunk(self, chunk: list[GameObject], dt: float):
         boids = []
         barriers = []
@@ -222,6 +213,8 @@ class Boid(GameObject):
         image = IMAGE
 
         if GRADIENT_COLORING:
+            neighbor_percentage = min((self.neighbors_count / TARGET_NEIGHBOUR_COUNT), 1)
+            self.color = interpolate_color(ALONE_COLOR, TOGETHER_COLOR, neighbor_percentage)
             image = replace_color(image, old_color=REPLACE_COLOR, new_color=self.color)
 
         if quadrant in (1, 4):
