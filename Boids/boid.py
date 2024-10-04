@@ -27,11 +27,11 @@ MAX_VARIATION = math.radians(40)
 VARIATION_PERCENTAGE_PER_SECOND = 0.5
 
 IMAGE = pygame.transform.flip(
-    pygame.transform.scale(pygame.image.load("sprites/arrow.png"),
+    pygame.transform.scale(pygame.image.load("sprites/arrow_white_center.png"),
                            (SIZE, SIZE)),
     True,
     False)
-GRADIENT_COLORING = False
+GRADIENT_COLORING = True
 COLORING_PER_SECOND = 4
 SECONDS_PER_COLORING = 1 / COLORING_PER_SECOND
 
@@ -48,8 +48,8 @@ SIGHT_ALPHA = 50
 SIGHT_COLOR = (175, 255, 171)
 PERSONAL_SPACE_COLOR = (255, 142, 140)
 
-COHESION_FACTOR = 1.0
-SEPARATION_FACTOR = 10.0
+COHESION_FACTOR = 1.5
+SEPARATION_FACTOR = 5.0
 ALIGNMENT_FACTOR = 1.5
 BARRIER_FACTOR = 50000.0
 
@@ -219,14 +219,16 @@ class Boid(GameObject):
         rad = self.get_radians()
         quadrant = angles.get_quadrant(rad)
 
-        if quadrant in (1, 4):
-            image = pygame.transform.rotate(IMAGE, math.degrees(rad))
-        else:
-            image = pygame.transform.flip(
-                pygame.transform.rotate(IMAGE, 180 - math.degrees(rad)), True, False)
+        image = IMAGE
 
         if GRADIENT_COLORING:
             image = replace_color(image, old_color=REPLACE_COLOR, new_color=self.color)
+
+        if quadrant in (1, 4):
+            image = pygame.transform.rotate(image, math.degrees(rad))
+        else:
+            image = pygame.transform.flip(
+                pygame.transform.rotate(image, 180 - math.degrees(rad)), True, False)
 
         w = image.get_width()
         h = image.get_height()

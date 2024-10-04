@@ -41,6 +41,7 @@ def interpolate_color(color1, color2, t):
     return tuple(int(c1 * (1 - t) + c2 * t) for c1, c2 in zip(color1, color2))
 
 
+@lru_cache(maxsize=None)
 def replace_color(image, old_color, new_color):
     image = image.copy()  # Create a copy to avoid modifying the original image
     for x in range(image.get_width()):
