@@ -59,7 +59,7 @@ class Barrier(Balloon):
 
 class Cloud(Balloon):
 
-    IMAGE = pygame.image.load("sprites/cloud.png")
+    IMAGE = pygame.image.load("Boids/sprites/cloud.png")
 
     AMPLITUDE = 1
     CYCLE_SECONDS = 3

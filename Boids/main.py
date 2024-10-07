@@ -10,7 +10,7 @@ from balloon import Barrier, Cloud
 
 from coloring import get_cyclical_rgb
 
-from IO import update_current_balloon, is_holding_balloon, handle_event
+from IO import update_current_balloon, is_holding_balloon, handle_event, buttons
 
 import GameObjects as GO
 
@@ -28,7 +28,7 @@ run_time_seconds = 0.0
 pygame.init()
 
 pygame.display.set_caption("Boids!")  # Set the window caption
-pygame.display.set_icon(pygame.transform.rotozoom(pygame.image.load("sprites/arrow.png"), 135, 2))
+pygame.display.set_icon(pygame.transform.rotozoom(pygame.image.load("Boids/sprites/arrow.png"), 135, 2))
 clock = pygame.time.Clock()  # Clock for controlling frame rate
 
 BLACK = (0, 0, 0)
@@ -78,6 +78,9 @@ def main():
         for cloud in clouds:
             cloud.move(dt, run_time_seconds)
             cloud.draw()
+
+        for b in buttons:
+            b.draw()
 
         pygame.display.flip()
 

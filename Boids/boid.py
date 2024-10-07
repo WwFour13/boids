@@ -27,7 +27,7 @@ MAX_VARIATION = math.radians(40)
 VARIATION_PERCENTAGE_PER_SECOND = 0.5
 
 IMAGE = pygame.transform.flip(
-    pygame.transform.scale(pygame.image.load("sprites/arrow_white_center.png"),
+    pygame.transform.scale(pygame.image.load("Boids/sprites/arrow_white_center.png"),
                            (SIZE, SIZE)),
     True,
     False)
