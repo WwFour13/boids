@@ -48,18 +48,5 @@ def add_boids():
         )
 
 
-def add_wall_barriers():
-    for x in range(0, main_screen_width, wall_barrier_separation):
-        barriers.append(Barrier(x=x, y=-wall_barrier_separation, pop=False, radius=wall_barrier_separation))
-        barriers.append(Barrier(x=x, y=main_screen_height + wall_barrier_separation,
-                                pop=False, radius=wall_barrier_separation))
-
-    for y in range(0, main_screen_height, wall_barrier_separation):
-        barriers.append(Barrier(x=-wall_barrier_separation, y=y, pop=False, radius=wall_barrier_separation))
-        barriers.append(Barrier(x=main_screen_width + wall_barrier_separation, y=y,
-                                pop=False, radius=wall_barrier_separation))
-
-
 def init():
     add_boids()
-    add_wall_barriers()

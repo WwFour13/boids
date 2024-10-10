@@ -160,6 +160,14 @@ class Boid(GameObject):
 
         return barrier_force * BARRIER_FACTOR
 
+    def wall_force(self) -> Vector:
+        force = Vector()
+
+        barriers = [Barrier(self.x, 0, False), Barrier(self.x, main_screen_height, False),
+                    Barrier(0, self.y, False), Barrier(main_screen_width, self.y, False)]
+
+        return self.barrier_force(barriers)
+
     def find_flock_direction(self, boids: list[Self], barriers: list[Barrier], dt: float):
 
         if random.random() < VARIATION_PERCENTAGE_PER_SECOND * dt:
@@ -173,6 +181,8 @@ class Boid(GameObject):
         self.neighbors_count = len(seen_boids)
 
         force = Vector()
+
+        force += self.wall_force()
         force += self.barrier_force(barriers)
         force += self.alignment_force(seen_boids)
         force += self.cohesion_force(seen_boids)
