@@ -56,11 +56,18 @@ class Vector:
     def get_magnitude(self):
         return math.sqrt(self.dx ** 2 + self.dy ** 2)
 
-    def clamp_magnitude(self, cap):
+    def clamp_magnitude(self, cap, min_=0):
+
         if self.get_magnitude() > cap:
             self.set_magnitude(cap)
-        elif self.get_magnitude() < -cap:
-            return self.set_magnitude(-cap)
+        if self.get_magnitude() < -cap:
+            self.set_magnitude(-cap)
+
+        if 0 < self.get_magnitude() < min_:
+            self.set_magnitude(min_)
+        if -min_ < self.get_magnitude() < 0:
+            self.set_magnitude(-min_)
+
 
     def get_opposite(self):
         return Vector(dx=-self.dx, dy=-self.dy)

@@ -11,11 +11,12 @@ from vector import Vector
 from typing import Self
 from GameObject import GameObject
 
-SIZE = 30
-SIGHT_DISTANCE = 65
-PERSONAL_SPACE = 25
+SIZE = 20
+SIGHT_DISTANCE = 55
+PERSONAL_SPACE = 20
 
 MAX_SPEED = 120  # per second
+#MIN_SPEED = 100
 MAX_FORCE = 40
 ACCELERATION_FACTOR = 800
 
@@ -49,7 +50,8 @@ PERSONAL_SPACE_COLOR = (255, 142, 140)
 COHESION_FACTOR = 1.5
 SEPARATION_FACTOR = 5.0
 ALIGNMENT_FACTOR = 1.5
-BARRIER_FACTOR = 50000.0
+BARRIER_FACTOR = 10.0
+WALL_FACTOR = 20.0
 
 
 class Boid(GameObject):
@@ -114,6 +116,17 @@ class Boid(GameObject):
             self.direction.dy *= -1
             self.y = main_screen_height
 
+    def avoidance_scale(self, coordinates: tuple, radius: float = 0) -> Vector:
+        x, y = coordinates
+        force = Vector(0, 0)
+        if dist := (math.dist(self.get_coordinates(), coordinates) - radius) < SIGHT_DISTANCE:
+            weight = (SIGHT_DISTANCE - dist) ** 2
+            force.dx = self.x - x
+            force.dy = y - self.y
+            force.set_magnitude(weight)
+
+        return force
+
     def cohesion_force(self, seen_boids: list[Self]) -> Vector:
         if not seen_boids:
             return Vector(0, 0)
@@ -141,32 +154,23 @@ class Boid(GameObject):
         if not personal_boids:
             return Vector(0, 0)
 
-        separation_force = self.cohesion_force(personal_boids).get_opposite()
+        separation_force = Vector.get_sum([self.avoidance_scale(boid.get_coordinates()) for boid in personal_boids])
         return separation_force * SEPARATION_FACTOR
 
     def barrier_force(self, barriers: list[Barrier]) -> Vector:
-        barrier_force = Vector(0, 0)
 
-        for bar in barriers:
-
-            if dist := (math.dist(self.get_coordinates(), bar.get_coordinates())) - bar.radius < SIGHT_DISTANCE:
-                weight = (SIGHT_DISTANCE - dist) ** 2
-                force = Vector()
-                dx, dy = self.x - bar.x, bar.y - self.y
-                force.set(dx, dy)
-                force.set_magnitude(weight)
-
-                barrier_force += (force.dx, force.dy)
-
+        barrier_force = Vector.get_sum(
+            [self.avoidance_scale(bar.get_coordinates(), bar.get_radius())
+             for bar in barriers])
         return barrier_force * BARRIER_FACTOR
 
     def wall_force(self) -> Vector:
-        force = Vector()
+        walls = [(self.x, 0), (self.x, main_screen_height),
+                 (0, self.y), (main_screen_width, self.y)]
 
-        barriers = [Barrier(self.x, 0, False), Barrier(self.x, main_screen_height, False),
-                    Barrier(0, self.y, False), Barrier(main_screen_width, self.y, False)]
+        wall_force = Vector.get_sum([self.avoidance_scale(wall) for wall in walls])
 
-        return self.barrier_force(barriers)
+        return wall_force * WALL_FACTOR
 
     def find_flock_direction(self, boids: list[Self], barriers: list[Barrier], dt: float):
 
