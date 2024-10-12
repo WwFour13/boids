@@ -80,14 +80,14 @@ key_binds: dict[int | None, callable] = {
 }
 
 buttons = [Button(main_screen_width - 60, main_screen_height - 60, 50, 50,
-                  pygame.image.load("sprites/Untitled.png"),
+                  pygame.image.load("sprites/backspace.png"),
                   key=pygame.K_BACKSPACE),
 
            Button(main_screen_width - 120, main_screen_height - 60, 50, 50,
                   pygame.image.load("sprites/arrow.png"),
                   key=pygame.K_b),
            Button(main_screen_width - 180, main_screen_height - 60, 50, 50,
-                  pygame.image.load("sprites/Untitled.png"),
+                  pygame.image.load("sprites/barrier.png"),
                   key=pygame.K_p),
 
            Button(main_screen_width - 240, main_screen_height - 60, 50, 50,

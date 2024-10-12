@@ -5,6 +5,9 @@ from surfaces import main_screen
 
 
 class Barrier(Balloon):
+
+    IMAGE = pygame.image.load("sprites/barrier.png")
+
     def __init__(self,
                  x: float,
                  y: float,
@@ -20,5 +23,5 @@ class Barrier(Balloon):
         return f"X: {self.x}, Y: {self.y}, Radius: {self.radius}, Pop: {self.pop}"
 
     def draw(self):
-        pygame.draw.circle(main_screen, self.COLOR, (self.x, self.y), self.radius)
-
+        image = pygame.transform.scale(self.IMAGE, (self.radius * 2, self.radius * 2))
+        main_screen.blit(image, (self.x - self.radius, self.y - self.radius))
