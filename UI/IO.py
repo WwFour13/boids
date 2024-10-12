@@ -3,12 +3,14 @@ from pygame.locals import MOUSEBUTTONDOWN, MOUSEBUTTONUP, KEYDOWN, KEYUP
 
 from surfaces import main_screen_width, main_screen_height
 
-from boid import Boid
-from balloon import Balloon, Barrier, Cloud
+from entities.boid import Boid
+from entities.balloon import Balloon
+from entities.barrier import Barrier
+from entities.cloud import Cloud
 
-import GameObjects as GO
+import game_state.objects as GO
 
-from button import Button
+from UI.button import Button
 
 boids: list[Boid] = GO.boids
 barriers: list[Barrier] = GO.barriers
@@ -78,18 +80,18 @@ key_binds: dict[int | None, callable] = {
 }
 
 buttons = [Button(main_screen_width - 60, main_screen_height - 60, 50, 50,
-                  pygame.image.load("Boids/sprites/Untitled.png"),
+                  pygame.image.load("sprites/Untitled.png"),
                   key=pygame.K_BACKSPACE),
 
            Button(main_screen_width - 120, main_screen_height - 60, 50, 50,
-                  pygame.image.load("Boids/sprites/arrow.png"),
+                  pygame.image.load("sprites/arrow.png"),
                   key=pygame.K_b),
            Button(main_screen_width - 180, main_screen_height - 60, 50, 50,
-                  pygame.image.load("Boids/sprites/Untitled.png"),
+                  pygame.image.load("sprites/Untitled.png"),
                   key=pygame.K_p),
 
            Button(main_screen_width - 240, main_screen_height - 60, 50, 50,
-                  pygame.image.load("Boids/sprites/cloud.png"),
+                  pygame.image.load("sprites/cloud.png"),
                   key=pygame.K_c),
            ]
 

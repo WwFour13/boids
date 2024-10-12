@@ -4,21 +4,21 @@ from surfaces import main_screen, main_screen_width, main_screen_height
 
 import math
 import random
-import angles
-from coloring import interpolate_color, replace_color
-from balloon import Barrier
-from vector import Vector
+from calculations import angles
+from calculations.coloring import interpolate_color, replace_color
+from entities.barrier import Barrier
+from calculations.vector import Vector
 from typing import Self
-from GameObject import GameObject
+from entities.entity import Entity
 
 SIZE = 20
 SIGHT_DISTANCE = 55
 PERSONAL_SPACE = 20
 
-MAX_SPEED = 120  # per second
-#MIN_SPEED = 100
+MAX_SPEED = 115  # per second
+MIN_SPEED = 100
 MAX_FORCE = 40
-ACCELERATION_FACTOR = 800
+#ACCELERATION_FACTOR = 800
 
 TRACER_DURATION = 1
 TRACES_PER_SECOND = 8
@@ -28,7 +28,7 @@ MAX_VARIATION = math.radians(40)
 VARIATION_PERCENTAGE_PER_SECOND = 0.5
 
 IMAGE = pygame.transform.flip(
-    pygame.transform.scale(pygame.image.load("Boids/sprites/arrow_white_center.png"),
+    pygame.transform.scale(pygame.image.load("sprites/arrow_white_center.png"),
                            (SIZE, SIZE)),
     True,
     False)
@@ -54,7 +54,7 @@ BARRIER_FACTOR = 10.0
 WALL_FACTOR = 20.0
 
 
-class Boid(GameObject):
+class Boid(Entity):
     def __init__(self, x=main_screen_width / 2, y=main_screen_height / 2, direction=Vector()):
 
         super().__init__(x, y)
@@ -195,8 +195,10 @@ class Boid(GameObject):
         force.clamp_magnitude(MAX_FORCE)
 
         self.direction += force
-        self.direction *= ACCELERATION_FACTOR * dt
-        self.direction.clamp_magnitude(MAX_SPEED)
+        #self.direction *= ACCELERATION_FACTOR * dt
+
+        #self.direction.set_magnitude(MAX_SPEED)
+        self.direction.clamp_magnitude(MAX_SPEED, min_=MIN_SPEED)
 
         self.tracer_pending_seconds += dt
         if self.tracer_pending_seconds > SECONDS_PER_TRACE:
@@ -206,7 +208,7 @@ class Boid(GameObject):
         if len(self.tracer_points) > TRACER_DURATION * TRACES_PER_SECOND:
             self.tracer_points.pop(0)
 
-    def flock_from_chunk(self, chunk: list[GameObject], dt: float):
+    def flock_from_chunk(self, chunk: list[Entity], dt: float):
         boids = []
         barriers = []
         for elem in chunk:

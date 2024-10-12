@@ -1,65 +1,15 @@
-import pygame
-
 import math
 
+import pygame
+
+from calculations.vector import Vector
+from entities.balloon import Balloon
 from surfaces import main_screen, main_screen_width, main_screen_height
-from vector import Vector
-
-from GameObject import GameObject
-
-
-class Balloon(GameObject):
-    def __init__(self, x: float, y: float, radius: float = 0.0):
-
-        super().__init__(x, y)
-        self.radius = radius
-        self.GROWTH_RATE = 50
-
-        self.MIN_RADIUS = min(main_screen_width, main_screen_height) / 80
-        self.MAX_RADIUS = min(main_screen_width, main_screen_height) / 15
-
-    def __eq__(self, other) -> bool:
-        return self.x == other.x and self.y == other.y and self.radius == other.radius
-
-    def __hash__(self):
-        return hash((self.x, self.y, self.radius))
-
-    def get_radius(self):
-        return self.radius
-
-    def intersects(self, other_coordinates):
-        return math.dist(self.get_coordinates(), other_coordinates) < self.radius
-
-    def expand(self, dt):
-        self.radius += self.GROWTH_RATE * dt
-        self.radius = min(self.radius, self.MAX_RADIUS)
-
-    def draw(self):
-        raise NotImplementedError("Draw method not implemented")
-
-
-class Barrier(Balloon):
-    def __init__(self,
-                 x: float,
-                 y: float,
-                 pop: bool,
-                 radius: float = 0.0):
-
-        self.pop = pop
-        self.COLOR = (255, 0, 0)
-
-        super().__init__(x, y, radius)
-
-    def __repr__(self):
-        return f"X: {self.x}, Y: {self.y}, Radius: {self.radius}, Pop: {self.pop}"
-
-    def draw(self):
-        pygame.draw.circle(main_screen, self.COLOR, (self.x, self.y), self.radius)
 
 
 class Cloud(Balloon):
 
-    IMAGE = pygame.image.load("Boids/sprites/cloud.png")
+    IMAGE = pygame.image.load("sprites/cloud.png")
 
     AMPLITUDE = 1
     CYCLE_SECONDS = 3

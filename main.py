@@ -5,16 +5,15 @@ import pygame
 
 from surfaces import main_screen
 
-from boid import Boid
-from balloon import Barrier, Cloud
+from entities.boid import Boid
+from entities.barrier import Barrier
+from entities.cloud import Cloud
 
-from coloring import get_cyclical_rgb
+from calculations.coloring import get_cyclical_rgb
 
-from IO import update_current_balloon, is_holding_balloon, handle_event, buttons
+from UI.IO import update_current_balloon, is_holding_balloon, handle_event, buttons
 
-import GameObjects as GO
-
-import chunks as CH
+from game_state import chunks as CH, objects as GO
 
 boids: list[Boid] = GO.boids
 barriers: list[Barrier] = GO.barriers
@@ -28,7 +27,7 @@ run_time_seconds = 0.0
 pygame.init()
 
 pygame.display.set_caption("Boids!")  # Set the window caption
-pygame.display.set_icon(pygame.transform.rotozoom(pygame.image.load("Boids/sprites/arrow.png"), 135, 2))
+pygame.display.set_icon(pygame.transform.rotozoom(pygame.image.load("sprites/arrow.png"), 135, 2))
 clock = pygame.time.Clock()  # Clock for controlling frame rate
 
 BLACK = (0, 0, 0)

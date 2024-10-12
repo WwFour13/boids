@@ -1,15 +1,15 @@
 import math
 import random
-from vector import Vector
+from calculations.vector import Vector
 
-from boid import Boid, MAX_SPEED
-from balloon import Barrier, Cloud
+from entities.boid import Boid, MAX_SPEED
+from entities.barrier import Barrier
+from entities.cloud import Cloud
 from surfaces import main_screen_width, main_screen_height
 
 BOID_COUNT = 130
 boids: list[Boid] = []
 
-wall_barrier_separation = 10
 barriers: list[Barrier] = []
 
 clouds: list[Cloud] = []

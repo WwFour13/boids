@@ -1,13 +1,13 @@
-from GameObject import GameObject
+from entities.entity import Entity
 
-from boid import SIGHT_DISTANCE
+from entities.boid import SIGHT_DISTANCE
 
 
 CHUNK_SIZE = SIGHT_DISTANCE * 2
 chunk_data = {}
 
 
-def add_to_chunks(*elems: GameObject):
+def add_to_chunks(*elems: Entity):
 
     for elem in elems:
 
@@ -18,7 +18,7 @@ def add_to_chunks(*elems: GameObject):
             chunk_data[elem.current_chunk] = [elem]
 
 
-def update_chunks_data(*elems: GameObject):
+def update_chunks_data(*elems: Entity):
 
     chunk_data.clear()
 
@@ -28,7 +28,7 @@ def update_chunks_data(*elems: GameObject):
         add_to_chunks(elem)
 
 
-def get_chunk_data(elem: GameObject) -> list[GameObject]:
+def get_chunk_data(elem: Entity) -> list[Entity]:
     ret = []
     try:
         ret = chunk_data[elem.current_chunk]
@@ -38,9 +38,9 @@ def get_chunk_data(elem: GameObject) -> list[GameObject]:
     return ret
 
 
-def get_chunks_data(elem: GameObject, radius: int) -> list[GameObject]:
+def get_chunks_data(elem: Entity, radius: int) -> list[Entity]:
 
-    chunks_data: list[GameObject] = []
+    chunks_data: list[Entity] = []
 
     x, y = elem.current_chunk
     for i in range(-radius, radius + 1):

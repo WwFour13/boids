@@ -1,5 +1,5 @@
 
-class GameObject:
+class Entity:
     def __init__(self,
                  x: float,
                  y: float,
