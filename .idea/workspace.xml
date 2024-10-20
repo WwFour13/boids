@@ -4,122 +4,78 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="boid coloring">
-      <change afterPath="$PROJECT_DIR$/Boids/button.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/games.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/boids.iml" afterDir="false" />
+    <list default="true" id="e12f0e32-0049-4035-999e-35c3970cb348" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea_/.idea.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea_/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea_/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea_/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea_/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/boids.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/boids.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boids/IO.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/IO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boids/balloon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/balloon.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boids/boid.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/boid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Boids/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Boids/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/sprites/apple.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/sprites/snake_full.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Snake/sprites/snake_side.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/.idea_/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/.idea_/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/.idea_/TFE.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/.idea_/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/.idea_/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/.idea_/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/.idea_/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/.idea_/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_1024.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_128.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_131072.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_16.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_16384.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_2048.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_256.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_32.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_32768.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_4096.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_512.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_64.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_65536.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_8.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TFE/sprites/sprite_8192.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea_/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea_/Birds.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea_/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea_/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea_/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea_/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea_/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/IO.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/IO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entities/balloon.py" beforeDir="false" afterPath="$PROJECT_DIR$/entities/balloon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entities/boid.py" beforeDir="false" afterPath="$PROJECT_DIR$/entities/boid.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/surfaces.py" beforeDir="false" afterPath="$PROJECT_DIR$/surfaces.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager">
-    <option name="groupingKeys">
-      <option value="directory" />
-      <option value="repository" />
-    </option>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="RESET_MODE" value="KEEP" />
-    <option name="SET_USER_NAME_GLOBALLY" value="false" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;WwFour13&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "WwFour13"
   }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/WwFour13/games.git&quot;,
-    &quot;accountId&quot;: &quot;aa5b62a2-d106-4c69-8722-15b14d44a074&quot;
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/WwFour13/boids",
+    "accountId": "aa5b62a2-d106-4c69-8722-15b14d44a074"
   }
-}</component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
-  <component name="ProjectId" id="2jBBUjReQGywl04ie2I6ydoAfxz" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2nOWQAGyQC75DoPmHv6sFNLyvvH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Python.background.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/dev/boids&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.codeium.AppSettingsConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.barrier.executor": "Run",
+    "Python.boid.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.surfaces.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/dev/boids/main.py",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\dev\games\Snake" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\dev\games\Boids" />
-      <recent name="C:\dev\games" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="coloring" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="games" />
+}]]></component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="boids" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -127,55 +83,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Boids" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\dev\games\Boids\coloring.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="games" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Snake" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Snake/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="games" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Boids" />
+      <option name="SDK_NAME" value="Python 3.12 (boids) (2)" />
+      <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Boids/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -184,13 +97,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.main (1)" />
-        <item itemvalue="Python.coloring" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -202,288 +108,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f4a038bd-067d-46fd-ad7f-33202110cb54" name="Changes" comment="" />
-      <created>1720850607871</created>
+      <changelist id="e12f0e32-0049-4035-999e-35c3970cb348" name="Changes" comment="" />
+      <created>1728844583827</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1720850607871</updated>
+      <updated>1728844583827</updated>
     </task>
-    <task id="LOCAL-00001" summary="background and rename">
-      <option name="closed" value="true" />
-      <created>1720928357340</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1720928357340</updated>
-    </task>
-    <task id="LOCAL-00002" summary="separate boid file">
-      <option name="closed" value="true" />
-      <created>1721008380126</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1721008380126</updated>
-    </task>
-    <task id="LOCAL-00003" summary="cleaned">
-      <option name="closed" value="true" />
-      <created>1721009625849</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1721009625849</updated>
-    </task>
-    <task id="LOCAL-00004" summary="centered after rotations">
-      <option name="closed" value="true" />
-      <created>1721010441050</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1721010441050</updated>
-    </task>
-    <task id="LOCAL-00005" summary="centered after rotations v2">
-      <option name="closed" value="true" />
-      <created>1721011420825</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1721011420825</updated>
-    </task>
-    <task id="LOCAL-00006" summary="sep surface">
-      <option name="closed" value="true" />
-      <created>1721193424917</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1721193424917</updated>
-    </task>
-    <task id="LOCAL-00007" summary="alignment">
-      <option name="closed" value="true" />
-      <created>1721310532196</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1721310532196</updated>
-    </task>
-    <task id="LOCAL-00008" summary="some separation">
-      <option name="closed" value="true" />
-      <created>1721493473827</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1721493473827</updated>
-    </task>
-    <task id="LOCAL-00009" summary="more separation separation">
-      <option name="closed" value="true" />
-      <created>1721643365965</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1721643365965</updated>
-    </task>
-    <task id="LOCAL-00010" summary="before barriers">
-      <option name="closed" value="true" />
-      <created>1721646704866</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1721646704866</updated>
-    </task>
-    <task id="LOCAL-00011" summary="before barriers v2">
-      <option name="closed" value="true" />
-      <created>1721647634956</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1721647634956</updated>
-    </task>
-    <task id="LOCAL-00012" summary="before barriers renaming">
-      <option name="closed" value="true" />
-      <created>1721711741349</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1721711741349</updated>
-    </task>
-    <task id="LOCAL-00013" summary="barriers appear on screen">
-      <option name="closed" value="true" />
-      <created>1721715068026</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1721715068026</updated>
-    </task>
-    <task id="LOCAL-00014" summary="barriers editable">
-      <option name="closed" value="true" />
-      <created>1721752790681</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1721752790681</updated>
-    </task>
-    <task id="LOCAL-00015" summary="barrier force">
-      <option name="closed" value="true" />
-      <created>1721924728398</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1721924728398</updated>
-    </task>
-    <task id="LOCAL-00016" summary="barrier force horizontal flip">
-      <option name="closed" value="true" />
-      <created>1722618719732</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1722618719732</updated>
-    </task>
-    <task id="LOCAL-00017" summary="wall barriers">
-      <option name="closed" value="true" />
-      <created>1722638110604</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1722638110604</updated>
-    </task>
-    <task id="LOCAL-00018" summary="improved visuals">
-      <option name="closed" value="true" />
-      <created>1722699876908</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1722699876908</updated>
-    </task>
-    <task id="LOCAL-00019" summary="bug fixs and cleanup">
-      <option name="closed" value="true" />
-      <created>1722721675260</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1722721675260</updated>
-    </task>
-    <task id="LOCAL-00020" summary="translucency and cloud movement (separation bug fix)">
-      <option name="closed" value="true" />
-      <created>1723077676006</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1723077676006</updated>
-    </task>
-    <task id="LOCAL-00021" summary="translucency and cloud movement (separation bug fix)">
-      <option name="closed" value="true" />
-      <created>1723078024152</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1723078024152</updated>
-    </task>
-    <task id="LOCAL-00022" summary="trail (inefficient)">
-      <option name="closed" value="true" />
-      <created>1723683150459</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1723683150459</updated>
-    </task>
-    <task id="LOCAL-00023" summary="separated IO and GameObjects.py, simplified key-binds">
-      <option name="closed" value="true" />
-      <created>1726001610298</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1726001610298</updated>
-    </task>
-    <task id="LOCAL-00024" summary="__hash__ methods">
-      <option name="closed" value="true" />
-      <created>1726705457603</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1726705457603</updated>
-    </task>
-    <task id="LOCAL-00025" summary="__hash__ methods">
-      <option name="closed" value="true" />
-      <created>1726978290697</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1726978290697</updated>
-    </task>
-    <task id="LOCAL-00026" summary="before chunks">
-      <option name="closed" value="true" />
-      <created>1726978615431</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1726978615431</updated>
-    </task>
-    <task id="LOCAL-00027" summary="chunks">
-      <option name="closed" value="true" />
-      <created>1727481452288</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1727481452288</updated>
-    </task>
-    <task id="LOCAL-00028" summary="boid coloring fix efficiency">
-      <option name="closed" value="true" />
-      <created>1728009509262</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1728009509262</updated>
-    </task>
-    <task id="LOCAL-00029" summary="boid coloring">
-      <option name="closed" value="true" />
-      <created>1728009834896</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1728009834896</updated>
-    </task>
-    <option name="localTasksCounter" value="30" />
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <ignored-roots>
-      <path value="$PROJECT_DIR$/SnakeGame" />
-    </ignored-roots>
-    <MESSAGE value="centered after rotations" />
-    <MESSAGE value="centered after rotations v2" />
-    <MESSAGE value="centered after rotations v3" />
-    <MESSAGE value="sep surface" />
-    <MESSAGE value="alignment" />
-    <MESSAGE value="some separation" />
-    <MESSAGE value="more separation separation" />
-    <MESSAGE value="before barriers" />
-    <MESSAGE value="before barriers v2" />
-    <MESSAGE value="before barriers renaming" />
-    <MESSAGE value="barriers appear on screen" />
-    <MESSAGE value="barriers editable" />
-    <MESSAGE value="barrier force" />
-    <MESSAGE value="barrier force horizontal flip" />
-    <MESSAGE value="wall barriers" />
-    <MESSAGE value="improved visuals" />
-    <MESSAGE value="bug fixs and cleanup" />
-    <MESSAGE value="translucency and cloud movement (separation bug fix)" />
-    <MESSAGE value="trail (inefficient)" />
-    <MESSAGE value="separated IO and GameObjects.py, simplified key-binds" />
-    <MESSAGE value="__hash__ methods" />
-    <MESSAGE value="before chunks" />
-    <MESSAGE value="chunks" />
-    <MESSAGE value="boid coloring fix efficiency" />
-    <MESSAGE value="boid coloring" />
-    <option name="LAST_COMMIT_MESSAGE" value="boid coloring" />
   </component>
 </project>

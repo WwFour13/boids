@@ -8,13 +8,10 @@ from entities.balloon import Balloon
 from entities.barrier import Barrier
 from entities.cloud import Cloud
 
-import game_state.objects as GO
+from game_state.objects import boids, barriers, clouds, remove_element
 
 from UI.button import Button
 
-boids: list[Boid] = GO.boids
-barriers: list[Barrier] = GO.barriers
-clouds: list[Cloud] = GO.clouds
 
 current_balloon: Balloon | None = None
 last_key = None
@@ -76,7 +73,7 @@ key_binds: dict[int | None, callable] = {
     pygame.K_c: add_cloud,
     pygame.K_b: add_boid,
     pygame.K_p: add_barrier,
-    pygame.K_BACKSPACE: GO.remove_element,
+    pygame.K_BACKSPACE: remove_element,
 }
 
 buttons = [Button(main_screen_width - 60, main_screen_height - 60, 50, 50,

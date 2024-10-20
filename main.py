@@ -1,23 +1,15 @@
 import sys
 
 import pygame
-# from pygame.locals import MOUSEBUTTONDOWN, MOUSEBUTTONUP, KEYDOWN, KEYUP
 
 from surfaces import main_screen
-
-from entities.boid import Boid
-from entities.barrier import Barrier
-from entities.cloud import Cloud
 
 from calculations.coloring import get_cyclical_rgb
 
 from UI.IO import update_current_balloon, is_holding_balloon, handle_event, buttons
 
-from game_state import chunks as CH, objects as GO
-
-boids: list[Boid] = GO.boids
-barriers: list[Barrier] = GO.barriers
-clouds: list[Cloud] = GO.clouds
+from game_state import chunks, objects
+from game_state.objects import boids, barriers, clouds
 
 
 FPS = 24
@@ -39,10 +31,10 @@ YELLOW = (255, 255, 0)
 
 
 def main():
-    global run_time_seconds, boids, barriers, clouds
+    global run_time_seconds
 
-    GO.init()
-    CH.update_chunks_data(*boids, *barriers, *clouds)
+    objects.init()
+    chunks.update_chunks_data(*boids, *barriers, *clouds)
 
     while True:
 
@@ -58,14 +50,13 @@ def main():
         main_screen.fill(get_cyclical_rgb(run_time_seconds))
 
         update_current_balloon(dt)
-        CH.update_chunks_data(*boids, *barriers, *clouds)
+        chunks.update_chunks_data(*boids, *barriers, *clouds)
 
         if not is_holding_balloon():
-            GO.remove_small_balloons()
+            objects.remove_small_balloons()
 
         for boid in boids:
-            #boid.find_flock_direction(boids, barriers, dt)
-            boid.flock_from_chunk(CH.get_chunks_data(boid, 1), dt)
+            boid.flock_from_chunk(chunks.get_chunks_data(boid, 1), dt)
             boid.move(dt)
             boid.draw_sight()
 

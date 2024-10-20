@@ -1,9 +1,6 @@
-import pygame
-
 import math
 
-from surfaces import main_screen, main_screen_width, main_screen_height
-from calculations.vector import Vector
+from surfaces import main_screen_width, main_screen_height
 
 from entities.entity import Entity
 

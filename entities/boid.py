@@ -18,7 +18,6 @@ PERSONAL_SPACE = 20
 MAX_SPEED = 115  # per second
 MIN_SPEED = 100
 MAX_FORCE = 40
-#ACCELERATION_FACTOR = 800
 
 TRACER_DURATION = 1
 TRACES_PER_SECOND = 8
@@ -176,7 +175,6 @@ class Boid(Entity):
 
         if random.random() < VARIATION_PERCENTAGE_PER_SECOND * dt:
             self.variate()
-            #return
 
         seen_boids = [b for b in boids
                       if math.dist(self.get_coordinates(), b.get_coordinates()) < SIGHT_DISTANCE
@@ -195,9 +193,7 @@ class Boid(Entity):
         force.clamp_magnitude(MAX_FORCE)
 
         self.direction += force
-        #self.direction *= ACCELERATION_FACTOR * dt
 
-        #self.direction.set_magnitude(MAX_SPEED)
         self.direction.clamp_magnitude(MAX_SPEED, min_=MIN_SPEED)
 
         self.tracer_pending_seconds += dt
