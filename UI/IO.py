@@ -11,6 +11,7 @@ from entities.cloud import Cloud
 from game_state.objects import boids, barriers, clouds, remove_element
 
 from UI.button import Button
+from UI.slider import Slider
 
 
 current_balloon: Balloon | None = None
@@ -76,21 +77,48 @@ key_binds: dict[int | None, callable] = {
     pygame.K_BACKSPACE: remove_element,
 }
 
-buttons = [Button(main_screen_width - 60, main_screen_height - 60, 50, 50,
-                  pygame.image.load("sprites/backspace.png"),
-                  key=pygame.K_BACKSPACE),
+buttons = [
+    Button(main_screen_width - 60, main_screen_height - 60, 50, 50,
+          pygame.image.load("sprites/backspace.png"),
+          key=pygame.K_BACKSPACE),
 
-           Button(main_screen_width - 120, main_screen_height - 60, 50, 50,
-                  pygame.image.load("sprites/arrow.png"),
-                  key=pygame.K_b),
-           Button(main_screen_width - 180, main_screen_height - 60, 50, 50,
-                  pygame.image.load("sprites/barrier.png"),
-                  key=pygame.K_p),
+   Button(main_screen_width - 120, main_screen_height - 60, 50, 50,
+          pygame.image.load("sprites/arrow.png"),
+          key=pygame.K_b),
+   Button(main_screen_width - 180, main_screen_height - 60, 50, 50,
+          pygame.image.load("sprites/barrier.png"),
+          key=pygame.K_p),
 
-           Button(main_screen_width - 240, main_screen_height - 60, 50, 50,
-                  pygame.image.load("sprites/cloud.png"),
-                  key=pygame.K_c),
-           ]
+   Button(main_screen_width - 240, main_screen_height - 60, 50, 50,
+          pygame.image.load("sprites/cloud.png"),
+          key=pygame.K_c),
+]
+
+sliders = [
+    Slider(30, main_screen_height - 40, 100, 30,
+
+           min_value=0.0,
+           max_value=10.0,
+           value_percentage=5.0/10.0,
+           image=pygame.image.load("sprites/S.png"),
+           ),
+
+    Slider(30, main_screen_height - 80, 100, 30,
+
+           min_value=0.0,
+           max_value=5.0,
+           value_percentage=1.5/5.0,
+           image=pygame.image.load("sprites/A.png"),
+           ),
+
+    Slider(30, main_screen_height - 120, 100, 30,
+
+           min_value=0.0,
+           max_value=5.0,
+           value_percentage=1.5/5.0,
+           image=pygame.image.load("sprites/C.png"),
+           ),
+]
 
 
 def handle_event(event):
@@ -106,6 +134,11 @@ def handle_event(event):
             set_key(None)
 
     if event.type == MOUSEBUTTONDOWN:
+
+        for s in sliders:
+            s.handle_click(event.pos)
+            if s.dragging:
+                return
 
         hit = None
         for b in buttons:
@@ -126,3 +159,5 @@ def handle_event(event):
 
     if event.type == MOUSEBUTTONUP:
         reset_balloon()
+        for s in sliders:
+            s.release()

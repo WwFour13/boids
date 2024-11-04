@@ -6,13 +6,13 @@ from surfaces import main_screen
 
 from calculations.coloring import get_cyclical_rgb
 
-from UI.IO import update_current_balloon, is_holding_balloon, handle_event, buttons
+from UI.IO import update_current_balloon, is_holding_balloon, handle_event, buttons, sliders
 
 from game_state import chunks, objects
 from game_state.objects import boids, barriers, clouds
 
 
-FPS = 24
+FPS = 30
 dt = 1 / FPS
 run_time_seconds = 0.0
 
@@ -56,7 +56,11 @@ def main():
             objects.remove_small_balloons()
 
         for boid in boids:
-            boid.flock_from_chunk(chunks.get_chunks_data(boid, 1), dt)
+            boid.flock_from_chunk(chunks.get_chunks_data(boid, 1),
+                                  dt,
+                                  separation_factor=sliders[0].value,
+                                  alignment_factor=sliders[1].value,
+                                  cohesion_factor=sliders[2].value)
             boid.move(dt)
             boid.draw_sight()
 
@@ -71,6 +75,10 @@ def main():
 
         for b in buttons:
             b.draw()
+
+        for s in sliders:
+            s.update()
+            s.draw()
 
         pygame.display.flip()
 

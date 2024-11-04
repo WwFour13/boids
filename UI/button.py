@@ -11,8 +11,7 @@ class Button:
         self.width = width
         self.height = height
         self.BASE_IMAGE = pygame.transform.scale(image, (width, height))
-        self.image = self.BASE_IMAGE
-        self.rect = self.image.get_rect()
+        self.rect = self.BASE_IMAGE.get_rect()
         self.rect.topleft = (x, y)
         self.hover_color = hover_color
 
@@ -31,8 +30,8 @@ class Button:
     def draw(self):
 
         if self.pressed or self.intersects(pygame.mouse.get_pos()):
-            self.image = self.BASE_IMAGE.copy()
-            self.image.fill(self.hover_color, special_flags=pygame.BLEND_RGB_ADD)
+            image = self.BASE_IMAGE.copy()
+            image.fill(self.hover_color, special_flags=pygame.BLEND_RGB_ADD)
         else:
-            self.image = self.BASE_IMAGE
-        main_screen.blit(self.image, (self.x, self.y))
+            image = self.BASE_IMAGE
+        main_screen.blit(image, (self.x, self.y))

@@ -15,8 +15,8 @@ SIZE = 20
 SIGHT_DISTANCE = 55
 PERSONAL_SPACE = 20
 
-MAX_SPEED = 115  # per second
-MIN_SPEED = 100
+MAX_SPEED = 165  # per second
+MIN_SPEED = 140
 MAX_FORCE = 40
 
 TRACER_DURATION = 1
@@ -133,7 +133,7 @@ class Boid(Entity):
         avg_x, avg_y = self.average_coordinates(seen_boids)
         to_average_position = Vector(avg_x - self.x, self.y - avg_y)
         cohesion_force = to_average_position - self.direction
-        return cohesion_force * COHESION_FACTOR
+        return cohesion_force
 
     def alignment_force(self, seen_boids: list[Self]) -> Vector:
         if not seen_boids:
@@ -141,7 +141,7 @@ class Boid(Entity):
 
         average_direction = Vector.get_average([boid.direction for boid in seen_boids])
         alignment_force = average_direction - self.direction
-        return alignment_force * ALIGNMENT_FACTOR
+        return alignment_force
 
     def separation_force(self, seen_boids: list[Self]) -> Vector:
         if not seen_boids:
@@ -154,7 +154,7 @@ class Boid(Entity):
             return Vector(0, 0)
 
         separation_force = Vector.get_sum([self.avoidance_scale(boid.get_coordinates()) for boid in personal_boids])
-        return separation_force * SEPARATION_FACTOR
+        return separation_force
 
     def barrier_force(self, barriers: list[Barrier]) -> Vector:
 
@@ -171,7 +171,11 @@ class Boid(Entity):
 
         return wall_force * WALL_FACTOR
 
-    def find_flock_direction(self, boids: list[Self], barriers: list[Barrier], dt: float):
+    def find_flock_direction(self, boids: list[Self], barriers: list[Barrier],
+                             dt: float,
+                             alignment_factor: float = ALIGNMENT_FACTOR,
+                             separation_factor: float = SEPARATION_FACTOR,
+                             cohesion_factor: float = COHESION_FACTOR):
 
         if random.random() < VARIATION_PERCENTAGE_PER_SECOND * dt:
             self.variate()
@@ -186,9 +190,9 @@ class Boid(Entity):
 
         force += self.wall_force()
         force += self.barrier_force(barriers)
-        force += self.alignment_force(seen_boids)
-        force += self.cohesion_force(seen_boids)
-        force += self.separation_force(seen_boids)
+        force += self.alignment_force(seen_boids) * alignment_factor
+        force += self.cohesion_force(seen_boids) * cohesion_factor
+        force += self.separation_force(seen_boids) * separation_factor
 
         force.clamp_magnitude(MAX_FORCE)
 
@@ -204,7 +208,11 @@ class Boid(Entity):
         if len(self.tracer_points) > TRACER_DURATION * TRACES_PER_SECOND:
             self.tracer_points.pop(0)
 
-    def flock_from_chunk(self, chunk: list[Entity], dt: float):
+    def flock_from_chunk(self, chunk: list[Entity],
+                         dt: float,
+                         alignment_factor: float = ALIGNMENT_FACTOR,
+                         separation_factor: float = SEPARATION_FACTOR,
+                         cohesion_factor: float = COHESION_FACTOR):
         boids = []
         barriers = []
         for elem in chunk:
@@ -212,7 +220,8 @@ class Boid(Entity):
                 boids.append(elem)
             if isinstance(elem, Barrier):
                 barriers.append(elem)
-        self.find_flock_direction(boids, barriers, dt)
+        self.find_flock_direction(boids, barriers, dt,
+                                  alignment_factor, separation_factor, cohesion_factor)
 
     def variate(self):
         random_angle_variation = random.uniform(-MAX_VARIATION, MAX_VARIATION)

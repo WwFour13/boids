@@ -4,55 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e12f0e32-0049-4035-999e-35c3970cb348" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea_/.idea.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea_/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea_/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea_/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea_/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/boids.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/boids.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="e12f0e32-0049-4035-999e-35c3970cb348" name="Changes" comment="new structure">
+      <change afterPath="$PROJECT_DIR$/UI/slider.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sprites/A.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sprites/C.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sprites/S.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea_/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea_/Birds.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea_/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea_/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea_/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea_/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea_/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/UI/IO.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/IO.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entities/balloon.py" beforeDir="false" afterPath="$PROJECT_DIR$/entities/balloon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/button.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entities/boid.py" beforeDir="false" afterPath="$PROJECT_DIR$/entities/boid.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/surfaces.py" beforeDir="false" afterPath="$PROJECT_DIR$/surfaces.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/Untitled.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/boid_gradient.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "WwFour13"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;WwFour13&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/WwFour13/boids",
-    "accountId": "aa5b62a2-d106-4c69-8722-15b14d44a074"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/WwFour13/boids&quot;,
+    &quot;accountId&quot;: &quot;aa5b62a2-d106-4c69-8722-15b14d44a074&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -61,18 +51,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.barrier.executor": "Run",
-    "Python.boid.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.surfaces.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/dev/boids/main.py",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.barrier.executor&quot;: &quot;Run&quot;,
+    &quot;Python.boid.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.surfaces.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/dev/boids/main.py&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="boids" />
@@ -114,6 +104,19 @@
       <option name="presentableId" value="Default" />
       <updated>1728844583827</updated>
     </task>
+    <task id="LOCAL-00001" summary="new structure">
+      <option name="closed" value="true" />
+      <created>1729468023030</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1729468023030</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="new structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="new structure" />
   </component>
 </project>
