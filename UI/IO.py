@@ -98,7 +98,7 @@ sliders = [
     Slider(30, main_screen_height - 40, 100, 30,
 
            min_value=0.0,
-           max_value=10.0,
+           max_value=0.2,
            value_percentage=5.0/10.0,
            image=pygame.image.load("sprites/S.png"),
            ),
