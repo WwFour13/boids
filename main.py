@@ -19,7 +19,7 @@ run_time_seconds = 0.0
 pygame.init()
 
 pygame.display.set_caption("Boids!")  # Set the window caption
-pygame.display.set_icon(pygame.transform.rotozoom(pygame.image.load("sprites/arrow.png"), 135, 2))
+pygame.display.set_icon(pygame.transform.rotozoom(pygame.image.load("sprites/arrow.png"), 0, 2.5))
 clock = pygame.time.Clock()  # Clock for controlling frame rate
 
 BLACK = (0, 0, 0)

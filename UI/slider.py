@@ -32,11 +32,10 @@ class Slider:
         if button_height is None:
             button_height = height
 
-        #self.BASE_IMAGE = pygame.Surface((width, height))
         self.background_offset = height / 3
         self.BASE_IMAGE = pygame.image.load("sprites/slider_bar.png")
         self.BASE_IMAGE = pygame.transform.scale(self.BASE_IMAGE, (width, height - self.background_offset * 2))
-        #self.BASE_IMAGE.fill((255, 255, 255))
+
         self.BUTTON_BASE_IMAGE = pygame.transform.scale(image, (button_width, button_height))
         self.rect = self.BUTTON_BASE_IMAGE.get_rect()
         self.rect.topleft = (x + value_percentage * (width - button_width), y)
@@ -61,7 +60,9 @@ class Slider:
 
 # private
     def move_handle(self, x):
-        new_x = max(self.x + self.rect.width / 2, min(x, self.x + self.width - self.rect.width / 2)) - self.rect.width / 2  # clamp x
+        new_x = (max(self.x + self.rect.width / 2,
+                 min(x, self.x + self.width - self.rect.width / 2))
+                 - self.rect.width / 2)  # clamp x
         self.rect.x = new_x
         self.update_value()
 
