@@ -19,8 +19,8 @@ MAX_SPEED = 165  # per second
 MIN_SPEED = 140
 MAX_FORCE = 40
 
-TRACER_DURATION = 1
-TRACES_PER_SECOND = 8
+TRACER_DURATION = 0.4
+TRACES_PER_SECOND = 100
 SECONDS_PER_TRACE = 1 / TRACES_PER_SECOND
 
 MAX_VARIATION = math.radians(40)
@@ -39,10 +39,10 @@ TARGET_NEIGHBOUR_COUNT = 10
 TOGETHER_COLOR = (84, 135, 229)
 ALONE_COLOR = (216, 26, 172)
 
-TRACER_COLOR = (255, 199, 0)
+TRACER_COLOR = (255, 255, 255)
 TRACER_FADE_OUT_COLOR = (255, 255, 255)
 
-SIGHT_ALPHA = 50
+SIGHT_ALPHA = 30
 SIGHT_COLOR = (175, 255, 171)
 PERSONAL_SPACE_COLOR = (255, 142, 140)
 
@@ -51,6 +51,24 @@ SEPARATION_FACTOR = 5.0
 ALIGNMENT_FACTOR = 1.5
 BARRIER_FACTOR = 10.0
 WALL_FACTOR = 20.0
+
+
+class Tracer:
+    def __init__(self, x, y, color_main=TRACER_COLOR, max_traces=TRACES_PER_SECOND * TRACER_DURATION):
+        self.max_traces = max_traces
+
+        self.points = [(x, y)]
+        self.color_main = color_main
+
+    def add_line(self, x, y):
+        self.points.append((x, y))
+
+        if len(self.points) > self.max_traces:
+            self.points.pop(0)
+
+    def draw(self):
+        for i, (p1, p2) in enumerate(zip(self.points, self.points[1:])):
+            pygame.draw.line(main_screen, color=self.color_main, start_pos=p1, end_pos=p2, width=min(i//2, 4))
 
 
 class Boid(Entity):
@@ -65,7 +83,7 @@ class Boid(Entity):
 
         self.direction: Vector = direction
 
-        self.tracer_points = []
+        self.tracer = Tracer(self.x, self.y)
         self.tracer_pending_seconds = 0.0
 
     @staticmethod
@@ -201,12 +219,10 @@ class Boid(Entity):
         self.direction.clamp_magnitude(MAX_SPEED, min_=MIN_SPEED)
 
         self.tracer_pending_seconds += dt
-        if self.tracer_pending_seconds > SECONDS_PER_TRACE:
-            self.tracer_pending_seconds = 0.0
-            self.tracer_points.append((self.x, self.y))
 
-        if len(self.tracer_points) > TRACER_DURATION * TRACES_PER_SECOND:
-            self.tracer_points.pop(0)
+        if self.tracer_pending_seconds > SECONDS_PER_TRACE:
+            self.tracer_pending_seconds = 0
+            self.tracer.add_line(*self.get_coordinates())
 
     def flock_from_chunk(self, chunk: list[Entity],
                          dt: float,
@@ -253,18 +269,13 @@ class Boid(Entity):
 
     def draw_sight(self):
 
-        circle = pygame.Surface((SIGHT_DISTANCE * 2, SIGHT_DISTANCE * 2), pygame.SRCALPHA)
+        surface = pygame.Surface((SIGHT_DISTANCE * 2, SIGHT_DISTANCE * 2), pygame.SRCALPHA)
         (pygame.draw.circle
-         (circle, color=(*SIGHT_COLOR, SIGHT_ALPHA), center=(SIGHT_DISTANCE, SIGHT_DISTANCE), radius=SIGHT_DISTANCE))
-        main_screen.blit(circle, (self.x - SIGHT_DISTANCE, self.y - SIGHT_DISTANCE))
+         (surface, color=(*SIGHT_COLOR, SIGHT_ALPHA), center=(SIGHT_DISTANCE, SIGHT_DISTANCE), radius=SIGHT_DISTANCE))
+        main_screen.blit(surface, (self.x - SIGHT_DISTANCE, self.y - SIGHT_DISTANCE))
 
     def draw_personal_space(self):
         pygame.draw.circle(main_screen, PERSONAL_SPACE_COLOR, self.get_coordinates(), PERSONAL_SPACE)
 
-    def draw_tracers(self):
-
-        for i, (p1, p2) in enumerate(zip(self.tracer_points[:-1], self.tracer_points[1:])):
-            color = interpolate_color(TRACER_FADE_OUT_COLOR, TRACER_COLOR, i / len(self.tracer_points))
-            alpha = int(255 * (len(self.tracer_points) - i) / len(self.tracer_points))
-            color = (color[0], color[1], color[2], alpha)
-            pygame.draw.line(main_screen, color, p1, p2, 2)
+    def draw_trace(self):
+        self.tracer.draw()

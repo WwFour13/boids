@@ -56,6 +56,9 @@ def main():
             objects.remove_small_balloons()
 
         for boid in boids:
+            boid.draw_trace()
+
+        for boid in boids:
             boid.flock_from_chunk(chunks.get_chunks_data(boid, 1),
                                   dt,
                                   separation_factor=sliders[0].value,
