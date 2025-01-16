@@ -12,18 +12,24 @@ class Vector:
         return f"X: {self.dx}, Y: {self.dy}, "
 
     def __eq__(self, other) -> bool:
-        if isinstance(other, Vector):
+        try:
             other = (other.dx, other.dy)
+        except AttributeError:
+            raise ValueError("Can't compare Vector with non Vector")
         return self.dx == other[0] and self.dy == other[1]
 
     def __add__(self, other) -> Self:
-        if isinstance(other, Vector):
+        try:
             other = (other.dx, other.dy)
+        except AttributeError:
+            raise ValueError("Can't add Vector with non Vector")
         return Vector((other[0] + self.dx), (other[1] + self.dy))
 
     def __sub__(self, other) -> Self:
-        if isinstance(other, Vector):
+        try:
             other = (other.dx, other.dy)
+        except AttributeError:
+            raise ValueError("Can't subtract Vector with non Vector")
         return Vector((self.dx - other[0]), (self.dy - other[1]))
 
     def __mul__(self, other: float) -> Self:
