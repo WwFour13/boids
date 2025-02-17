@@ -6,7 +6,6 @@ import math
 import random
 from calculations import angles
 from calculations.coloring import interpolate_color, replace_color
-from entities.barrier import Barrier
 from calculations.vector import Vector
 from typing import Self
 from entities.entity import Entity
@@ -49,7 +48,6 @@ PERSONAL_SPACE_COLOR = (255, 142, 140)
 COHESION_FACTOR = 1.5
 SEPARATION_FACTOR = 5.0
 ALIGNMENT_FACTOR = 1.5
-BARRIER_FACTOR = 10.0
 WALL_FACTOR = 20.0
 
 
@@ -85,12 +83,6 @@ class Boid(Entity):
 
         self.tracer = Tracer(self.x, self.y)
         self.tracer_pending_seconds = 0.0
-
-    @staticmethod
-    def average_coordinates(boids):
-        x = sum([boid.x for boid in boids]) / len(boids)
-        y = sum([boid.y for boid in boids]) / len(boids)
-        return x, y
 
     def __repr__(self):
         return f"X: {self.x}, Y: {self.y}, "
@@ -133,84 +125,107 @@ class Boid(Entity):
             self.direction.dy *= -1
             self.y = main_screen_height
 
-    def avoidance_scale(self, coordinates: tuple, radius: float = 0) -> Vector:
+    def boid_pusher_scale(self, coordinates: tuple, sight_distance: float) -> Vector:
         x, y = coordinates
         force = Vector(0, 0)
-        if dist := (math.dist(self.get_coordinates(), coordinates) - radius) < SIGHT_DISTANCE:
+        if dist := (math.dist(self.get_coordinates(), coordinates)) < PERSONAL_SPACE:
             weight = (SIGHT_DISTANCE - dist) ** 2
-            force.dx = self.x - x
-            force.dy = y - self.y
+            force.dx = x - self.x
+            force.dy = self.y - y
             force.set_magnitude(weight)
 
         return force
 
-    def cohesion_force(self, seen_boids: list[Self]) -> Vector:
-        if not seen_boids:
+    def boid_puller_coordinate(self) -> tuple[float, float] | None:
+        return self.get_coordinates()
+
+    def boid_pointer(self) -> Vector | None:
+        return self.direction
+
+    def cohesion_force(self, coheders: list[tuple[float, float] | None]) -> Vector:
+
+        coheders = [c for c in coheders
+                    if c is not None
+                    and math.dist(c, self.get_coordinates()) < SIGHT_DISTANCE]
+
+        if not coheders:
             return Vector(0, 0)
 
-        avg_x, avg_y = self.average_coordinates(seen_boids)
+        avg_x = sum([c[0] for c in coheders]) / len(coheders)
+        avg_y = sum([c[1] for c in coheders]) / len(coheders)
         to_average_position = Vector(avg_x - self.x, self.y - avg_y)
         cohesion_force = to_average_position - self.direction
         return cohesion_force
 
-    def alignment_force(self, seen_boids: list[Self]) -> Vector:
-        if not seen_boids:
+    def alignment_force(self, aligners: list[Vector | None]) -> Vector:
+
+        aligners = [a for a in aligners
+                    if a is not None]
+
+        if not aligners:
             return Vector(0, 0)
 
-        average_direction = Vector.get_average([boid.direction for boid in seen_boids])
+        average_direction = Vector.get_average(aligners)
         alignment_force = average_direction - self.direction
         return alignment_force
 
-    def separation_force(self, seen_boids: list[Self]) -> Vector:
-        if not seen_boids:
+    def separation_force(self, separators: list[Vector | None]) -> Vector:
+
+        separators = [s for s in separators
+                      if s is not None]
+
+        if not separators:
             return Vector(0, 0)
 
-        personal_boids = [boid for boid in seen_boids
-                          if math.dist(self.get_coordinates(), boid.get_coordinates()) < PERSONAL_SPACE]
-
-        if not personal_boids:
-            return Vector(0, 0)
-
-        separation_force = Vector.get_sum([self.avoidance_scale(boid.get_coordinates()) for boid in personal_boids])
+        separation_force = Vector.get_sum(separators)
         return separation_force
 
-    def barrier_force(self, barriers: list[Barrier]) -> Vector:
+    def wall_force(self):
+        wall = [(0, self.y),
+                (main_screen_width, self.y),
+                (self.x, 0),
+                (self.x, main_screen_height)]
 
-        barrier_force = Vector.get_sum(
-            [self.avoidance_scale(bar.get_coordinates(), bar.get_radius())
-             for bar in barriers])
-        return barrier_force * BARRIER_FACTOR
+        force = Vector(0, 0)
 
-    def wall_force(self) -> Vector:
-        walls = [(self.x, 0), (self.x, main_screen_height),
-                 (0, self.y), (main_screen_width, self.y)]
+        for w in wall:
+            if dist := math.dist(w, self.get_coordinates()) < SIGHT_DISTANCE:
+                f = Vector(0, 0)
+                weight = (SIGHT_DISTANCE - dist) ** 2
+                f.dx = self.x - w[0]
+                f.dy = w[1] - self.y
+                f.set_magnitude(weight)
+                force += f
 
-        wall_force = Vector.get_sum([self.avoidance_scale(wall) for wall in walls])
+        return force
 
-        return wall_force * WALL_FACTOR
+    def flock_from_chunk(self, chunk: list[Entity],
+                         dt: float,
+                         alignment_factor: float = ALIGNMENT_FACTOR,
+                         separation_factor: float = SEPARATION_FACTOR,
+                         cohesion_factor: float = COHESION_FACTOR):
 
-    def find_flock_direction(self, boids: list[Self], barriers: list[Barrier],
-                             dt: float,
-                             alignment_factor: float = ALIGNMENT_FACTOR,
-                             separation_factor: float = SEPARATION_FACTOR,
-                             cohesion_factor: float = COHESION_FACTOR):
+        aligners = []
+        separators = []
+        coheders = []
 
-        if random.random() < VARIATION_PERCENTAGE_PER_SECOND * dt:
-            self.variate()
+        count = 0
+        for elem in chunk:
+            if elem != self:
+                if math.dist(elem.get_coordinates(), self.get_coordinates()) < SIGHT_DISTANCE:
+                    count += 1
+                aligners.append(elem.boid_pointer())
+                coheders.append(elem.boid_puller_coordinate())
+                separators.append(elem.boid_pusher_scale(self.get_coordinates(), SIGHT_DISTANCE))
 
-        seen_boids = [b for b in boids
-                      if math.dist(self.get_coordinates(), b.get_coordinates()) < SIGHT_DISTANCE
-                      and b != self]
-
-        self.neighbors_count = len(seen_boids)
+        self.neighbors_count = count
 
         force = Vector()
 
-        force += self.wall_force()
-        force += self.barrier_force(barriers)
-        force += self.alignment_force(seen_boids) * alignment_factor
-        force += self.cohesion_force(seen_boids) * cohesion_factor
-        force += self.separation_force(seen_boids) * separation_factor
+        force += self.alignment_force(aligners) * alignment_factor
+        force += self.cohesion_force(coheders) * cohesion_factor
+        force += self.separation_force(separators) * separation_factor
+        force += self.wall_force() * WALL_FACTOR
 
         force.clamp_magnitude(MAX_FORCE)
 
@@ -219,25 +234,12 @@ class Boid(Entity):
         self.direction.clamp_magnitude(MAX_SPEED, min_=MIN_SPEED)
 
         self.tracer_pending_seconds += dt
-
         if self.tracer_pending_seconds > SECONDS_PER_TRACE:
-            self.tracer_pending_seconds = 0
-            self.tracer.add_line(*self.get_coordinates())
+            self.tracer_pending_seconds = 0.0
+            self.tracer.points.append((self.x, self.y))
 
-    def flock_from_chunk(self, chunk: list[Entity],
-                         dt: float,
-                         alignment_factor: float = ALIGNMENT_FACTOR,
-                         separation_factor: float = SEPARATION_FACTOR,
-                         cohesion_factor: float = COHESION_FACTOR):
-        boids = []
-        barriers = []
-        for elem in chunk:
-            if isinstance(elem, Boid):
-                boids.append(elem)
-            if isinstance(elem, Barrier):
-                barriers.append(elem)
-        self.find_flock_direction(boids, barriers, dt,
-                                  alignment_factor, separation_factor, cohesion_factor)
+        if len(self.tracer.points) > TRACER_DURATION * TRACES_PER_SECOND:
+            self.tracer.points.pop(0)
 
     def variate(self):
         random_angle_variation = random.uniform(-MAX_VARIATION, MAX_VARIATION)
