@@ -25,12 +25,12 @@ class Entity:
     def draw(self):
         raise NotImplemented("Draw method not implemented")
 
-    def boid_puller_coordinate(self) -> tuple[float, float] | None:
+    def puller_coordinate(self) -> tuple[float, float] | None:
         return None
 
-    def boid_pusher_scale(self, coordinates: tuple, sight_distance: float) -> Vector | None:
+    def pusher_scale(self, coordinates: tuple, sight_distance: float) -> Vector | None:
         return None
 
-    def boid_pointer(self) -> Vector | None:
+    def pointer(self) -> Vector | None:
         return None
 

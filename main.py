@@ -59,11 +59,11 @@ def main():
             boid.draw_trace()
 
         for boid in boids:
-            boid.flock_from_chunk(chunks.get_chunks_data(boid, 1),
-                                  dt,
-                                  separation_factor=sliders[0].value,
-                                  alignment_factor=sliders[1].value,
-                                  cohesion_factor=sliders[2].value)
+            boid.flock(chunks.get_chunks_data(boid, 1),
+                       dt,
+                       separation_factor=sliders[0].value,
+                       alignment_factor=sliders[1].value,
+                       cohesion_factor=sliders[2].value)
             boid.move(dt)
             boid.draw_sight()
 

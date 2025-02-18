@@ -125,7 +125,7 @@ class Boid(Entity):
             self.direction.dy *= -1
             self.y = main_screen_height
 
-    def boid_pusher_scale(self, coordinates: tuple, sight_distance: float) -> Vector:
+    def pusher_scale(self, coordinates: tuple, sight_distance: float) -> Vector:
         x, y = coordinates
         force = Vector(0, 0)
         if dist := (math.dist(self.get_coordinates(), coordinates)) < PERSONAL_SPACE:
@@ -136,10 +136,10 @@ class Boid(Entity):
 
         return force
 
-    def boid_puller_coordinate(self) -> tuple[float, float] | None:
+    def puller_coordinate(self) -> tuple[float, float] | None:
         return self.get_coordinates()
 
-    def boid_pointer(self) -> Vector | None:
+    def pointer(self) -> Vector | None:
         return self.direction
 
     def cohesion_force(self, coheders: list[tuple[float, float] | None]) -> Vector:
@@ -199,11 +199,11 @@ class Boid(Entity):
 
         return force
 
-    def flock_from_chunk(self, chunk: list[Entity],
-                         dt: float,
-                         alignment_factor: float = ALIGNMENT_FACTOR,
-                         separation_factor: float = SEPARATION_FACTOR,
-                         cohesion_factor: float = COHESION_FACTOR):
+    def flock(self, chunk: list[Entity],
+              dt: float,
+              alignment_factor: float = ALIGNMENT_FACTOR,
+              separation_factor: float = SEPARATION_FACTOR,
+              cohesion_factor: float = COHESION_FACTOR):
 
         aligners = []
         separators = []
@@ -214,9 +214,9 @@ class Boid(Entity):
             if elem != self:
                 if math.dist(elem.get_coordinates(), self.get_coordinates()) < SIGHT_DISTANCE:
                     count += 1
-                aligners.append(elem.boid_pointer())
-                coheders.append(elem.boid_puller_coordinate())
-                separators.append(elem.boid_pusher_scale(self.get_coordinates(), SIGHT_DISTANCE))
+                aligners.append(elem.pointer())
+                coheders.append(elem.puller_coordinate())
+                separators.append(elem.pusher_scale(self.get_coordinates(), SIGHT_DISTANCE))
 
         self.neighbors_count = count
 
