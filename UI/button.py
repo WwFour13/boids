@@ -35,3 +35,6 @@ class Button:
         else:
             image = self.BASE_IMAGE
         main_screen.blit(image, (self.x, self.y))
+
+    def draw_outline(self):
+        pygame.draw.rect(main_screen, (0, 0, 0), self.rect, 2)

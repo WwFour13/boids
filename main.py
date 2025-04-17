@@ -80,6 +80,7 @@ def main():
 
         for b in buttons:
             b.draw()
+            b.draw_outline()
 
         for s in sliders:
             s.update()
