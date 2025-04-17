@@ -145,8 +145,7 @@ class Boid(Entity):
     def cohesion_force(self, coheders: list[tuple[float, float] | None]) -> Vector:
 
         coheders = [c for c in coheders
-                    if c is not None
-                    and math.dist(c, self.get_coordinates()) < SIGHT_DISTANCE]
+                    if c is not None]
 
         if not coheders:
             return Vector(0, 0)
@@ -205,15 +204,18 @@ class Boid(Entity):
               separation_factor: float = SEPARATION_FACTOR,
               cohesion_factor: float = COHESION_FACTOR):
 
-        aligners = []
-        separators = []
-        coheders = []
+        # Getting the relevant information from each element in the chunk (Abstract base classes)
+        # That information is the values which will be affecting "Self" in its flocking decision
+
+        aligners = [] # data for the alignment behavior
+        separators = [] # data for the separation behavior
+        coheders = [] # data for the cohesion behavior
 
         count = 0
         for elem in chunk:
-            if elem != self:
-                if math.dist(elem.get_coordinates(), self.get_coordinates()) < SIGHT_DISTANCE:
-                    count += 1
+            if (elem != self
+            and math.dist(elem.get_coordinates(), self.get_coordinates()) < SIGHT_DISTANCE):
+                count += 1
                 aligners.append(elem.pointer())
                 coheders.append(elem.puller_coordinate())
                 separators.append(elem.pusher_scale(self.get_coordinates(), SIGHT_DISTANCE))
