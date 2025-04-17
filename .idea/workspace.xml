@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e12f0e32-0049-4035-999e-35c3970cb348" name="Changes" comment="improved slider 3">
+    <list default="true" id="e12f0e32-0049-4035-999e-35c3970cb348" name="Changes" comment="fixed alignment distancing">
+      <change beforePath="$PROJECT_DIR$/.idea/boids.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/boids.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entities/boid.py" beforeDir="false" afterPath="$PROJECT_DIR$/entities/boid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +33,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/WwFour13/boids&quot;,
-    &quot;accountId&quot;: &quot;aa5b62a2-d106-4c69-8722-15b14d44a074&quot;
+    &quot;url&quot;: &quot;https://github.com/WwFour13/boids.git&quot;,
+    &quot;accountId&quot;: &quot;c4313fc0-b7da-48ee-8fee-6cb3bba72b35&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -51,6 +52,7 @@
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.surfaces.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/dev/boids/main.py&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
@@ -66,9 +68,8 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.12 (boids) (2)" />
       <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
@@ -84,7 +85,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-975db3bf15a3-31b6be0877a2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.18034.82" />
+        <option value="bundled-python-sdk-fc1d50d2d915-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.24978.54" />
       </set>
     </attachedChunks>
   </component>
@@ -146,6 +147,7 @@
     <MESSAGE value="improved slider sprites" />
     <MESSAGE value="improved slider sprites 2" />
     <MESSAGE value="improved slider 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="improved slider 3" />
+    <MESSAGE value="fixed alignment distancing" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed alignment distancing" />
   </component>
 </project>
