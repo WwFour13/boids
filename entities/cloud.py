@@ -2,6 +2,8 @@ import math
 
 import pygame
 
+import random
+
 from calculations.vector import Vector
 from entities.balloon import Balloon
 from entity import Entity
@@ -15,16 +17,20 @@ class Cloud(Balloon):
     AMPLITUDE = 1
     CYCLE_SECONDS = 3
     WAVE_LENGTH = 2 * math.pi / CYCLE_SECONDS
+    COLOR_ALPHA = 200
 
     def __init__(self,
                  x: float,
                  y: float,
-                 direction: Vector = Vector(20, 0),
+                 direction: Vector = Vector(10, 3),
                  radius: float = 0.0):
 
         self.image = pygame.transform.scale(self.IMAGE, (0, 0))
         self.direction = direction
         super().__init__(x, y, radius)
+        c = random.randint(210, 240)
+        self.color = (c, c, c, Cloud.COLOR_ALPHA)
+        self.MAX_RADIUS = 20
 
     def move(self,
              chunk: list[Entity],
@@ -42,7 +48,6 @@ class Cloud(Balloon):
                   and math.dist(self.get_coordinates(), f.get_coordinates()) < self.radius
                   ]
 
-        print(len(forces))
         force = Vector.get_sum(forces) / 20
         self.x += force.dx * dt
         self.y -= force.dy * dt
@@ -55,25 +60,19 @@ class Cloud(Balloon):
         if self.radius == 0:
             return
 
-        scale_factor = (self.radius * 2) / min(self.IMAGE.get_width(), self.IMAGE.get_height())
-        w = int(self.IMAGE.get_width() * scale_factor)
-        h = int(self.IMAGE.get_height() * scale_factor)
-        self.image = pygame.transform.scale(self.IMAGE, (w, h))
-        self.image.set_alpha(180)
+        circle_surface = pygame.Surface((main_screen_width, main_screen_height), pygame.SRCALPHA)
 
-        left = self.x - (w / 2)
-        top = self.y - (h / 2)
-        right = left + w
-        bottom = top + h
+        pygame.draw.circle(circle_surface, self.color, (self.x, self.y), self.radius)
 
-        main_screen.blit(self.image, (left, top))
+        x = (self.x + self.radius) % main_screen_width - self.radius
+        y = (self.y + self.radius) % main_screen_height - self.radius
 
-        if right > main_screen_width:
-            main_screen.blit(self.image, (left - main_screen_width, top))
-        if left < 0:
-            main_screen.blit(self.image, (left + main_screen_width, top))
+        pygame.draw.circle(circle_surface, self.color, (x, y), self.radius)
 
-        if bottom > main_screen_height:
-            main_screen.blit(self.image, (left, top - main_screen_height))
-        if top < 0:
-            main_screen.blit(self.image, (left, top + main_screen_height))
+        x = (self.x - self.radius) % main_screen_width + self.radius
+        y = (self.y - self.radius) % main_screen_height + self.radius
+
+        pygame.draw.circle(circle_surface, self.color, (x, y), self.radius)
+
+        main_screen.blit(circle_surface, (0, 0))
+
