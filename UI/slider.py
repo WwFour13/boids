@@ -58,7 +58,6 @@ class Slider:
         if self.intersects(other_coordinates):
             self.dragging = True
 
-# private
     def move_handle(self, x):
         new_x = (max(self.x + self.rect.width / 2,
                  min(x, self.x + self.width - self.rect.width / 2))

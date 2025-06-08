@@ -6,7 +6,7 @@ from surfaces import main_screen
 
 from calculations.coloring import get_cyclical_rgb
 
-from UI.IO import update_current_balloon, is_holding_balloon, handle_event, buttons, sliders
+from UI.IO import update_current_balloon, is_holding_balloon, handle_event, action_buttons, sliders
 
 from game_state import chunks, objects
 from game_state.objects import boids, barriers, clouds
@@ -78,7 +78,8 @@ def main():
                        run_time_seconds)
             cloud.draw()
 
-        for b in buttons:
+        for b in action_buttons:
+            b.update()
             b.draw()
             b.draw_outline()
 

@@ -76,7 +76,7 @@ key_binds: dict[int | None, callable] = {
     pygame.K_BACKSPACE: remove_element,
 }
 
-buttons = [
+action_buttons = [
     Button(main_screen_width - 60, main_screen_height - 60, 50, 50,
            pygame.image.load("sprites/backspace.png"),
            key=pygame.K_BACKSPACE),
@@ -124,8 +124,8 @@ def handle_event(event):
     global default_bind
 
     if event.type == KEYDOWN:
-        for b in buttons:
-            b.release()
+        for b in action_buttons:
+            b.update()
         set_key(event.key)
 
     if event.type == KEYUP:
@@ -139,19 +139,12 @@ def handle_event(event):
             if s.dragging:
                 return
 
-        hit = None
-        for b in buttons:
-            b.handle_click(event.pos)
-            if b.intersects(event.pos):
+        for b in action_buttons:
+            b.update(event.pos)
+            if b.is_pressed:
                 set_key(b.key)
-                hit = b
-                break
 
-        if hit is not None:
-            for b in buttons:
-                b.release()
-            hit.pressed = True
-        else:
+        if True not in [b.is_pressed for b in action_buttons]:
             action: callable = key_binds.get(get_key(), default_bind)
             x, y = pygame.mouse.get_pos()
             action(x, y)

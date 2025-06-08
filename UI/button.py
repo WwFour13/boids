@@ -4,7 +4,7 @@ from surfaces import main_screen
 
 class Button:
 
-    def __init__(self, x, y, width, height, image, key=None, hover_color=(100, 100, 100)):
+    def __init__(self, x, y, width, height, image, key=None, hover_color=(100, 100, 100), spring_up_on_update=True):
         self.key = key
         self.x = x
         self.y = y
@@ -15,21 +15,24 @@ class Button:
         self.rect.topleft = (x, y)
         self.hover_color = hover_color
 
-        self.pressed = False
+        self.is_pressed = False
+        self.spring_up_on_update = spring_up_on_update
 
     def intersects(self, other_coordinates):
         return self.rect.collidepoint(other_coordinates)
 
-    def handle_click(self, other_coordinates):
-        if self.intersects(other_coordinates):
-            self.pressed = True
-
-    def release(self):
-        self.pressed = False
+    def update(self, click_coordinates: tuple | None = None):
+        if self.spring_up_on_update:
+            self.is_pressed = False
+            if click_coordinates is not None and self.intersects(click_coordinates):
+                self.is_pressed = True
+        else:
+            if self.intersects(click_coordinates):
+                self.is_pressed = not self.is_pressed
 
     def draw(self):
 
-        if self.pressed or self.intersects(pygame.mouse.get_pos()):
+        if self.is_pressed or self.intersects(pygame.mouse.get_pos()):
             image = self.BASE_IMAGE.copy()
             image.fill(self.hover_color, special_flags=pygame.BLEND_RGB_ADD)
         else:
