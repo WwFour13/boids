@@ -31,6 +31,7 @@ class Cloud(Balloon):
         c = random.randint(210, 240)
         self.color = (c, c, c, Cloud.COLOR_ALPHA)
         self.MAX_RADIUS = 20
+        self.MIN_RADIUS = 6
 
     def move(self,
              chunk: list[Entity],
@@ -60,19 +61,22 @@ class Cloud(Balloon):
         if self.radius == 0:
             return
 
-        circle_surface = pygame.Surface((main_screen_width, main_screen_height), pygame.SRCALPHA)
+        circle_surface = pygame.Surface((2 * self.radius, 2 * self.radius), pygame.SRCALPHA)
 
-        pygame.draw.circle(circle_surface, self.color, (self.x, self.y), self.radius)
+        pygame.draw.circle(circle_surface, self.color, (self.radius, self.radius), self.radius)
+        main_screen.blit(circle_surface, (self.x - self.radius, self.y - self.radius))
 
+        # drawing the looping circle + direction
         x = (self.x + self.radius) % main_screen_width - self.radius
         y = (self.y + self.radius) % main_screen_height - self.radius
+        if (x, y) != (self.x, self.y):
+            main_screen.blit(circle_surface, (x - self.radius, y - self.radius))
 
-        pygame.draw.circle(circle_surface, self.color, (x, y), self.radius)
-
+        # drawing the looping circle - direction
         x = (self.x - self.radius) % main_screen_width + self.radius
         y = (self.y - self.radius) % main_screen_height + self.radius
+        if (x, y) != (self.x, self.y):
+            main_screen.blit(circle_surface, (x - self.radius, y - self.radius))
 
-        pygame.draw.circle(circle_surface, self.color, (x, y), self.radius)
 
-        main_screen.blit(circle_surface, (0, 0))
 
