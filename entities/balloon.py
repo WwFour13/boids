@@ -33,4 +33,3 @@ class Balloon(Entity):
 
     def draw(self):
         raise NotImplementedError("Draw method not implemented")
-

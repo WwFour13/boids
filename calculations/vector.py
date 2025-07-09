@@ -74,7 +74,6 @@ class Vector:
         if -min_ < self.get_magnitude() < 0:
             self.set_magnitude(-min_)
 
-
     def get_opposite(self):
         return Vector(dx=-self.dx, dy=-self.dy)
 
@@ -91,6 +90,8 @@ class Vector:
 
     @staticmethod
     def get_average(vectors):
+        if not vectors:
+            return Vector(0, 0)
         vector_sum = Vector.get_sum(vectors)
         x = vector_sum.dx / len(vectors)
         y = vector_sum.dy / len(vectors)

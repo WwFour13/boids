@@ -29,13 +29,15 @@ class Barrier(Balloon):
         image = pygame.transform.scale(self.IMAGE, (self.radius * 2, self.radius * 2))
         main_screen.blit(image, (self.x - self.radius, self.y - self.radius))
 
-    def pusher_scale(self, coordinates: tuple, sight_distance: float) -> Vector:
+    def get_boid_repulsion_force(self, coordinates: tuple, sight_distance: float) -> Vector | None:
         x, y = coordinates
         force = Vector(0, 0)
-        if dist := (math.dist(self.get_coordinates(), coordinates) - self.radius) < sight_distance:
+        if dist := (math.dist(self.get_coordinates(), coordinates) - self.radius) <= sight_distance:
             weight = (sight_distance - dist) ** 2
             force.dx = x - self.x
             force.dy = self.y - y
             force.set_magnitude(weight)
 
-        return force * 100
+            return force * 100
+
+        return None
