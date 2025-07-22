@@ -5,6 +5,8 @@ import pygame
 import random
 
 from calculations.vector import Vector
+from calculations.coloring import draw_soft_circle
+
 from entities.balloon import Balloon
 from entity import Entity
 from surfaces import main_screen, main_screen_width, main_screen_height
@@ -60,14 +62,14 @@ class Cloud(Balloon):
         pygame.draw.circle(circle_surface, self.color, (self.radius, self.radius), self.radius)
         main_screen.blit(circle_surface, (self.x - self.radius, self.y - self.radius))
 
-        # drawing the looping circle + direction
-        x = (self.x + self.radius) % main_screen_width - self.radius
-        y = (self.y + self.radius) % main_screen_height - self.radius
-        if (x, y) != (self.x, self.y):
-            main_screen.blit(circle_surface, (x - self.radius, y - self.radius))
+        if self.x + self.radius >= main_screen_width:
+            main_screen.blit(circle_surface, (self.x - self.radius - main_screen_width, self.y - self.radius))
 
-        # drawing the looping circle - direction
-        x = (self.x - self.radius) % main_screen_width + self.radius
-        y = (self.y - self.radius) % main_screen_height + self.radius
-        if (x, y) != (self.x, self.y):
-            main_screen.blit(circle_surface, (x - self.radius, y - self.radius))
+        if self.x - self.radius <= 0:
+            main_screen.blit(circle_surface, (self.x - self.radius + main_screen_width, self.y - self.radius))
+
+        if self.y + self.radius >= main_screen_height:
+            main_screen.blit(circle_surface, (self.x - self.radius, self.y - self.radius - main_screen_height))
+
+        if self.y - self.radius <= 0:
+            main_screen.blit(circle_surface, (self.x - self.radius, self.y - self.radius + main_screen_height))
