@@ -124,11 +124,25 @@ class Boid(Entity):
             self.direction.dy *= -1
             self.y = main_screen_height
 
+    def get_cloud_repulsion_force(self, cloud_coordinates: tuple, cloud_radius: float) -> Vector | None:
+        x, y = cloud_coordinates
+        force = Vector(0, 0)
+        if dist := (math.dist(self.get_coordinates(), cloud_coordinates)) < cloud_radius:
+            weight = (cloud_radius - dist) ** 1.7
+            force.dx = x - self.x
+            force.dy = self.y - y
+            force.set_magnitude(weight)
+
+            return force
+
+        return None
+
+
     def get_boid_repulsion_force(self, coordinates: tuple, sight_distance: float) -> Vector | None:
         x, y = coordinates
         force = Vector(0, 0)
         if dist := (math.dist(self.get_coordinates(), coordinates)) < PERSONAL_SPACE:
-            weight = (SIGHT_DISTANCE - dist) ** 2
+            weight = (sight_distance - dist) ** 1.8
             force.dx = x - self.x
             force.dy = self.y - y
             force.set_magnitude(weight)

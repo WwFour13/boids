@@ -25,11 +25,18 @@ class Entity:
     def draw(self):
         raise NotImplemented("Draw method not implemented")
 
-    def get_boid_attraction_point(self, coordinates: tuple, sight_distance: float) -> tuple[float, float] | None:
+    def get_boid_attraction_point(self, boid_coordinates: tuple, sight_distance: float) -> tuple[float, float] | None:
         return None
 
-    def get_boid_repulsion_force(self, coordinates: tuple, sight_distance: float) -> Vector | None:
+    def get_boid_repulsion_force(self, boid_coordinates: tuple, sight_distance: float) -> Vector | None:
         return None
 
-    def get_boid_pointer_force(self, coordinates: tuple, sight_distance: float) -> Vector | None:
+    def get_boid_pointer_force(self, boid_coordinates: tuple, sight_distance: float) -> Vector | None:
         return None
+
+    def get_cloud_repulsion_force(self, cloud_coordinates: tuple, cloud_radius: float) -> Vector | None:
+        return None
+
+    def get_cloud_merge_point(self, cloud_coordinates: tuple, cloud_radius: float) -> tuple[float, float] | None:
+        return None
+

@@ -73,9 +73,7 @@ def main():
             boid.draw()
 
         for cloud in clouds:
-            cloud.move(chunks.get_chunks_data(cloud, 1),
-                       dt,
-                       run_time_seconds)
+            cloud.move(run_time_seconds=run_time_seconds,dt=dt)
             cloud.draw()
 
         for b in action_buttons:
