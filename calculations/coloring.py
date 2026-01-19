@@ -1,4 +1,6 @@
+import pygame
 import colorsys
+import math
 from functools import lru_cache
 
 
@@ -22,6 +24,29 @@ def get_cyclical_rgb(seconds: float):
     s = color_strength
     v = color_brightness
     return normalize_hsv_to_rgb((h, s, v))
+
+
+def draw_soft_circle(target_surf, center, radius, blend_increment, blend_amount: int, color: tuple[int, int, int, int]):
+
+    # Create a transparent surface large enough to hold the full fuzzy circle
+    diameter = math.ceil(radius * 2)
+    soft_surf = pygame.Surface((diameter, diameter), pygame.SRCALPHA)
+
+    center_pos = (diameter // 2, diameter // 2)
+    for i in range(blend_amount):
+        r = radius - i * blend_increment
+        pygame.draw.circle(
+            soft_surf,
+            color,
+            center_pos,
+            r
+        )
+
+    target_surf.blit(
+        soft_surf,
+        (center[0] - diameter // 2, center[1] - diameter // 2),
+        special_flags=pygame.BLEND_PREMULTIPLIED
+    )
 
 
 @lru_cache(maxsize=None)

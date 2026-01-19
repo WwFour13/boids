@@ -15,17 +15,20 @@ class Cloud(Balloon):
 
     IMAGE = pygame.image.load("sprites/cloud.png")
 
-    HORIZONTAL_DRIFT_SPEED = 20
+    MAX_SPEED = 30
+    HORIZONTAL_DRIFT_SPEED = 15
+
     AMPLITUDE = 2
     CYCLE_SECONDS = 3
     WAVE_LENGTH = 2 * math.pi / CYCLE_SECONDS
     BORDER_THICKNESS = 3
+
     OVERLAP_BLOCK_PERCENT = 0.8
 
     def __init__(self,
                  x: float,
                  y: float,
-                 direction: Vector = Vector(0,0),
+                 direction: Vector = Vector(0, 0),
                  radius: float = 0.0):
 
         self.image = pygame.transform.scale(self.IMAGE, (0, 0))
@@ -35,7 +38,6 @@ class Cloud(Balloon):
         self.color = (c, c, c)
         self.MAX_RADIUS = 20
         self.MIN_RADIUS = 6
-
 
     def get_cloud_merge_point(self, cloud_coordinates: tuple, cloud_radius: float) -> tuple[float, float] | None:
         direction_to_self = Vector(
@@ -49,28 +51,59 @@ class Cloud(Balloon):
         merge_point = cloud_coordinates[0] + direction_to_self.dx, cloud_coordinates[1] + direction_to_self.dy
         return merge_point
 
-
     def move(self,
              dt,
              run_time_seconds):
 
-        #self.x += self.direction.dx
-        #self.y -= self.direction.dy
-
+        # Natural breeze
         self.x += self.HORIZONTAL_DRIFT_SPEED * dt
         self.y += math.sin(run_time_seconds * self.WAVE_LENGTH) * self.AMPLITUDE
 
+        self.x += self.direction.dx * dt
+        self.y -= self.direction.dy * dt
+
         self.x %= main_screen_width
         self.y %= main_screen_height
-
 
     def drift(self,
               chunk: list[Entity],
               dt,):
 
-        points = [elem.get_cloud_merge_point for elem in chunk]
+        merge_points = []
+        alignment_forces = []
 
+        for elem in chunk:
+            if elem != self:
+                if (p := elem.get_cloud_merge_point(self.get_coordinates(), self.radius)) is not None:
+                    merge_points.append(p)
 
+                if (p := elem.get_cloud_repulsion_force(self.get_coordinates(), self.radius)) is not None:
+                    alignment_forces.append(p)
+
+        force = Vector()
+
+        closest_val = main_screen_width
+        closest_points = []
+        for p in merge_points:
+            dist = math.dist(self.get_coordinates(), p)
+            if dist < closest_val:
+                closest_val = dist
+                closest_points = [p]
+
+        avg = Vector.get_average([Vector(p[0], p[1]) for p in closest_points])
+        #pygame.draw.circle(main_screen, (200, 200, 200), (avg.dx, avg.dy), 2)
+        to_average_position = Vector(avg.dx - self.x, avg.dy - self.y)
+        #to_average_position -= to_average_position.get_unit_vector() * self.BORDER_THICKNESS
+        merge_force = to_average_position - self.direction
+        force += merge_force
+
+        avg = Vector.get_average(alignment_forces)
+        alignment_force = avg - self.direction
+        force += alignment_force * 2
+
+        self.direction += force
+
+        self.direction.clamp_magnitude(self.MAX_SPEED)
 
     def draw(self):
 
@@ -80,7 +113,8 @@ class Cloud(Balloon):
         circle_surface = pygame.Surface((2 * self.radius, 2 * self.radius), pygame.SRCALPHA)
 
         pygame.draw.circle(circle_surface, self.color, (self.radius, self.radius), self.radius)
-        pygame.draw.circle(circle_surface, tuple((v-20) for v in self.color), (self.radius, self.radius), self.radius, self.BORDER_THICKNESS)
+        pygame.draw.circle(circle_surface, tuple((v-20) for v in self.color), (self.radius, self.radius),
+                           self.radius, self.BORDER_THICKNESS)
         main_screen.blit(circle_surface, (self.x - self.radius, self.y - self.radius))
 
         if self.x + self.radius >= main_screen_width:

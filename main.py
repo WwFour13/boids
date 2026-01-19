@@ -4,8 +4,6 @@ import pygame
 
 from surfaces import main_screen
 
-from calculations.coloring import get_cyclical_rgb
-
 from UI.IO import update_current_balloon, is_holding_balloon, handle_event, action_buttons, sliders
 
 from game_state import chunks, objects
@@ -47,7 +45,7 @@ def main():
 
             handle_event(event)
 
-        main_screen.fill(get_cyclical_rgb(run_time_seconds))
+        main_screen.fill((30, 30, 30))
 
         update_current_balloon(dt)
         chunks.update_chunks_data(*boids, *barriers, *clouds)
@@ -55,8 +53,8 @@ def main():
         if not is_holding_balloon():
             objects.remove_small_balloons()
 
-        for boid in boids:
-            boid.draw_trace()
+        # for boid in boids:
+        #     boid.draw_trace()
 
         for boid in boids:
             boid.flock(chunks.get_chunks_data(boid, 1),
@@ -73,7 +71,8 @@ def main():
             boid.draw()
 
         for cloud in clouds:
-            cloud.move(run_time_seconds=run_time_seconds,dt=dt)
+            cloud.drift(chunks.get_chunks_data(cloud, 1), dt)
+            cloud.move(run_time_seconds=run_time_seconds, dt=dt)
             cloud.draw()
 
         for b in action_buttons:

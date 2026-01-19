@@ -33,7 +33,7 @@ GRADIENT_COLORING = True
 
 REPLACE_COLOR = (255, 255, 255)
 
-TARGET_NEIGHBOUR_COUNT = 10
+TARGET_NEIGHBOUR_COUNT = 15
 TOGETHER_COLOR = (89, 121, 181)
 ALONE_COLOR = (166, 75, 126)
 
@@ -127,8 +127,8 @@ class Boid(Entity):
     def get_cloud_repulsion_force(self, cloud_coordinates: tuple, cloud_radius: float) -> Vector | None:
         x, y = cloud_coordinates
         force = Vector(0, 0)
-        if dist := (math.dist(self.get_coordinates(), cloud_coordinates)) < cloud_radius:
-            weight = (cloud_radius - dist) ** 1.7
+        if dist := (math.dist(self.get_coordinates(), cloud_coordinates)) < 2*cloud_radius:
+            weight = (2*cloud_radius - dist) ** 1.7
             force.dx = x - self.x
             force.dy = self.y - y
             force.set_magnitude(weight)
@@ -136,7 +136,6 @@ class Boid(Entity):
             return force
 
         return None
-
 
     def get_boid_repulsion_force(self, coordinates: tuple, sight_distance: float) -> Vector | None:
         x, y = coordinates
@@ -249,7 +248,7 @@ class Boid(Entity):
         if GRADIENT_COLORING:
             neighbor_percentage = min((self.neighbors_count / TARGET_NEIGHBOUR_COUNT), 1)
             self.color = interpolate_color(ALONE_COLOR, TOGETHER_COLOR, neighbor_percentage)
-            image = replace_color(image, old_color=REPLACE_COLOR, new_color=self.color)
+            image = replace_color(image, old_color=(255, 255, 255), new_color=(205, 205, 180))
 
         if quadrant in (1, 4):
             image = pygame.transform.rotate(image, math.degrees(rad))
@@ -266,9 +265,15 @@ class Boid(Entity):
 
     def draw_sight(self):
 
+        color = SIGHT_COLOR
+
+        if GRADIENT_COLORING:
+            neighbor_percentage = min((self.neighbors_count / TARGET_NEIGHBOUR_COUNT), 1)
+            color = interpolate_color(ALONE_COLOR, TOGETHER_COLOR, neighbor_percentage)
+
         surface = pygame.Surface((SIGHT_DISTANCE * 2, SIGHT_DISTANCE * 2), pygame.SRCALPHA)
         (pygame.draw.circle
-         (surface, color=(*SIGHT_COLOR, SIGHT_ALPHA), center=(SIGHT_DISTANCE, SIGHT_DISTANCE), radius=SIGHT_DISTANCE))
+         (surface, color=(*color, SIGHT_ALPHA), center=(SIGHT_DISTANCE, SIGHT_DISTANCE), radius=SIGHT_DISTANCE))
         main_screen.blit(surface, (self.x - SIGHT_DISTANCE, self.y - SIGHT_DISTANCE))
 
     def draw_personal_space(self):

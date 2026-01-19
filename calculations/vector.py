@@ -96,3 +96,6 @@ class Vector:
         x = vector_sum.dx / len(vectors)
         y = vector_sum.dy / len(vectors)
         return Vector(x, y)
+
+    def get_unit_vector(self):
+        return Vector(self.dx / self.get_magnitude(), self.dy / self.get_magnitude())
