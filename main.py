@@ -4,7 +4,7 @@ import pygame
 
 from surfaces import main_screen
 
-from UI.IO import update_current_balloon, is_holding_balloon, handle_event, action_buttons, sliders
+from UI.IO import update_current_balloon, is_holding_balloon, handle_event, action_buttons, sliders, toggle_drawing_buttons
 
 from game_state import chunks, objects
 from game_state.objects import boids, barriers, clouds
@@ -63,19 +63,29 @@ def main():
                        alignment_factor=sliders[1].value,
                        cohesion_factor=sliders[2].value)
             boid.move(dt)
-            boid.draw_sight()
+            if toggle_drawing_buttons[3].is_pressed:
+                boid.draw_sight()
 
         for bar in barriers:
-            bar.draw()
+            if toggle_drawing_buttons[1].is_pressed:
+                bar.draw()
+
         for boid in boids:
-            boid.draw()
+            if toggle_drawing_buttons[0].is_pressed:
+                boid.draw()
 
         for cloud in clouds:
             cloud.drift(chunks.get_chunks_data(cloud, 1), dt)
             cloud.move(run_time_seconds=run_time_seconds, dt=dt)
-            cloud.draw()
+            if toggle_drawing_buttons[2].is_pressed:
+                cloud.draw()
 
         for b in action_buttons:
+            b.update()
+            b.draw()
+            b.draw_outline()
+
+        for b in toggle_drawing_buttons:
             b.update()
             b.draw()
             b.draw_outline()

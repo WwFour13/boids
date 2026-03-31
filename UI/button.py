@@ -14,6 +14,8 @@ class Button:
         self.rect = self.BASE_IMAGE.get_rect()
         self.rect.topleft = (x, y)
         self.hover_color = hover_color
+        self.outline_color = (200, 200, 200)
+        self.outline_color_pressed = (240, 232, 10)
 
         self.is_pressed = False
         self.spring_up_on_update = spring_up_on_update
@@ -27,7 +29,7 @@ class Button:
             if click_coordinates is not None and self.intersects(click_coordinates):
                 self.is_pressed = True
         else:
-            if self.intersects(click_coordinates):
+            if click_coordinates is not None and self.intersects(click_coordinates):
                 self.is_pressed = not self.is_pressed
 
     def draw(self):
@@ -40,4 +42,9 @@ class Button:
         main_screen.blit(image, (self.x, self.y))
 
     def draw_outline(self):
-        pygame.draw.rect(main_screen, (0, 0, 0), self.rect, 2)
+        color = self.outline_color
+        if self.is_pressed or self.intersects(pygame.mouse.get_pos()):
+            color = self.hover_color
+        if (not self.spring_up_on_update) and self.is_pressed:
+            color = self.outline_color_pressed
+        pygame.draw.rect(main_screen, color, self.rect, 2)

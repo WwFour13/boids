@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e12f0e32-0049-4035-999e-35c3970cb348" name="Changes" comment="improved slider 3">
+    <list default="true" id="e12f0e32-0049-4035-999e-35c3970cb348" name="Changes" comment="new cloud look + stucture for cloud movement">
       <change beforePath="$PROJECT_DIR$/.idea/boids.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/boids.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI/IO.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/IO.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI/button.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/button.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UI/slider.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/slider.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,15 +33,19 @@
     &quot;assignee&quot;: &quot;WwFour13&quot;
   }
 }</component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="games" />
+      </list>
+    </option>
+  </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/WwFour13/boids&quot;,
-    &quot;accountId&quot;: &quot;aa5b62a2-d106-4c69-8722-15b14d44a074&quot;
+    &quot;url&quot;: &quot;https://github.com/WwFour13/boids.git&quot;,
+    &quot;accountId&quot;: &quot;c4313fc0-b7da-48ee-8fee-6cb3bba72b35&quot;
   }
 }</component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -51,19 +54,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.barrier.executor&quot;: &quot;Run&quot;,
-    &quot;Python.boid.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.surfaces.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/dev/boids/main.py&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.barrier.executor": "Run",
+    "Python.boid.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.surfaces.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/dev/boids/main.py",
+    "settings.editor.selected.configurable": "editor.preferences.completion"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="boids" />
@@ -75,7 +78,7 @@
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
@@ -91,7 +94,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-eebebe6c2be4-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.15325.20" />
+        <option value="bundled-python-sdk-fc1d50d2d915-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.24978.54" />
       </set>
     </attachedChunks>
   </component>
@@ -144,7 +147,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735100457967</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="new cloud look + stucture for cloud movement">
+      <option name="closed" value="true" />
+      <created>1758041634989</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1758041634989</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -153,6 +164,8 @@
     <MESSAGE value="improved slider sprites" />
     <MESSAGE value="improved slider sprites 2" />
     <MESSAGE value="improved slider 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="improved slider 3" />
+    <MESSAGE value="fixed alignment distancing" />
+    <MESSAGE value="new cloud look + stucture for cloud movement" />
+    <option name="LAST_COMMIT_MESSAGE" value="new cloud look + stucture for cloud movement" />
   </component>
 </project>

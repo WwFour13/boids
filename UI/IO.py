@@ -82,7 +82,7 @@ action_buttons = [
            key=pygame.K_BACKSPACE),
 
     Button(main_screen_width - 120, main_screen_height - 60, 50, 50,
-           pygame.image.load("sprites/arrow.png"),
+           pygame.image.load("sprites/arrow_white_center.png"),
            key=pygame.K_b),
     Button(main_screen_width - 180, main_screen_height - 60, 50, 50,
            pygame.image.load("sprites/barrier.png"),
@@ -92,6 +92,22 @@ action_buttons = [
            pygame.image.load("sprites/cloud.png"),
            key=pygame.K_c),
 ]
+
+toggle_drawing_buttons = [
+
+    Button(150, main_screen_height - 30, 20, 20,
+           pygame.image.load("sprites/arrow_white_center.png"), spring_up_on_update=False),
+
+    Button(180, main_screen_height - 30, 20, 20,
+           pygame.image.load("sprites/barrier.png"), spring_up_on_update=False),
+
+    Button(210, main_screen_height - 30, 20, 20,
+           pygame.image.load("sprites/cloud.png"), spring_up_on_update=False),
+
+    Button(240, main_screen_height - 30, 20, 20,
+           pygame.image.load("sprites/boid_vision.png"), spring_up_on_update=False),
+]
+
 
 sliders = [
     Slider(30, main_screen_height - 40, 100, 30,
@@ -143,6 +159,9 @@ def handle_event(event):
             b.update(event.pos)
             if b.is_pressed:
                 set_key(b.key)
+
+        for b in toggle_drawing_buttons:
+            b.update(event.pos)
 
         if True not in [b.is_pressed for b in action_buttons]:
             action: callable = key_binds.get(get_key(), default_bind)
