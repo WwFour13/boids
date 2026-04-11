@@ -2,13 +2,11 @@ import sys
 
 import pygame
 
-from surfaces import main_screen
-
-from UI.IO import update_current_balloon, is_holding_balloon, handle_event, action_buttons, sliders, toggle_drawing_buttons
-
+from UI.IO import update_current_balloon, is_holding_balloon, handle_event, action_buttons, sliders, \
+    toggle_drawing_buttons, pause_button
 from game_state import chunks, objects
 from game_state.objects import boids, barriers, clouds
-
+from surfaces import main_screen
 
 FPS = 30
 dt = 1 / FPS
@@ -57,12 +55,13 @@ def main():
         #     boid.draw_trace()
 
         for boid in boids:
-            boid.flock(chunks.get_chunks_data(boid, 1),
-                       dt,
-                       separation_factor=sliders[0].value,
-                       alignment_factor=sliders[1].value,
-                       cohesion_factor=sliders[2].value)
-            boid.move(dt)
+            if not pause_button.is_pressed:
+                boid.flock(chunks.get_chunks_data(boid, 1),
+                           dt,
+                           separation_factor=sliders[0].value,
+                           alignment_factor=sliders[1].value,
+                           cohesion_factor=sliders[2].value)
+                boid.move(dt)
             if toggle_drawing_buttons[3].is_pressed:
                 boid.draw_sight()
 
@@ -75,10 +74,13 @@ def main():
                 boid.draw()
 
         for cloud in clouds:
-            cloud.drift(chunks.get_chunks_data(cloud, 1), dt)
-            cloud.move(run_time_seconds=run_time_seconds, dt=dt)
+            if not pause_button.is_pressed:
+                cloud.drift(chunks.get_chunks_data(cloud, 1), dt)
+                cloud.move(run_time_seconds=run_time_seconds, dt=dt)
             if toggle_drawing_buttons[2].is_pressed:
                 cloud.draw()
+
+        pause_button.draw()
 
         for b in action_buttons:
             b.update()
@@ -86,7 +88,6 @@ def main():
             b.draw_outline()
 
         for b in toggle_drawing_buttons:
-            b.update()
             b.draw()
             b.draw_outline()
 

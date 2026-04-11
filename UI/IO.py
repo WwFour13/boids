@@ -14,7 +14,7 @@ from UI.button import Button
 from UI.slider import Slider
 
 current_balloon: Balloon | None = None
-last_key = None
+last_keybind = None
 
 
 def reset_balloon():
@@ -26,13 +26,13 @@ def is_holding_balloon():
     return current_balloon is not None
 
 
-def get_key():
-    return last_key
+def get_current_action_from_keybind():
+    return last_keybind
 
 
-def set_key(key):
-    global last_key
-    last_key = key
+def set_keybind(key):
+    global last_keybind
+    last_keybind = key
 
 
 def update_current_balloon(dt):
@@ -108,6 +108,17 @@ toggle_drawing_buttons = [
            pygame.image.load("sprites/boid_vision.png"), spring_up_on_update=False),
 ]
 
+toggle_drawing_buttons[0].is_pressed = True
+toggle_drawing_buttons[1].is_pressed = True
+toggle_drawing_buttons[2].is_pressed = True
+
+pause_button = (Button(10, 10, 50, 50,
+                       pygame.image.load("sprites/unpaused.png"),
+                       key=pygame.K_SPACE,
+                       spring_up_on_update=False,
+                       pressed_image=pygame.image.load("sprites/paused.png"),
+                       )
+                )
 
 sliders = [
     Slider(30, main_screen_height - 40, 100, 30,
@@ -140,15 +151,23 @@ def handle_event(event):
     global default_bind
 
     if event.type == KEYDOWN:
+
+        if event.key == pause_button.key:
+            pause_button.is_pressed = not pause_button.is_pressed
+
         for b in action_buttons:
             b.update()
-        set_key(event.key)
+        set_keybind(event.key)
 
     if event.type == KEYUP:
-        if event.key == get_key():
-            set_key(None)
+        if event.key == get_current_action_from_keybind():
+            set_keybind(None)
 
     if event.type == MOUSEBUTTONDOWN:
+
+        pause_button.update(event.pos)
+        if pause_button.intersects(event.pos):
+            return
 
         for s in sliders:
             s.handle_click(event.pos)
@@ -158,14 +177,17 @@ def handle_event(event):
         for b in action_buttons:
             b.update(event.pos)
             if b.is_pressed:
-                set_key(b.key)
+                set_keybind(b.key)
+                return
 
         for b in toggle_drawing_buttons:
             b.update(event.pos)
+            if b.intersects(event.pos):
+                return
 
         if True not in [b.is_pressed for b in action_buttons]:
-            action: callable = key_binds.get(get_key(), default_bind)
-            x, y = pygame.mouse.get_pos()
+            action: callable = key_binds.get(get_current_action_from_keybind(), default_bind)
+            x, y = event.pos
             action(x, y)
 
     if event.type == MOUSEBUTTONUP:

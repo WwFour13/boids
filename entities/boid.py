@@ -127,11 +127,12 @@ class Boid(Entity):
     def get_cloud_repulsion_force(self, cloud_coordinates: tuple, cloud_radius: float) -> Vector | None:
         x, y = cloud_coordinates
         force = Vector(0, 0)
-        if dist := (math.dist(self.get_coordinates(), cloud_coordinates)) < 2*cloud_radius:
-            weight = (2*cloud_radius - dist) ** 1.7
+        if dist := (math.dist(self.get_coordinates(), cloud_coordinates)) < 2 * cloud_radius:
+            weight = (2 * cloud_radius - dist) ** 1.7
             force.dx = x - self.x
             force.dy = self.y - y
             force.set_magnitude(weight)
+            force.set_radians(self.get_radians())
 
             return force
 
@@ -226,6 +227,8 @@ class Boid(Entity):
         separation_force = Vector.get_sum(separation_forces)
         force += separation_force * separation_factor
         force += self.get_wall_avoidance_force() * WALL_FACTOR
+
+        force *= dt
 
         force.clamp_magnitude(MAX_FORCE)
         self.direction += force

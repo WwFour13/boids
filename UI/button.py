@@ -4,20 +4,25 @@ from surfaces import main_screen
 
 class Button:
 
-    def __init__(self, x, y, width, height, image, key=None, hover_color=(100, 100, 100), spring_up_on_update=True):
+    def __init__(self, x, y, width, height, image, key=None,
+                 spring_up_on_update=True,
+                 pressed_image=None):
         self.key = key
         self.x = x
         self.y = y
         self.width = width
         self.height = height
-        self.BASE_IMAGE = pygame.transform.scale(image, (width, height))
-        self.rect = self.BASE_IMAGE.get_rect()
+        self.base_image = pygame.transform.scale(image, (width, height))
+        self.rect = self.base_image.get_rect()
         self.rect.topleft = (x, y)
-        self.hover_color = hover_color
         self.outline_color = (200, 200, 200)
         self.outline_color_pressed = (240, 232, 10)
+        self.outline_color_hover = (100, 100, 100)
 
         self.is_pressed = False
+        self.pressed_image = None
+        if pressed_image:
+            self.pressed_image = pygame.transform.scale(pressed_image, (width, height))
         self.spring_up_on_update = spring_up_on_update
 
     def intersects(self, other_coordinates):
@@ -34,17 +39,15 @@ class Button:
 
     def draw(self):
 
-        if self.is_pressed or self.intersects(pygame.mouse.get_pos()):
-            image = self.BASE_IMAGE.copy()
-            image.fill(self.hover_color, special_flags=pygame.BLEND_RGB_ADD)
-        else:
-            image = self.BASE_IMAGE
+        image = self.base_image
+        if self.is_pressed and self.pressed_image is not None:
+            image = self.pressed_image
         main_screen.blit(image, (self.x, self.y))
 
     def draw_outline(self):
         color = self.outline_color
         if self.is_pressed or self.intersects(pygame.mouse.get_pos()):
-            color = self.hover_color
+            color = self.outline_color_hover
         if (not self.spring_up_on_update) and self.is_pressed:
             color = self.outline_color_pressed
         pygame.draw.rect(main_screen, color, self.rect, 2)
