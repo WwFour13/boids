@@ -4,7 +4,7 @@ import pygame
 
 from entities.balloon import Balloon
 from surfaces import main_screen
-from vector import Vector
+from calculations.vector import Vector
 
 
 class Barrier(Balloon):

@@ -1,4 +1,4 @@
-from vector import Vector
+from calculations.vector import Vector
 
 
 class Entity:

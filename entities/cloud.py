@@ -7,7 +7,7 @@ import random
 from calculations.vector import Vector
 
 from entities.balloon import Balloon
-from entity import Entity
+from entities.entity import Entity
 from surfaces import main_screen, main_screen_width, main_screen_height
 
 

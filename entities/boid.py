@@ -75,6 +75,7 @@ class Boid(Entity):
         self.image = IMAGE
 
         self.neighbors_count = 0
+        self.neighbors: list[Entity] = []
         self.color = (0, 0, 0)
         self.coloring_pending_seconds = 0.0
 
@@ -194,6 +195,7 @@ class Boid(Entity):
         alignment_forces = []  # data for the alignment behavior
         separation_forces = []  # data for the separation behavior
         cohesion_points = []  # data for the cohesion behavior
+        self.neighbors = []
 
         # Extracting information from the chunk elements
         for elem in chunk:
@@ -201,6 +203,7 @@ class Boid(Entity):
 
                 if (f := elem.get_boid_pointer_force(self.get_coordinates(), SIGHT_DISTANCE)) is not None:
                     alignment_forces.append(f)
+                    self.neighbors.append(elem)
 
                 if (p := elem.get_boid_attraction_point(self.get_coordinates(), SIGHT_DISTANCE)) is not None:
                     cohesion_points.append(p)
@@ -278,6 +281,28 @@ class Boid(Entity):
         (pygame.draw.circle
          (surface, color=(*color, SIGHT_ALPHA), center=(SIGHT_DISTANCE, SIGHT_DISTANCE), radius=SIGHT_DISTANCE))
         main_screen.blit(surface, (self.x - SIGHT_DISTANCE, self.y - SIGHT_DISTANCE))
+
+    def draw_interactions(self, selected_boid=None, draw_all=False):
+        if selected_boid is not None and self is not selected_boid:
+            return
+
+        for neighbor in self.neighbors:
+            if draw_all and id(self) > id(neighbor):
+                continue
+            pygame.draw.line(main_screen, (255, 220, 90),
+                             (self.x, self.y), (neighbor.x, neighbor.y), 1)
+
+    def draw_distance_checks(self, chunk, selected_boid=None):
+        if selected_boid is not None and self is not selected_boid:
+            return
+
+        for elem in chunk:
+            if elem is self:
+                continue
+
+            if elem.get_boid_pointer_force(elem.get_coordinates(), 0) is not None:
+                pygame.draw.line(main_screen, (120, 120, 120),
+                                 (self.x, self.y), elem.get_coordinates(), 1)
 
     def draw_personal_space(self):
         pygame.draw.circle(main_screen, PERSONAL_SPACE_COLOR, self.get_coordinates(), PERSONAL_SPACE)

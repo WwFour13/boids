@@ -15,6 +15,9 @@ from UI.slider import Slider
 
 current_balloon: Balloon | None = None
 last_keybind = None
+selected_boid: Boid | None = None
+interaction_line_mode = 0
+interaction_line_mode_names = ("off", "all", "selected", "checks", "selected checks")
 
 
 def reset_balloon():
@@ -106,11 +109,22 @@ toggle_drawing_buttons = [
 
     Button(240, main_screen_height - 30, 20, 20,
            pygame.image.load("sprites/boid_vision.png"), spring_up_on_update=False),
+
+    Button(270, main_screen_height - 30, 20, 20,
+            pygame.image.load("sprites/chunk_grid.png"),
+           key=pygame.K_g, spring_up_on_update=False),
 ]
 
 toggle_drawing_buttons[0].is_pressed = True
 toggle_drawing_buttons[1].is_pressed = True
 toggle_drawing_buttons[2].is_pressed = True
+
+interaction_lines_button = Button(
+    300, main_screen_height - 30, 20, 20,
+    pygame.image.load("sprites/interaction_lines.png"),
+    key=pygame.K_l,
+    spring_up_on_update=False,
+)
 
 pause_button = (Button(10, 10, 50, 50,
                        pygame.image.load("sprites/unpaused.png"),
@@ -148,12 +162,20 @@ sliders = [
 
 
 def handle_event(event):
-    global default_bind
+    global default_bind, interaction_line_mode, selected_boid
 
     if event.type == KEYDOWN:
 
         if event.key == pause_button.key:
             pause_button.is_pressed = not pause_button.is_pressed
+
+        if event.key == interaction_lines_button.key:
+            interaction_line_mode = (interaction_line_mode + 1) % 5
+            selected_boid = None
+            interaction_lines_button.is_pressed = interaction_line_mode != 0
+
+        if event.key == toggle_drawing_buttons[4].key:
+            toggle_drawing_buttons[4].update()
 
         for b in action_buttons:
             b.update()
@@ -167,6 +189,12 @@ def handle_event(event):
 
         pause_button.update(event.pos)
         if pause_button.intersects(event.pos):
+            return
+
+        if interaction_lines_button.intersects(event.pos):
+            interaction_line_mode = (interaction_line_mode + 1) % 5
+            selected_boid = None
+            interaction_lines_button.is_pressed = interaction_line_mode != 0
             return
 
         for s in sliders:
@@ -185,6 +213,12 @@ def handle_event(event):
             if b.intersects(event.pos):
                 return
 
+        if interaction_line_mode in (2, 4):
+            for boid in boids:
+                if boid.intersects(event.pos):
+                    selected_boid = boid
+                    return
+
         if True not in [b.is_pressed for b in action_buttons]:
             action: callable = key_binds.get(get_current_action_from_keybind(), default_bind)
             x, y = event.pos
@@ -194,3 +228,17 @@ def handle_event(event):
         reset_balloon()
         for s in sliders:
             s.release()
+
+
+def get_interaction_line_mode():
+    return interaction_line_mode
+
+
+def get_interaction_line_mode_name():
+    return interaction_line_mode_names[interaction_line_mode]
+
+
+def get_selected_boid():
+    return selected_boid
+
+
