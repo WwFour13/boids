@@ -2,6 +2,7 @@ import sys
 
 import pygame
 
+from entities.boid import SIGHT_DISTANCE
 from UI.IO import update_current_balloon, is_holding_balloon, handle_event, action_buttons, sliders, \
     toggle_drawing_buttons, pause_button, interaction_lines_button, get_interaction_line_mode, \
     get_interaction_line_mode_name, get_selected_boid
@@ -27,11 +28,11 @@ BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
 
-
 def main():
     global run_time_seconds
 
     objects.init()
+    chunks.set_chunk_size(sliders["chunk_size"].get_value())
     chunks.update_chunks_data(*boids, *barriers, *clouds)
 
     while True:
@@ -47,7 +48,10 @@ def main():
 
         main_screen.fill((30, 30, 30))
 
-        if toggle_drawing_buttons[4].is_pressed:
+        chunks.set_chunk_size(sliders["chunk_size"].get_value())
+        chunk_radius = chunks.get_required_radius(SIGHT_DISTANCE)
+
+        if toggle_drawing_buttons["grid"].is_pressed:
             chunks.draw_grid()
 
         update_current_balloon(dt)
@@ -60,48 +64,53 @@ def main():
         #     boid.draw_trace()
 
         for boid in boids:
+            selected_boid = get_selected_boid()
+            if (toggle_drawing_buttons["grid"].is_pressed and
+                    get_interaction_line_mode() in (2, 4) and selected_boid is boid):
+                chunks.draw_chunk_highlight(boid, chunk_radius)
             if not pause_button.is_pressed:
-                boid.flock(chunks.get_chunks_data(boid, 1),
+                boid.flock(chunks.get_chunks_data(boid, chunk_radius),
                            dt,
-                           separation_factor=sliders[0].value,
-                           alignment_factor=sliders[1].value,
-                           cohesion_factor=sliders[2].value)
+                           separation_factor=sliders["separation"].value,
+                           alignment_factor=sliders["alignment"].value,
+                           cohesion_factor=sliders["cohesion"].value)
                 boid.move(dt)
-            if toggle_drawing_buttons[3].is_pressed:
+            if (toggle_drawing_buttons["sight"].is_pressed and
+                    (selected_boid is None or selected_boid is boid)):
                 boid.draw_sight()
             if get_interaction_line_mode() == 1:
                 boid.draw_interactions(draw_all=True)
             elif get_interaction_line_mode() == 2:
                 boid.draw_interactions(selected_boid=get_selected_boid())
             elif get_interaction_line_mode() == 3:
-                boid.draw_distance_checks(chunks.get_chunks_data(boid, 1))
+                boid.draw_distance_checks(chunks.get_chunks_data(boid, chunk_radius))
             elif get_interaction_line_mode() == 4:
-                boid.draw_distance_checks(chunks.get_chunks_data(boid, 1),
+                boid.draw_distance_checks(chunks.get_chunks_data(boid, chunk_radius),
                                           selected_boid=get_selected_boid())
 
         for bar in barriers:
-            if toggle_drawing_buttons[1].is_pressed:
+            if toggle_drawing_buttons["barriers"].is_pressed:
                 bar.draw()
 
         for boid in boids:
-            if toggle_drawing_buttons[0].is_pressed:
+            if toggle_drawing_buttons["boids"].is_pressed:
                 boid.draw()
 
         for cloud in clouds:
             if not pause_button.is_pressed:
-                cloud.drift(chunks.get_chunks_data(cloud, 1), dt)
+                cloud.drift(chunks.get_chunks_data(cloud, chunk_radius), dt)
                 cloud.move(run_time_seconds=run_time_seconds, dt=dt)
-            if toggle_drawing_buttons[2].is_pressed:
+            if toggle_drawing_buttons["clouds"].is_pressed:
                 cloud.draw()
 
         pause_button.draw()
 
-        for b in action_buttons:
+        for b in action_buttons.values():
             b.update()
             b.draw()
             b.draw_outline()
 
-        for b in toggle_drawing_buttons:
+        for b in toggle_drawing_buttons.values():
             b.draw()
             b.draw_outline()
 
@@ -111,7 +120,7 @@ def main():
             f"Lines: {get_interaction_line_mode_name()}", True, (220, 220, 220))
         main_screen.blit(interaction_line_label, (325, main_screen_height - 28))
 
-        for s in sliders:
+        for s in sliders.values():
             s.update()
             s.draw()
 

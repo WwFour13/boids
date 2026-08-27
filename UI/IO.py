@@ -79,45 +79,38 @@ key_binds: dict[int | None, callable] = {
     pygame.K_BACKSPACE: remove_element,
 }
 
-action_buttons = [
-    Button(main_screen_width - 60, main_screen_height - 60, 50, 50,
-           pygame.image.load("sprites/backspace.png"),
-           key=pygame.K_BACKSPACE),
+action_buttons = {
+    "remove": Button(main_screen_width - 60, main_screen_height - 60, 50, 50,
+             pygame.image.load("sprites/backspace.png"),
+             key=pygame.K_BACKSPACE),
+    "boid": Button(main_screen_width - 120, main_screen_height - 60, 50, 50,
+             pygame.image.load("sprites/arrow_white_center.png"),
+             key=pygame.K_b),
+    "barrier": Button(main_screen_width - 180, main_screen_height - 60, 50, 50,
+             pygame.image.load("sprites/barrier.png"),
+             key=pygame.K_p),
+    "cloud": Button(main_screen_width - 240, main_screen_height - 60, 50, 50,
+              pygame.image.load("sprites/cloud.png"),
+              key=pygame.K_c),
+}
 
-    Button(main_screen_width - 120, main_screen_height - 60, 50, 50,
-           pygame.image.load("sprites/arrow_white_center.png"),
-           key=pygame.K_b),
-    Button(main_screen_width - 180, main_screen_height - 60, 50, 50,
-           pygame.image.load("sprites/barrier.png"),
-           key=pygame.K_p),
+toggle_drawing_buttons = {
+    "boids": Button(150, main_screen_height - 30, 20, 20,
+              pygame.image.load("sprites/arrow_white_center.png"), spring_up_on_update=False),
+    "barriers": Button(180, main_screen_height - 30, 20, 20,
+               pygame.image.load("sprites/barrier.png"), spring_up_on_update=False),
+    "clouds": Button(210, main_screen_height - 30, 20, 20,
+            pygame.image.load("sprites/cloud.png"), spring_up_on_update=False),
+    "sight": Button(240, main_screen_height - 30, 20, 20,
+              pygame.image.load("sprites/boid_vision.png"), spring_up_on_update=False),
+    "grid": Button(270, main_screen_height - 30, 20, 20,
+             pygame.image.load("sprites/chunk_grid.png"),
+             key=pygame.K_g, spring_up_on_update=False),
+}
 
-    Button(main_screen_width - 240, main_screen_height - 60, 50, 50,
-           pygame.image.load("sprites/cloud.png"),
-           key=pygame.K_c),
-]
-
-toggle_drawing_buttons = [
-
-    Button(150, main_screen_height - 30, 20, 20,
-           pygame.image.load("sprites/arrow_white_center.png"), spring_up_on_update=False),
-
-    Button(180, main_screen_height - 30, 20, 20,
-           pygame.image.load("sprites/barrier.png"), spring_up_on_update=False),
-
-    Button(210, main_screen_height - 30, 20, 20,
-           pygame.image.load("sprites/cloud.png"), spring_up_on_update=False),
-
-    Button(240, main_screen_height - 30, 20, 20,
-           pygame.image.load("sprites/boid_vision.png"), spring_up_on_update=False),
-
-    Button(270, main_screen_height - 30, 20, 20,
-            pygame.image.load("sprites/chunk_grid.png"),
-           key=pygame.K_g, spring_up_on_update=False),
-]
-
-toggle_drawing_buttons[0].is_pressed = True
-toggle_drawing_buttons[1].is_pressed = True
-toggle_drawing_buttons[2].is_pressed = True
+toggle_drawing_buttons["boids"].is_pressed = True
+toggle_drawing_buttons["barriers"].is_pressed = True
+toggle_drawing_buttons["clouds"].is_pressed = True
 
 interaction_lines_button = Button(
     300, main_screen_height - 30, 20, 20,
@@ -134,31 +127,20 @@ pause_button = (Button(10, 10, 50, 50,
                        )
                 )
 
-sliders = [
-    Slider(30, main_screen_height - 40, 100, 30,
-
-           min_value=0.0,
-           max_value=0.1,
-           value_percentage=5.0 / 10.0,
-           image=pygame.image.load("sprites/S.png"),
-           ),
-
-    Slider(30, main_screen_height - 80, 100, 30,
-
-           min_value=0.0,
-           max_value=5.0,
-           value_percentage=1.5 / 5.0,
-           image=pygame.image.load("sprites/A.png"),
-           ),
-
-    Slider(30, main_screen_height - 120, 100, 30,
-
-           min_value=0.0,
-           max_value=5.0,
-           value_percentage=1.5 / 5.0,
-           image=pygame.image.load("sprites/C.png"),
-           ),
-]
+sliders = {
+    "separation": Slider(30, main_screen_height - 40, 100, 30,
+                 min_value=0.0, max_value=0.1, value_percentage=5.0 / 10.0,
+                 image=pygame.image.load("sprites/S.png")),
+    "alignment": Slider(30, main_screen_height - 80, 100, 30,
+                min_value=0.0, max_value=5.0, value_percentage=1.5 / 5.0,
+                image=pygame.image.load("sprites/A.png")),
+    "cohesion": Slider(30, main_screen_height - 120, 100, 30,
+              min_value=0.0, max_value=5.0, value_percentage=1.5 / 5.0,
+              image=pygame.image.load("sprites/C.png")),
+    "chunk_size": Slider(30, main_screen_height - 160, 100, 30,
+                 min_value=20, max_value=110, value_percentage=0.5,
+                 image=pygame.image.load("sprites/chunk_grid.png")),
+}
 
 
 def handle_event(event):
@@ -174,10 +156,10 @@ def handle_event(event):
             selected_boid = None
             interaction_lines_button.is_pressed = interaction_line_mode != 0
 
-        if event.key == toggle_drawing_buttons[4].key:
-            toggle_drawing_buttons[4].update()
+        if event.key == toggle_drawing_buttons["grid"].key:
+            toggle_drawing_buttons["grid"].update()
 
-        for b in action_buttons:
+        for b in action_buttons.values():
             b.update()
         set_keybind(event.key)
 
@@ -197,18 +179,18 @@ def handle_event(event):
             interaction_lines_button.is_pressed = interaction_line_mode != 0
             return
 
-        for s in sliders:
+        for s in sliders.values():
             s.handle_click(event.pos)
             if s.dragging:
                 return
 
-        for b in action_buttons:
+        for b in action_buttons.values():
             b.update(event.pos)
             if b.is_pressed:
                 set_keybind(b.key)
                 return
 
-        for b in toggle_drawing_buttons:
+        for b in toggle_drawing_buttons.values():
             b.update(event.pos)
             if b.intersects(event.pos):
                 return
@@ -219,14 +201,14 @@ def handle_event(event):
                     selected_boid = boid
                     return
 
-        if True not in [b.is_pressed for b in action_buttons]:
+        if True not in [b.is_pressed for b in action_buttons.values()]:
             action: callable = key_binds.get(get_current_action_from_keybind(), default_bind)
             x, y = event.pos
             action(x, y)
 
     if event.type == MOUSEBUTTONUP:
         reset_balloon()
-        for s in sliders:
+        for s in sliders.values():
             s.release()
 
 

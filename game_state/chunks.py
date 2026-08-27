@@ -1,3 +1,5 @@
+import math
+
 import pygame
 
 from entities.entity import Entity
@@ -8,6 +10,18 @@ from surfaces import main_screen, main_screen_width, main_screen_height
 
 CHUNK_SIZE = SIGHT_DISTANCE * 2
 chunk_data = {}
+
+
+def set_chunk_size(size: int):
+    global CHUNK_SIZE
+    CHUNK_SIZE = max(1, int(size))
+
+
+def get_required_radius(distance: float) -> int:
+    chunks_per_axis = math.ceil(distance / CHUNK_SIZE)
+    print(f"Distance: {distance}, Chunk Size: {CHUNK_SIZE}, Chunks per Axis: {chunks_per_axis}")
+    return math.ceil(chunks_per_axis)
+
 
 
 def add_to_chunks(*elements: Entity):
@@ -45,12 +59,31 @@ def get_chunks_data(elem: Entity, radius: int) -> list[Entity]:
 
     chunks_data: list[Entity] = []
 
-    x, y = elem.current_chunk
-    for i in range(-radius, radius + 1):
-        for j in range(-radius, radius + 1):
-            chunks_data.extend(chunk_data.get((x + i, y + j), []))
+    for chunk in get_chunk_coordinates(elem, radius):
+        chunks_data.extend(chunk_data.get(chunk, []))
 
     return chunks_data
+
+
+def get_chunk_coordinates(elem: Entity, radius: int) -> list[tuple[int, int]]:
+    x, y = elem.current_chunk
+    return [
+        (x + i, y + j)
+        for i in range(-radius, radius + 1)
+        for j in range(-radius, radius + 1)
+        if i * i + j * j <= radius * radius
+    ]
+
+
+def draw_chunk_highlight(elem: Entity, radius: int):
+    overlay = pygame.Surface((main_screen_width, main_screen_height), pygame.SRCALPHA)
+    for x, y in get_chunk_coordinates(elem, radius):
+        pygame.draw.rect(
+            overlay,
+            (120, 0, 0, 100),
+            (x * CHUNK_SIZE, y * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE),
+        )
+    main_screen.blit(overlay, (0, 0))
 
 
 def draw_grid():
