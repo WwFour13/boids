@@ -1,4 +1,5 @@
 import pygame
+import random
 from pygame.locals import MOUSEBUTTONDOWN, MOUSEBUTTONUP, KEYDOWN, KEYUP
 
 from surfaces import main_screen_width, main_screen_height
@@ -17,7 +18,7 @@ current_balloon: Balloon | None = None
 last_keybind = None
 selected_boid: Boid | None = None
 interaction_line_mode = 0
-interaction_line_mode_names = ("off", "all", "selected", "checks", "selected checks")
+interaction_line_mode_names = ("off", "real interaction", "distance checkers")
 
 
 def reset_balloon():
@@ -69,6 +70,11 @@ def add_barrier_pop(x, y):
 def add_boid(x, y):
     b = Boid(x=x, y=y)
     boids.append(b)
+
+
+def select_random_boid():
+    global selected_boid
+    selected_boid = random.choice(boids) if boids else None
 
 
 default_bind = add_barrier_pop
@@ -152,8 +158,7 @@ def handle_event(event):
             pause_button.is_pressed = not pause_button.is_pressed
 
         if event.key == interaction_lines_button.key:
-            interaction_line_mode = (interaction_line_mode + 1) % 5
-            selected_boid = None
+            interaction_line_mode = (interaction_line_mode + 1) % 3
             interaction_lines_button.is_pressed = interaction_line_mode != 0
 
         if event.key == toggle_drawing_buttons["grid"].key:
@@ -174,8 +179,7 @@ def handle_event(event):
             return
 
         if interaction_lines_button.intersects(event.pos):
-            interaction_line_mode = (interaction_line_mode + 1) % 5
-            selected_boid = None
+            interaction_line_mode = (interaction_line_mode + 1) % 3
             interaction_lines_button.is_pressed = interaction_line_mode != 0
             return
 
@@ -195,11 +199,10 @@ def handle_event(event):
             if b.intersects(event.pos):
                 return
 
-        if interaction_line_mode in (2, 4):
-            for boid in boids:
-                if boid.intersects(event.pos):
-                    selected_boid = boid
-                    return
+        for boid in boids:
+            if boid.intersects(event.pos):
+                selected_boid = boid
+                return
 
         if True not in [b.is_pressed for b in action_buttons.values()]:
             action: callable = key_binds.get(get_current_action_from_keybind(), default_bind)

@@ -5,7 +5,7 @@ import pygame
 from entities.boid import SIGHT_DISTANCE
 from UI.IO import update_current_balloon, is_holding_balloon, handle_event, action_buttons, sliders, \
     toggle_drawing_buttons, pause_button, interaction_lines_button, get_interaction_line_mode, \
-    get_interaction_line_mode_name, get_selected_boid
+    get_interaction_line_mode_name, get_selected_boid, select_random_boid
 from game_state import chunks, objects
 from game_state.objects import boids, barriers, clouds
 from surfaces import main_screen, main_screen_height
@@ -32,6 +32,7 @@ def main():
     global run_time_seconds
 
     objects.init()
+    select_random_boid()
     chunks.set_chunk_size(sliders["chunk_size"].get_value())
     chunks.update_chunks_data(*boids, *barriers, *clouds)
 
@@ -66,7 +67,7 @@ def main():
         for boid in boids:
             selected_boid = get_selected_boid()
             if (toggle_drawing_buttons["grid"].is_pressed and
-                    get_interaction_line_mode() in (2, 4) and selected_boid is boid):
+                    get_interaction_line_mode() != 0 and selected_boid is boid):
                 chunks.draw_chunk_highlight(boid, chunk_radius)
             if not pause_button.is_pressed:
                 boid.flock(chunks.get_chunks_data(boid, chunk_radius),
@@ -76,15 +77,11 @@ def main():
                            cohesion_factor=sliders["cohesion"].value)
                 boid.move(dt)
             if (toggle_drawing_buttons["sight"].is_pressed and
-                    (selected_boid is None or selected_boid is boid)):
+                    (get_interaction_line_mode() == 0 or selected_boid is boid)):
                 boid.draw_sight()
             if get_interaction_line_mode() == 1:
-                boid.draw_interactions(draw_all=True)
-            elif get_interaction_line_mode() == 2:
                 boid.draw_interactions(selected_boid=get_selected_boid())
-            elif get_interaction_line_mode() == 3:
-                boid.draw_distance_checks(chunks.get_chunks_data(boid, chunk_radius))
-            elif get_interaction_line_mode() == 4:
+            elif get_interaction_line_mode() == 2:
                 boid.draw_distance_checks(chunks.get_chunks_data(boid, chunk_radius),
                                           selected_boid=get_selected_boid())
 
