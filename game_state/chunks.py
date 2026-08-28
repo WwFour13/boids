@@ -19,7 +19,6 @@ def set_chunk_size(size: int):
 
 def get_required_radius(distance: float) -> int:
     chunks_per_axis = math.ceil(distance / CHUNK_SIZE)
-    print(f"Distance: {distance}, Chunk Size: {CHUNK_SIZE}, Chunks per Axis: {chunks_per_axis}")
     return math.ceil(chunks_per_axis)
 
 
@@ -67,11 +66,26 @@ def get_chunks_data(elem: Entity, radius: int) -> list[Entity]:
 
 def get_chunk_coordinates(elem: Entity, radius: int) -> list[tuple[int, int]]:
     x, y = elem.current_chunk
+    pos_x, pos_y = elem.get_coordinates()
+    search_radius = radius * CHUNK_SIZE
+
+    def chunk_intersects_search_area(chunk_x: int, chunk_y: int) -> bool:
+        left = chunk_x * CHUNK_SIZE
+        right = left + CHUNK_SIZE
+        top = chunk_y * CHUNK_SIZE
+        bottom = top + CHUNK_SIZE
+
+        closest_x = max(left, min(pos_x, right))
+        closest_y = max(top, min(pos_y, bottom))
+        distance_x = pos_x - closest_x
+        distance_y = pos_y - closest_y
+        return distance_x ** 2 + distance_y ** 2 <= search_radius ** 2
+
     return [
         (x + i, y + j)
         for i in range(-radius, radius + 1)
         for j in range(-radius, radius + 1)
-        if i * i + j * j <= radius * radius
+        if chunk_intersects_search_area(x + i, y + j)
     ]
 
 
