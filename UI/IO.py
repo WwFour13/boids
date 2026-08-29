@@ -199,15 +199,18 @@ def handle_event(event):
             if b.intersects(event.pos):
                 return
 
-        for boid in boids:
-            if boid.intersects(event.pos):
-                selected_boid = boid
-                return
+        if interaction_lines_button.is_pressed and get_current_action_from_keybind() is not remove_element:
+            for boid in boids:
+                if boid.intersects(event.pos):
+                    selected_boid = boid
+                    return
 
         if True not in [b.is_pressed for b in action_buttons.values()]:
             action: callable = key_binds.get(get_current_action_from_keybind(), default_bind)
             x, y = event.pos
             action(x, y)
+            if selected_boid not in boids:
+                select_random_boid()
 
     if event.type == MOUSEBUTTONUP:
         reset_balloon()
