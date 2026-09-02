@@ -14,6 +14,7 @@ from surfaces import main_screen, main_screen_height
 FPS = 30
 dt = 1 / FPS
 run_time_seconds = 0.0
+rtsint = 0
 
 pygame.init()
 
@@ -21,6 +22,7 @@ pygame.display.set_caption("Boids!")  # Set the window caption
 pygame.display.set_icon(pygame.transform.rotozoom(pygame.image.load("sprites/arrow.png"), 0, 2.5))
 clock = pygame.time.Clock()  # Clock for controlling frame rate
 interaction_line_font = pygame.font.Font(None, 18)
+stats_font = pygame.font.Font(None, 18)
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -30,13 +32,16 @@ GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
 
 def main():
-    global run_time_seconds, dt
+    global run_time_seconds, dt, rtsint, frame_elapsed_save, total_interactions_handled_save
 
     target_dt = 1 / FPS
     objects.init()
     select_random_boid()
     chunks.set_chunk_size(sliders["chunk_size"].get_value())
     chunks.update_chunks_data(*boids, *barriers, *clouds)
+
+    frame_elapsed_save = 0.0
+    total_interactions_handled_save = 0
 
     while True:
         frame_start = time.perf_counter()
@@ -64,12 +69,12 @@ def main():
         if not is_holding_balloon():
             objects.remove_small_balloons()
 
-        # for boid in boids:
-        #     boid.draw_trace()
+        total_interactions_handled = 0
 
         for boid in boids:
             selected_boid = get_selected_boid()
             chunks_data = chunks.get_chunks_data(boid, chunk_radius)
+            total_interactions_handled += len(chunks_data)
             if (toggle_drawing_buttons["grid"].is_pressed and
                     get_interaction_line_mode() != 0 and selected_boid is boid):
                 chunks.draw_chunk_highlight(boid, chunk_radius)
@@ -98,8 +103,10 @@ def main():
                 boid.draw()
 
         for cloud in clouds:
+            cloud_chunks_data = chunks.get_chunks_data(cloud, chunk_radius)
+            total_interactions_handled += len(cloud_chunks_data)
             if not pause_button.is_pressed:
-                cloud.drift(chunks.get_chunks_data(cloud, chunk_radius), dt)
+                cloud.drift(cloud_chunks_data, dt)
                 cloud.move(run_time_seconds=run_time_seconds, dt=dt)
             if toggle_drawing_buttons["clouds"].is_pressed:
                 cloud.draw()
@@ -125,10 +132,27 @@ def main():
             s.update()
             s.draw()
 
-        pygame.display.flip()
-
         frame_elapsed = time.perf_counter() - frame_start
         dt = max(frame_elapsed, target_dt)
+
+        if int(run_time_seconds) != rtsint:
+            rtsint = int(run_time_seconds)
+            frame_elapsed_save = frame_elapsed
+            total_interactions_handled_save = total_interactions_handled
+
+        stats_lines = [
+            f"Boids: {len(boids)}",
+            f"Frame Elapsed ({target_dt:.4f}s): {frame_elapsed_save:.4f}s",
+            f"Interactions ({len(boids)**2}): {total_interactions_handled_save}",
+        ]
+        for line_index, line in enumerate(stats_lines):
+            stats_label = stats_font.render(line, True, (220, 220, 220))
+            main_screen.blit(
+                stats_label,
+                (pause_button.x, pause_button.y + pause_button.height + 12 + line_index * 18),
+            )
+
+        pygame.display.flip()
 
         clock.tick(FPS)
         run_time_seconds += dt
