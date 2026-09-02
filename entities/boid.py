@@ -88,6 +88,8 @@ class Boid(Entity):
         return f"X: {self.x}, Y: {self.y}, "
 
     def __eq__(self, other: Self) -> bool:
+        if not other:
+            return False
         return (self.x == other.x and
                 self.y == other.y and
                 self.direction.dx == other.direction.dx and

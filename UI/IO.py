@@ -72,6 +72,16 @@ def add_boid(x, y):
     boids.append(b)
 
 
+def add_boids_ten(x, y):
+    for _ in range(10):
+        add_boid(x + random.randint(-50, 50), y + random.randint(-50, 50))
+
+def remove_boids_ten(x, y):
+    for _ in range(10):
+        if boids:
+            boids.pop()
+
+
 def select_random_boid():
     global selected_boid
     selected_boid = random.choice(boids) if boids else None
@@ -82,6 +92,8 @@ key_binds: dict[int | None, callable] = {
     pygame.K_c: add_cloud,
     pygame.K_b: add_boid,
     pygame.K_p: add_barrier,
+    pygame.K_UP : add_boids_ten,
+    pygame.K_DOWN : remove_boids_ten,
     pygame.K_BACKSPACE: remove_element,
 }
 
