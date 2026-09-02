@@ -1,4 +1,5 @@
 import sys
+import time
 
 import pygame
 
@@ -29,14 +30,16 @@ GREEN = (0, 255, 0)
 YELLOW = (255, 255, 0)
 
 def main():
-    global run_time_seconds
+    global run_time_seconds, dt
 
+    target_dt = 1 / FPS
     objects.init()
     select_random_boid()
     chunks.set_chunk_size(sliders["chunk_size"].get_value())
     chunks.update_chunks_data(*boids, *barriers, *clouds)
 
     while True:
+        frame_start = time.perf_counter()
 
         events = pygame.event.get()
         for event in events:
@@ -66,11 +69,12 @@ def main():
 
         for boid in boids:
             selected_boid = get_selected_boid()
+            chunks_data = chunks.get_chunks_data(boid, chunk_radius)
             if (toggle_drawing_buttons["grid"].is_pressed and
                     get_interaction_line_mode() != 0 and selected_boid is boid):
                 chunks.draw_chunk_highlight(boid, chunk_radius)
             if not pause_button.is_pressed:
-                boid.flock(chunks.get_chunks_data(boid, chunk_radius),
+                boid.flock(chunks_data,
                            dt,
                            separation_factor=sliders["separation"].value,
                            alignment_factor=sliders["alignment"].value,
@@ -82,7 +86,7 @@ def main():
             if get_interaction_line_mode() == 1:
                 boid.draw_interactions(selected_boid=get_selected_boid())
             elif get_interaction_line_mode() == 2:
-                boid.draw_distance_checks(chunks.get_chunks_data(boid, chunk_radius),
+                boid.draw_distance_checks(chunks_data,
                                           selected_boid=get_selected_boid())
 
         for bar in barriers:
@@ -122,6 +126,9 @@ def main():
             s.draw()
 
         pygame.display.flip()
+
+        frame_elapsed = time.perf_counter() - frame_start
+        dt = max(frame_elapsed, target_dt)
 
         clock.tick(FPS)
         run_time_seconds += dt
