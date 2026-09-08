@@ -14,8 +14,8 @@ SIGHT_DISTANCE = 55
 PERSONAL_SPACE = 20
 
 MAX_SPEED = 165  # per second
-MIN_SPEED = 140
-MAX_FORCE = 40
+MIN_SPEED = 100
+MAX_FORCE = 40 # per second
 
 TRACER_DURATION = 0.4
 TRACES_PER_SECOND = 100
@@ -79,7 +79,7 @@ class Boid(Entity):
         self.color = (0, 0, 0)
         self.coloring_pending_seconds = 0.0
 
-        self.direction: Vector = direction
+        self.velocity: Vector = direction
 
         self.tracer = Tracer(self.x, self.y)
         self.tracer_pending_seconds = 0.0
@@ -92,60 +92,58 @@ class Boid(Entity):
             return False
         return (self.x == other.x and
                 self.y == other.y and
-                self.direction.dx == other.direction.dx and
-                self.direction.dy == other.direction.dy)
+                self.velocity.dx == other.velocity.dx and
+                self.velocity.dy == other.velocity.dy)
 
     def __hash__(self):
         return hash((self.x,
                      self.y,
-                     self.direction.dx,
-                     self.direction.dy))
+                     self.velocity.dx,
+                     self.velocity.dy))
 
     def get_radians(self):
-        return self.direction.get_radians()
+        return self.velocity.get_radians()
+
+    def square_distance_to(self, other: Self | tuple) -> float:
+        if isinstance(other, Boid):
+            other_x, other_y = other.x, other.y
+        else:
+            other_x, other_y = other
+
+        dx = self.x - other_x
+        dy = self.y - other_y
+        return dx * dx + dy * dy
 
     def intersects(self, other: tuple) -> bool:
-        return math.dist((self.x, self.y), other) < PERSONAL_SPACE
+        return self.square_distance_to(other) < PERSONAL_SPACE ** 2
 
     def move(self, dt: float):
-        self.x += self.direction.dx * dt
-        self.y -= self.direction.dy * dt
+        self.x += self.velocity.dx * dt
+        self.y -= self.velocity.dy * dt
 
         if self.x < 0:
-            self.direction.dx *= -1
+            self.velocity.dx *= -1
             self.x = 0
 
         if self.y < 0:
-            self.direction.dy *= -1
+            self.velocity.dy *= -1
             self.y = 0
 
         if self.x > main_screen_width:
-            self.direction.dx *= -1
+            self.velocity.dx *= -1
             self.x = main_screen_width
 
         if self.y > main_screen_height:
-            self.direction.dy *= -1
+            self.velocity.dy *= -1
             self.y = main_screen_height
 
-    def get_cloud_repulsion_force(self, cloud_coordinates: tuple, cloud_radius: float) -> Vector | None:
-        x, y = cloud_coordinates
-        force = Vector(0, 0)
-        if dist := (math.dist(self.get_coordinates(), cloud_coordinates)) < 2 * cloud_radius:
-            weight = (2 * cloud_radius - dist) ** 1.7
-            force.dx = x - self.x
-            force.dy = self.y - y
-            force.set_magnitude(weight)
-            force.set_radians(self.get_radians())
-
-            return force
-
-        return None
-
+    
     def get_boid_repulsion_force(self, coordinates: tuple, sight_distance: float) -> Vector | None:
         x, y = coordinates
         force = Vector(0, 0)
-        if dist := (math.dist(self.get_coordinates(), coordinates)) < PERSONAL_SPACE:
-            weight = (sight_distance - dist) ** 1.8
+        sq_dist = self.square_distance_to(coordinates)
+        if sq_dist < PERSONAL_SPACE ** 2:
+            weight = (sight_distance **2 - sq_dist)
             force.dx = x - self.x
             force.dy = self.y - y
             force.set_magnitude(weight)
@@ -155,14 +153,14 @@ class Boid(Entity):
         return None
 
     def get_boid_attraction_point(self, coordinates: tuple, sight_distance: float) -> tuple[float, float] | None:
-        if math.dist(self.get_coordinates(), coordinates) <= sight_distance:
+        if self.square_distance_to(coordinates) <= sight_distance ** 2:
             return self.get_coordinates()
 
         return None
 
     def get_boid_pointer_force(self, coordinates: tuple, sight_distance: float) -> Vector | None:
-        if math.dist(self.get_coordinates(), coordinates) <= sight_distance:
-            return self.direction
+        if self.square_distance_to(coordinates) <= sight_distance ** 2:
+            return self.velocity
 
         return None
 
@@ -175,9 +173,10 @@ class Boid(Entity):
         force = Vector(0, 0)
 
         for w in wall:
-            if dist := math.dist(w, self.get_coordinates()) < SIGHT_DISTANCE:
+            sq_dist = self.square_distance_to(w)
+            if sq_dist < SIGHT_DISTANCE ** 2:
                 f = Vector(0, 0)
-                weight = (SIGHT_DISTANCE - dist) ** 2
+                weight = (SIGHT_DISTANCE ** 2 - sq_dist)
                 f.dx = self.x - w[0]
                 f.dy = w[1] - self.y
                 f.set_magnitude(weight)
@@ -219,13 +218,13 @@ class Boid(Entity):
 
         # Alignment
         avg = Vector.get_average(alignment_forces)
-        alignment_force = avg - self.direction
+        alignment_force = avg
         force += alignment_force * alignment_factor
 
         # Cohesion
         avg = Vector.get_average([Vector(p[0], p[1]) for p in cohesion_points])
         to_average_position = Vector(avg.dx - self.x, self.y - avg.dy)
-        cohesion_force = to_average_position - self.direction
+        cohesion_force = to_average_position - self.velocity
         force += cohesion_force * cohesion_factor
 
         # Separation
@@ -236,8 +235,8 @@ class Boid(Entity):
         force *= dt
 
         force.clamp_magnitude(MAX_FORCE)
-        self.direction += force
-        self.direction.clamp_magnitude(MAX_SPEED, min_=MIN_SPEED)
+        self.velocity += force
+        self.velocity.clamp_magnitude(MAX_SPEED, min_=MIN_SPEED)
 
         self.tracer_pending_seconds += dt
         if self.tracer_pending_seconds > SECONDS_PER_TRACE:
