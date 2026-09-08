@@ -5,7 +5,9 @@ from calculations.vector import Vector
 from entities.boid import Boid, MAX_SPEED
 from entities.barrier import Barrier
 from entities.cloud import Cloud
+from entities.entity import Entity
 from surfaces import main_screen_width, main_screen_height
+import game_state.chunks as chunks
 
 BOID_COUNT = 130
 boids: list[Boid] = []
@@ -15,9 +17,14 @@ barriers: list[Barrier] = []
 clouds: list[Cloud] = []
 
 
-def same_instance_filter(x: list, remove_condition: callable):
+def same_instance_filter(x: list[Entity], remove_condition: callable):
     for i in range(len(x) - 1, -1, -1):
         if remove_condition(x[i]):
+            chunk = x[i].current_chunk
+            try:
+                chunks.chunk_data[chunk].remove(x[i])
+            except (KeyError, ValueError):
+                pass
             del x[i]
 
 
