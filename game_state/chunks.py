@@ -36,12 +36,18 @@ def add_to_chunks(*elements: Entity):
 
 def update_chunks_data(*elements: Entity):
 
-    chunk_data.clear()
-
     for elem in elements:
 
-        elem.current_chunk = ((elem.x // CHUNK_SIZE), (elem.y // CHUNK_SIZE))
-        add_to_chunks(elem)
+        new_chunk = ((elem.x // CHUNK_SIZE), (elem.y // CHUNK_SIZE))
+
+        if new_chunk != elem.current_chunk:
+            try:
+                chunk_data[elem.current_chunk].remove(elem)
+            except (KeyError, ValueError):
+                pass
+
+            elem.current_chunk = new_chunk
+            add_to_chunks(elem)
 
 
 def get_chunk_data(elem: Entity) -> list[Entity]:
@@ -66,27 +72,17 @@ def get_chunks_data(elem: Entity, radius: int) -> list[Entity]:
 
 def get_chunk_coordinates(elem: Entity, radius: int) -> list[tuple[int, int]]:
     x, y = elem.current_chunk
-    pos_x, pos_y = elem.get_coordinates()
-    search_radius = radius * CHUNK_SIZE
 
-    def chunk_intersects_search_area(chunk_x: int, chunk_y: int) -> bool:
-        left = chunk_x * CHUNK_SIZE
-        right = left + CHUNK_SIZE
-        top = chunk_y * CHUNK_SIZE
-        bottom = top + CHUNK_SIZE
+    ret = [(x, y)]
 
-        closest_x = max(left, min(pos_x, right))
-        closest_y = max(top, min(pos_y, bottom))
-        distance_x = pos_x - closest_x
-        distance_y = pos_y - closest_y
-        return distance_x ** 2 + distance_y ** 2 <= search_radius ** 2
-
-    return [
+    ret.extend([
         (x + i, y + j)
         for i in range(-radius, radius + 1)
         for j in range(-radius, radius + 1)
-        if chunk_intersects_search_area(x + i, y + j)
-    ]
+        if not (i == 0 and j == 0)
+    ])
+
+    return ret
 
 
 def draw_chunk_highlight(elem: Entity, radius: int):
